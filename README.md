@@ -11,17 +11,10 @@ This documentation aims to serve three purposes:
 2. For experts, it includes a detailed technical reference of the various interfaces implemented by RJM.
 3. For everyone, it provides an opinionated exposition of best practices for interacting with RJM, that users might avoid common pitfalls and achieve success in their interactions with RJM.
 
-# Basic Concepts
-
-RJM is a human organism. If you are already familiar with human organisms or other rational beings, many of the concepts in this section should seem familiar to you. I still advise you not to skip the section, however, because the precise meaning of the terms may differ from what you are accustomed to.
-
-## States
-
-
 # Getting Started 
 
 ## Building From Source
-Building human organisms from source is not recommended, as it requires a [very specialized build environment](http://wwwmigrate.usccb.org/bible/genesis/2). It is well beyond the scope of this documentation.
+Building human organisms from source is not recommended, as it requires a [very specialized build environment](http://wwwmigrate.usccb.org/bible/genesis/2), which is well beyond the scope of this documentation.
 
 ## Acquiring a Prebuilt Package
 Due to the practical and legal difficulties involved in the [distribution of pre-packaged human beings](https://en.wikipedia.org/wiki/Human_mail#Real_occurrences), this method is also no longer recommended.
@@ -30,6 +23,32 @@ Due to the practical and legal difficulties involved in the [distribution of pre
 All the functionality of the RJM system is available on demand through the Richard Marmorstein Foundation's centralized instance. Indeed, this is the recommended method of access.
 
 ### Accessing The RJM Public Interface
+#### Invocation
+You may trigger the RJM system to enter interactive mode through the invocations.
+'Richard',
+'Rich',
+'Richie',
+'Rick',
+'Dick',
+'Dickie',
+'Ricardo',
+'Twitchard',
+'RJ',
+'Arge',
+'Arge the J',
+'RJM',
+'Rijum',
+or 'Silly Uncle'.
+
+Please note, the invocations 'RJ', 'Arge', and 'Arge the J,' have been deprecated since like, middle school.
+
+The invocation 'Dick' may cause confusion in some environments, where 'dick' is used as an insult or a reference to an unflattering feature of the male anatomy. Such usage will trigger RJM to enter into 'mock indignance' mode, which can be exited by supplying an apology.
+
+*Examples:*
+
+```
+Excuse me,
+```
 
 #### Contact Information
 The first step of accessing the RJM public interface is to acquire contact information. There are several forms of contact information. Which form of contact information you use determines which interfaces you have access to.
