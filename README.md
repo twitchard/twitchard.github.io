@@ -13,17 +13,19 @@ This documentation aims to serve three purposes:
 
 # Getting Started 
 
-## Building From Source
+## Access methods
+
+### Building From Source
 Building human organisms from source is not recommended, as it requires a [very specialized build environment](http://wwwmigrate.usccb.org/bible/genesis/2), which is well beyond the scope of this documentation.
 
-## Acquiring a Prebuilt Package
+### Acquiring a Prebuilt Package
 Due to the practical and legal difficulties involved in the [distribution of pre-packaged human beings](https://en.wikipedia.org/wiki/Human_mail#Real_occurrences), this method is also no longer recommended.
 
-## Richard as a Service 
+### Richard as a Service 
 All the functionality of the RJM system is available on demand through the Richard Marmorstein Foundation's centralized instance. Indeed, this is the recommended method of access.
 
-### Accessing The RJM Public Interface
-#### Invocation
+## Usage
+### Invocation
 You may trigger the RJM system to enter interactive mode through the invocations.
 'Richard',
 'Rich',
@@ -33,6 +35,7 @@ You may trigger the RJM system to enter interactive mode through the invocations
 'Dickie',
 'Ricardo',
 'Twitchard',
+'Twizzard',
 'RJ',
 'Arge',
 'Arge the J',
@@ -44,13 +47,18 @@ Please note, the invocations 'RJ', 'Arge', and 'Arge the J,' have been deprecate
 
 The invocation 'Dick' may cause confusion in some environments, where 'dick' is used as an insult or a reference to an unflattering feature of the male anatomy. Such usage will trigger RJM to enter into 'mock indignance' mode, which can be exited by supplying an apology.
 
-*Examples:*
+**Example Apology 1**
 
-```
-Excuse me,
-```
+> My sincerest apoligies, I should not have described Kanye West as a 'dick'. In my haste I forgot that 'dick' can and does refer to individuals of the highest nobility and grace, and it is not fair to compare such dignified creatures to the likes of Kanye West.
 
-#### Contact Information
+**Example Apology 2**
+
+> I am very sorry to have offended you. I, of course, fully realize that 'dick' refers to an entity including all sorts of anatomical features, and there is no excuse for reducing that proud name to a single, unflattering one. I resolve to be less vulgar in the future.
+
+### Interactive mode
+After invoking the RJM system, you will be entered into interactive mode.
+
+### Contact Information
 The first step of accessing the RJM public interface is to acquire contact information. There are several forms of contact information. Which form of contact information you use determines which interfaces you have access to.
 
 * *Twitter* - Richard Marmorstein's [twitter](http://www.twitter.com/twitchard) provides access to the [social media interface](#Social Media)
