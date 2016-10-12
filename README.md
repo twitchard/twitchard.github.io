@@ -5,11 +5,16 @@ Richard J Marmorstein 0.0.1 Reference Manual
 Richard J Marmorstein (RJM) is a autonomous generalized problem-solving and entertainment system, implemented chiefly in deoxyribonucleic acid, featuring a robust natural language interface.
 
 ## About this documentation
-This documentation aims to serve three purposes:
+This documentation provides an opinionated exposition of RJM best practices. Read this documentation to avoid common pitfalls and achieve success in your interactions with RJM.
 
-1. For novices, it provides a general and gentle introduction to RJM's key concepts.
-2. For experts, it includes a detailed technical reference of the various interfaces implemented by RJM.
-3. For everyone, it provides an opinionated exposition of best practices for interacting with RJM, that users might avoid common pitfalls and achieve success in their interactions with RJM.
+## Quick Start
+
+1. Approach Richard.
+2. Invoke. 
+  "Yo Richard"
+  "Yo."
+3. Bestow with baked goods.
+  "Have some cookies"
 
 ## Access methods
 
