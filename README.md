@@ -107,7 +107,7 @@ Oh. I thought you were making a joke.
 
 > I am irritated at you for not understanding me more quickly. This is your fault.
 
-So it must be.
+So it is, and so it must be.
 ```
 
 **Good:**
@@ -132,7 +132,7 @@ Bringing this information to the RJM systems immediate attention will elicit one
 ```
 > Excuse me sir, your shoelace is untied.
 
-So it must be.
+So it is, and so it must be.
 ```
 
 #### Backpack
