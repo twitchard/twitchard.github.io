@@ -37,7 +37,8 @@ You may trigger the RJM system to enter interactive mode through any of the foll
 * 'Rich',
 * 'Richie',
 * 'Rick',
-* 'Dick', 'Dickie',
+* 'Dick',
+* 'Dickie',
 * 'Ricardo',
 * 'Twitchard',
 * 'Twizzard',
@@ -52,13 +53,20 @@ Please note, the invocations 'RJ', 'Arge', and 'Arge the J,' have been deprecate
 
 The invocation 'Dick' may cause confusion in some environments, where 'dick' is used as an insult or a reference to an unflattering feature of the male anatomy. Such usage will trigger RJM to enter into 'mock indignance' mode, which can be exited by supplying an apology.
 
-**Example Apology 1**
+**Example**
+```
+> Yo, Judas can be such a dick sometimes, you know.
 
-> My sincerest apoligies, I should not have described Judas Iscariot as a 'dick'. In my haste I forgot that 'dick' can and does refer to individuals of the highest nobility and grace, and it is not fair to compare such dignified creatures to the likes of Judas Iscariot.
+Excuse me?
 
-**Example Apology 2**
+> Oh sorry. I mean he can be such a jerk.
 
-> I am very sorry to have offended you. I, of course, fully realize that 'dick' refers to a magnificent creature with a variety of anatomical features, and there is no excuse for reducing that proud name to a single, unflattering one. I resolve to be less vulgar in the future.
+You know how I feel about using the word in such a way.
+
+> My deepest apologies. In my haste, I forgot that 'dick' can and does refer to individuals of the highest nobility and grace. It is unfair -- not merely unfair, it is a crime against the idea of language itself -- to besmirch it by such disparaging use.
+
+Apology accepted. Let us resume normal conversation.
+```
 
 ### Interactive mode
 
@@ -66,10 +74,55 @@ After invoking the RJM system, you will be entered into interactive mode. Upon e
 
 To maximize successful communication in interactive mode, enunciate well and speak loudly. Do not face away from the RJM instance. Failure to abide by these instructions will muddle your communications, causing the RJM instance to devote its problem-solving resources into puzzling out what sounds you have made, rather than processing your intended query. Similarly, avoid using pronouns such as "it" when there are many possible "its," or noun phrases such as "the function" when there are many possible "functions". Even if it is possible to guess your meaning from context, specificity will allow the RJM instance to devote less effort into guessing what you are trying to say, and more into thinking about what you have said.
 
-When issuing a lengthy communication, whether a narrative or technical explanation, prompt the RJM system to listen in the correct manner by providing a brief overview of your communication's purpose. "Hey, do you have any idea why I am getting this error?" "Hey, what do you think of the way I refactored this code?" "Hey, isn't this block of legacy code crazy?" This step allows the RJM system to optimally select which details of your communication it pays most attention, and increases the likelihood of an effective response.
+When issuing a communication, especially a lengthy one, whether a query, a narrative, or a technical explanation, prompt the RJM system to listen in the correct manner by providing a brief overview of your communication's purpose. "Hey, did you want to hear a joke?" "Hey, can you help me with this error?" "Hey, what do you think of this?" "Hey, come look at this. This is crazy!" This step allows the RJM system to optimally select which details of your communication it pays most attention, and increases the likelihood of an effective response.
 
+**Bad:**
+
+```
+> Yo Rijum, why did the function recurse infinitely?
+
+Hmm---I don't know. Because it recursed infinitely?
+
+> What?
+
+What?
+
+> That's not helpful.
+
+What are you talking about?
+
+> The function in your pull request `extractAndValidateParameters`. It's making my request hang.
+
+Oh. I thought you were making a joke.
+
+> I am irritated at you for not understanding me more quickly. This is your fault.
+
+So it must be.
+```
+
+**Good:**
+
+```
+> Yo Rijum, want to hear a joke?
+
+How I answer this question does not matter, I believe.
+
+> Your code!! You accidentally wrote an infinitely recursive function.
+
+I find your comment rude. However, this is infinitely preferable to inadequately framed interchange.
+```
 
 ### For Strangers
+
+There is no need to inform the RJM system of its untied shoelaces. The system is already completely aware. The shoelaces remain untied for political reasons.
+
+Bringing this information to the RJM systems immediate attention will elicit one of several 'noop' phrases.
+
+```
+> Excuse me sir, your shoelace is untied.
+
+So it must be.
+```
 
 ### For Acquaintances
 
@@ -81,12 +134,6 @@ When issuing a lengthy communication, whether a narrative or technical explanati
 
 ### For Enemies
 
-
-# Invocation
-
-# Greetings
-
-# Communication
 
 ## Email
 
