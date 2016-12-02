@@ -9,12 +9,22 @@ This documentation provides an opinionated exposition of RJM best practices. Rea
 
 ## Quick Start
 
-1. Approach Richard.
-2. Invoke. 
-  "Yo Richard"
-  "Yo."
+1. Approach the RJM system.
+2. Invoke.
+
+```
+> Yo Richard
+
+Yo
+```
+
 3. Bestow with baked goods.
-  "Have some cookies"
+
+```
+> Have some cookies
+
+Hey, thanks!
+```
 
 ## Access methods
 
@@ -114,7 +124,8 @@ I find your comment rude. However, this is infinitely preferable to inadequately
 
 ### For Strangers
 
-There is no need to inform the RJM system of its untied shoelaces. The system is already completely aware. The shoelaces remain untied for political reasons.
+#### Shoelaces
+There is no need to inform the RJM system of its untied shoelaces. This is considered a valid state. The system is already completely aware. The shoelaces remain untied for political reasons.
 
 Bringing this information to the RJM systems immediate attention will elicit one of several 'noop' phrases.
 
@@ -124,13 +135,66 @@ Bringing this information to the RJM systems immediate attention will elicit one
 So it must be.
 ```
 
+#### Backpack
+
+On the other hand, if you observe RJM system walking around with an opened backpack, this is not intended. RJM has entered an invalid state. Filing a bug report will result in a sincere thank you and immediate action to correct it.
+
+#### Directions
+
+Asking the RJM system for directions is **not** recommended. The directions module is known to be wildly inaccurate. Nevertheless, if you are lost and ask for directions, RJM's pity engine will execute and trigger a misplaced desire to help, which will generate directions, such as they may be. Do not trust them. You are better off asking the next person.
+
 ### For Acquaintances
 
 ### For Colleagues
 
 ### For Family
 
-### For Old Friends
+### For Those Who Deem Themselves Friends
+
+#### Gifts
+
+The RJM system features the capacity to exhibit genuine enjoyment. One way to access this functionality is through the giving of gifts. However, this is not as straightforward as it may seem.
+
+The most reliably successful method of gift-giving is via small, ad-hoc gifts such as baked goods. The RJM system suffers from no allergies. Such gifts are almost always accepted and appreciated.
+
+Far riskier is the giving of significant gifts, or the giving of gifts upon special occasions such as a birthday or Christmas. Even if the gifted item is intrinsically something appreciated by the RJM system, when you give such a gift, you also give:
+1. The gift of guilt, if the RJM system has not also given you a gift.
+2. The gift of guilt, if the RJM system has given you a gift but yours is perceived to be more valuable.
+3. The gift of the obligation to display gratitude.
+
+Often, these secondary gifts countervene any tendency of your gift to elicit genuine enjoyment from the RJM system. The recommended practice, therefore, is not to give such gifts at all. Stick with baked goods.
+
+#### Sacrifices
+
+Offering sacrifices to the RJM system will instill immense spiritual disquiet. It is not recommended.
+
+#### Favors
+
+When you are able to help the RJM system with a problem it has described to you, you may offer to perform a favor. The best practice is to offer the favor first, and ask about relevant details second.
+
+***Not recommended***
+```
+> You want a cookie?
+I can't, I'm about to go to a dentist appointment.
+
+> What is the address of your dentist?
+Uhh... why?
+
+> I can drive you there. I'm headed into town anyway.
+No thanks, I'm good.
+
+> Why not?
+This conversation is highly uncomfortable.
+```
+
+***Recommended***
+```
+> You want a cookie?
+I can't, I'm about to go to a dentist appointment.
+
+> Hey, you want me to drive you? I'm headed into town anyway.
+That's nice of you to offer, but no thanks, I think I'm good.
+```
 
 ### For Enemies
 
