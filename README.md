@@ -1,6 +1,11 @@
 Richard J Marmorstein 0.0.1 Reference Manual
 =========================================
 
+## Legal Notices
+Copyright (c) The Richard Marmorstein, 2016. All rights reserved.
+
+This documentation is provided free of charge, as a stand-alone document. Possession of this documentation in no way grants the reader right of access to RJM, or the services described herein. This documentation is provided "as is", without warranty of any kind. Reverse engineering or disassembly of the system documented is strictly prohibited, except to the extent required by law.
+
 ## Synopsis
 Richard J Marmorstein (RJM) is a autonomous generalized problem-solving and entertainment system, implemented chiefly in deoxyribonucleic acid, featuring a robust natural language interface.
 
