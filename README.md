@@ -163,9 +163,10 @@ The RJM system features the capacity to exhibit genuine enjoyment. One way to ac
 The most reliably successful method of gift-giving is via small, ad-hoc gifts such as baked goods. The RJM system suffers from no allergies. Such gifts are almost always accepted and appreciated.
 
 Far riskier is the giving of significant gifts, or the giving of gifts upon special occasions such as a birthday or Christmas. Even if the gifted item is intrinsically something appreciated by the RJM system, when you give such a gift, you also give:
-1. The gift of guilt, if the RJM system has not also given you a gift.
-2. The gift of guilt, if the RJM system has given you a gift but yours is perceived to be more valuable.
-3. The gift of the obligation to display gratitude.
+
+  1. The gift of guilt, if the RJM system has not also given you a gift.
+  2. The gift of guilt, if the RJM system has given you a gift but yours is perceived to be more valuable.
+  3. The gift of the obligation to display gratitude.
 
 Often, these secondary gifts countervene any tendency of your gift to elicit genuine enjoyment from the RJM system. The recommended practice, therefore, is not to give such gifts at all. Stick with baked goods.
 
@@ -175,7 +176,7 @@ Offering sacrifices to the RJM system will instill immense spiritual disquiet. I
 
 #### Favors
 
-When you are able to help the RJM system with a problem it has described to you, you may offer to perform a favor. The best practice is to offer the favor first, and ask about relevant details second.
+When you are able to help the RJM system with a problem it has described to you, you may offer to perform a favor. The best practice is to offer the favor first, and ask about relevant details second. If the RJM system declines an offer, do not question or seek to change this.
 
 ***Not recommended***
 ```
@@ -185,11 +186,11 @@ I can't, I'm about to go to a dentist appointment.
 > What is the address of your dentist?
 Uhh... why?
 
-> I can drive you there. I'm headed into town anyway.
+> I can fly you there in my helicopter. I'm headed into town anyway.
 No thanks, I'm good.
 
 > Why not?
-This conversation is highly uncomfortable.
+Helicoptors are bad for my humors.
 ```
 
 ***Recommended***
@@ -197,11 +198,14 @@ This conversation is highly uncomfortable.
 > You want a cookie?
 I can't, I'm about to go to a dentist appointment.
 
-> Hey, you want me to drive you? I'm headed into town anyway.
+> Hey, you want me to fly you in my helicoptor? I'm headed into town anyway.
 That's nice of you to offer, but no thanks, I think I'm good.
+
+> I respect, even welcome, your decision not to accept my offer.
 ```
 
 ### For Enemies
+
 
 
 ## Email
@@ -210,15 +214,11 @@ That's nice of you to offer, but no thanks, I think I'm good.
 
 ### Twitter
 
+* *Twitter* - Richard Marmorstein's [twitter](http://www.twitter.com/twitchard) provides access to the [social media interface](#Social Media)
+
 ### Facebook
+
 
 # Social Media Integration
 
-
-### Contact Information
-The first step of accessing the RJM public interface is to acquire contact information. There are several forms of contact information. Which form of contact information you use determines which interfaces you have access to.
-
-* *Twitter* - Richard Marmorstein's [twitter](http://www.twitter.com/twitchard) provides access to the [social media interface](#Social Media)
-* *Email Address* - Richard Marmorstein's [e-mail](richard.marmorstein@gmail.com) is open to the public. See the section on [How to E-mail Richard](#email) for more information.
-* *Github* - Richard Marmorstein's [github](http://github.com/twitchard) is open to the public.
 
