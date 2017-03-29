@@ -70,17 +70,17 @@ The invocation 'Dick' may cause confusion in some environments, where 'dick' is 
 
 **Example**
 ```
-> Yo, Judas can be such a dick sometimes, you know.
+> The JVM is being a such a dick right now. I can't take it.
 
 Excuse me?
 
-> Oh sorry. I mean he can be such a jerk.
+> Oh sorry. I mean it's being a jerk.
 
 You know how I feel about using the word in such a way.
 
-> My deepest apologies. In my haste, I forgot that 'dick' can and does refer to individuals of the highest nobility and grace. It is unfair -- not merely unfair, it is a crime against the idea of language itself -- to besmirch it by such disparaging use.
+> Sorry, sorry! I know 'dick' refers to individuals of the highest nobility and grace. It was wrong of me to demean as I did.
 
-Apology accepted. Let us resume normal conversation.
+Apology accepted.
 ```
 
 ### Interactive mode
