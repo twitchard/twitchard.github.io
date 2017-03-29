@@ -78,7 +78,7 @@ Excuse me?
 
 You know how I feel about using the word in such a way.
 
-> Sorry, sorry! I know 'dick' refers to individuals of the highest nobility and grace. It was wrong of me to demean as I did.
+> Sorry, sorry! I know 'dick' refers to individuals of the highest nobility and grace. It was wrong of me to demean that proud name, as I did.
 
 Apology accepted.
 ```
