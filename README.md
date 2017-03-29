@@ -147,15 +147,24 @@ On the other hand, if you observe RJM system walking around with an opened backp
 
 Asking the RJM system for directions is **not** recommended. The directions module is known to be wildly inaccurate. Nevertheless, if you are lost and ask for directions, RJM's pity engine will execute and trigger a misplaced desire to help, which will generate directions, such as they may be. Do not trust them. You are better off asking the next person.
 
-### For Acquaintances
+#### Etiquette
+
+##### Earbud Music
+Playing music from your earbuds at a volume such that the RJM system can sense the click, click, click, clicking of your snare drums, especially when in a confined space such as a subway car, will trigger RJM to enter into the murderous rage mode. Murderous rage mode is an experimental feature not yet ready for production use. In its current implementation, the murderous rage feature does not produce murders, or any action at all other than the tightening of the jaw and possibly enraged chat messages to other users of the RJM system. Only expert users should make use of this feature. It is not recommended for normal users.
 
 
-### For Colleagues
+### For Acquaintances/Colleagues
 
+#### Meetings
+RJM typically operates according to EST, according to the Gregorian Calendar. It is possible to schedule a meeting with RJM via the voice interface or one of the several calendar integrations. Prepare as much as possible for the meeting ahead of time.
+
+**Arrivals** It is strongly recommended to arrive on time or early to a meeting involving the RJM system, particularly if the meeting cannot take place without your presence. However, transit times can be unpredictable, and it is not always a realistic option to depart early enough for 100% certainty of arriving on time. In these cases, it is recommended to depart so that the expected value of how early you will be equals the expected value of how late you will be times the number of people whose time you will be wasting by arriving late.
+
+**Participation** It is recommended that you do not say anything in a meeting of more than 3 people unless you have thought about what you are going to say, and can communicate it clearly on the first try. Unless you specifically address RJM, the RJM system will assume that anything you say that cannot immediately be understood is intended for somebody else in the meeting with more context.
 
 ### For Family
 
-### For Those Who Deem Themselves Friends
+### For Friends
 
 #### Gifts
 
