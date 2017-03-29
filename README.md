@@ -112,7 +112,8 @@ Oh. I thought you were making a joke.
 
 > I am irritated at you for not understanding me more quickly. This is your fault.
 
-So it is, and so it must be.
+Yeah, sure.
+[[INTERACTIVE MODE TERMINATES]]
 ```
 
 **Good:**
@@ -120,7 +121,7 @@ So it is, and so it must be.
 ```
 > Yo Rijum, want to hear a joke?
 
-How I answer this question does not matter, I believe.
+Does it matter how I answer?
 
 > Your code!! You accidentally wrote an infinitely recursive function.
 
@@ -132,12 +133,10 @@ I find your comment rude. However, this is infinitely preferable to inadequately
 #### Shoelaces
 There is no need to inform the RJM system of its untied shoelaces. This is considered a valid state. The system is already completely aware. The shoelaces remain untied for political reasons.
 
-Bringing this information to the RJM systems immediate attention will elicit one of several 'noop' phrases.
-
 ```
 > Excuse me sir, your shoelace is untied.
 
-So it is, and so it must be.
+Oh.
 ```
 
 #### Backpack
@@ -150,7 +149,9 @@ Asking the RJM system for directions is **not** recommended. The directions modu
 
 ### For Acquaintances
 
+
 ### For Colleagues
+
 
 ### For Family
 
