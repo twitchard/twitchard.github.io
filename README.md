@@ -200,7 +200,7 @@ Uhh... why?
 No thanks, I'm good.
 
 > Why not?
-Helicoptors are bad for my humors.
+Helicoptors should be reserved for serious medical emergencies, and I certainly hope my trip to the dentist doesn't turn into of those.
 ```
 
 ***Recommended***
@@ -216,6 +216,32 @@ That's nice of you to offer, but no thanks, I think I'm good.
 
 ### For Enemies
 
+#### Passive Aggression
+
+In isolation, the RJM system has very rudimentary support for the detection and analysis of passive aggression. Support is somewhat better when the significant other module is installed and present in the same environment; still, communicating dissatisfaction through the use of passive aggression is not recommended. The RJM system is most likely completely oblivious to your grievance, and your communications will likely remain unrecognized, and be either misinterpreted or ignored. Use direct methods, where possible.
+
+***Not recommended***
+```
+> Those were some interesting ideas you laid out in that email.
+Uhh...thank you?
+> Truly visionary. Where'd you learn to think like that?
+Uhh, I don't know?
+> You must have had some wonderful colleagues and mentors.
+I certainly have! Like you!
+> Yes, like me! You've learned a lot from me, haven't you.
+Yes... are you trying to get at something?
+> No, no... just wanted to congratulate you on your fabulous email.
+```
+
+***Recommended***
+```
+> Richard! You stole my idea and took credit for it in that email.
+> I spit in your face, fiend! Feel the moisture of my spittle upon
+> your brow.
+
+I'm so so sorry. Please stop spitting at me! Stop it, stop I say! 
+This instant! I'll make it right, I swear!
+```
 
 
 ## Email
