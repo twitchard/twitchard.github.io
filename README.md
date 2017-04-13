@@ -1,4 +1,4 @@
-Richard J Marmorstein 0.0.1 Reference Manual
+Richard J Marmorstein 0.1.0 Reference Manual
 =========================================
 
 ## Legal Notices
@@ -155,6 +155,21 @@ Playing music from your earbuds at a volume such that the RJM system can sense t
 
 ### For Acquaintances/Colleagues
 
+
+#### Chit Chat
+
+RJM includes support for chit chat within a number of topics, including:
+- The weather
+- Books (especially book recommendations)
+- Some TV Shows
+- New York City and its horrors
+- Dogs
+- Technology
+
+Chit chat about sports is not supported outside of the Olympics and the NBA playoffs.
+
+Chit chat about politics is not preferred. The RJM system will listen attentively to whatever your opinions, and echo back any sentiments it holds that may resonate with your own. Sincere chit-chat is unlikely.
+
 #### Meetings
 RJM typically operates according to EST, according to the Gregorian Calendar. It is possible to schedule a meeting with RJM via the voice interface or one of the several calendar integrations. Prepare as much as possible for the meeting ahead of time.
 
@@ -218,7 +233,7 @@ That's nice of you to offer, but no thanks, I think I'm good.
 
 #### Passive Aggression
 
-In isolation, the RJM system has very rudimentary support for the detection and analysis of passive aggression. Support is somewhat better when the significant other module is installed and present in the same environment; still, communicating dissatisfaction through the use of passive aggression is not recommended. The RJM system is most likely completely oblivious to your grievance, and your communications will likely remain unrecognized, and be either misinterpreted or ignored. Use direct methods, where possible.
+In isolation, the RJM system has very rudimentary support for the detection and analysis of passive aggression. Support is somewhat better when the "significant other" module is installed and present in the same environment; still, communicating dissatisfaction through the use of passive aggression is not recommended. The RJM system is most likely completely oblivious to your grievance, and your communications will likely remain unrecognized, and be either misinterpreted or ignored. Use direct methods, where possible.
 
 ***Not recommended***
 ```
@@ -242,7 +257,6 @@ Yes... are you trying to get at something?
 I'm so so sorry. Please stop spitting at me! Stop it, stop I say! 
 This instant! I'll make it right, I swear!
 ```
-
 
 ## Email
 
