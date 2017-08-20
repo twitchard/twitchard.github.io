@@ -1,0 +1,67 @@
+<style type="text/css">
+.line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+}
+.axis {
+    fill: #ddd;
+}
+.axis:hover {
+    cursor: col-resize;
+}
+
+.alphabetChooser {
+    display: table-row;
+}
+
+.alphabetChooser__label {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.alphabetChooser__checkbox {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    margin: 10px;
+    margin: 10px;
+}
+
+</style>
+<h1>
+    The Randomness/Friendliness Trade-off
+</h1>
+<p>
+<div id="chart"></div>
+<h3>What is the biggest you expect your working set to be?</h3>
+<div id="selectXmax" class="slider">
+    <input id="xmaxSlider" class="slider__input">
+    <input id="xmaxLabel" class="slider__label"></span> entries
+</div>
+<h3>What is the maximum probability of a collision you are willing to accept?</h3>
+<div id="selectYmax" class="slider">
+    <input id="ymaxSlider" class="slider__input">
+    <input id="ymaxLabel" class="slider__label"></span> 
+</div>
+
+<h3>How long do you want each identifier to be?</h3>
+<div id="selectWordLength" class="slider">
+    <input id="wordLengthSlider" class="slider__input">
+    <input id="wordLengthLabel" class="slider__label"></input> characters long
+</div>
+<h3>Choose an Alphabet Length</h3>
+<div id="selectAlphabetSize" class="slider">
+    <input
+      id="alphabetSlider"
+      class="slider__input"
+    />
+    <input id="alphabetLabel" class="slider__label"></input> symbols
+</div>
+
+<h3>OR choose an Alphabet</h3>
+<div id="alphabetChooser"></div>
+<div id="alphabetSelections">
+</div>
+
+<script src="bundle.js"></script>
