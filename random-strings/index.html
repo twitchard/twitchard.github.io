@@ -1,4 +1,6 @@
-<style type="text/css">
+<html>
+    <head>
+        <style type="text/css">
 .line {
     fill: none;
     stroke: grey;
@@ -28,40 +30,45 @@
     margin: 10px;
 }
 
-</style>
-<h1>
-    The Randomness/Friendliness Trade-off
-</h1>
-<p>
-<div id="chart"></div>
-<h3>What is the biggest you expect your working set to be?</h3>
-<div id="selectXmax" class="slider">
-    <input id="xmaxSlider" class="slider__input">
-    <input id="xmaxLabel" class="slider__label"></span> entries
-</div>
-<h3>What is the maximum probability of a collision you are willing to accept?</h3>
-<div id="selectYmax" class="slider">
-    <input id="ymaxSlider" class="slider__input">
-    <input id="ymaxLabel" class="slider__label"></span> 
-</div>
-
-<h3>How long do you want each identifier to be?</h3>
-<div id="selectWordLength" class="slider">
-    <input id="wordLengthSlider" class="slider__input">
-    <input id="wordLengthLabel" class="slider__label"></input> characters long
-</div>
-<h3>Choose an Alphabet Length</h3>
-<div id="selectAlphabetSize" class="slider">
-    <input
-      id="alphabetSlider"
-      class="slider__input"
-    />
-    <input id="alphabetLabel" class="slider__label"></input> symbols
-</div>
-
-<h3>OR choose an Alphabet</h3>
-<div id="alphabetChooser"></div>
-<div id="alphabetSelections">
-</div>
-
-<script src="bundle.js"></script>
+        </style>
+    </head>
+    <body>
+        <h1>
+            The Randomness/Friendliness Trade-off
+        </h1>
+        <h4>Written to go along with <a href="https://medium.com/engineering-livestream/random-strings-the-terrible-cost-of-friendliness-242820e4358e">this post</a> on the Livestream engineering blog.</h4>
+        <h4><a href="https://github.com/twitchard/friendliness-vs-uniqueness">Source code</a></h4>
+        <div id="chart"></div>
+        <h3>What is the biggest you expect your working set to be?</h3>
+        <div id="selectXmax" class="slider">
+            <input id="xmaxSlider" class="slider__input">
+            <input id="xmaxLabel" class="slider__label"></span> entries
+        </div>
+        <h3>What is the maximum probability of a collision you are willing to accept?</h3>
+        <div id="selectYmax" class="slider">
+            <input id="ymaxSlider" class="slider__input">
+            <input id="ymaxLabel" class="slider__label"></span> 
+        </div>
+        
+        <h3>How long do you want each identifier to be?</h3>
+        <div id="selectWordLength" class="slider">
+            <input id="wordLengthSlider" class="slider__input">
+            <input id="wordLengthLabel" class="slider__label"></input> characters long
+        </div>
+        <h3>Choose an Alphabet Length</h3>
+        <div id="selectAlphabetSize" class="slider">
+            <input
+              id="alphabetSlider"
+              class="slider__input"
+            />
+            <input id="alphabetLabel" class="slider__label"></input> symbols
+        </div>
+        
+        <h3>OR choose an Alphabet</h3>
+        <div id="alphabetChooser"></div>
+        <div id="alphabetSelections">
+        </div>
+        
+        <script src="bundle.js"></script>
+</body>
+</html>
