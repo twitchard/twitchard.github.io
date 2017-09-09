@@ -22,14 +22,18 @@
 		}
 	</style>
 	<script type="text/javascript">	
+                var radius = 200
+                var size = radius + 20
                 var names =
                     [ 'penelope', // 0
                       'helen', // 1
                       'persephone', // 2
                       'taylor swift', // 3
                     ]
-
                 var winner = 2
+                var spinDurationInMilliseconds = 10000
+                var numberOfSpins = 10
+
 		var svgns = "http://www.w3.org/2000/svg"; // SVG Namespace (in case we need it)
 		var slices = []; // Array of wheel slice objects
 		var numSlices = names.length;  // Size of the circle slices
@@ -61,11 +65,11 @@
 				// Create the slice object
 				var slice = document.createElementNS(svgns, "path");
 				slice.setAttributeNS(null, "id", this.id);
-				var x1 = 200 + 160 * Math.cos(Math.PI*(-90+this.offset)/180);
-				var y1 = 200 + 160 * Math.sin(Math.PI*(-90+this.offset)/180);
-				var x2 = 200 + 160 * Math.cos(Math.PI*(-90+this.size+this.offset)/180);
-				var y2 = 200 + 160 * Math.sin(Math.PI*(-90+this.size+this.offset)/180);
-				slice.setAttributeNS(null, "d", "M 200 200 L "+x1+" "+y1+" A 130 130 0 0 1 "+x2+" "+y2+"  Z");
+				var x1 = size + radius * Math.cos(Math.PI*(-90+this.offset)/180);
+				var y1 = size + radius * Math.sin(Math.PI*(-90+this.offset)/180);
+				var x2 = size + radius * Math.cos(Math.PI*(-90+this.size+this.offset)/180);
+				var y2 = size + radius * Math.sin(Math.PI*(-90+this.size+this.offset)/180);
+				slice.setAttributeNS(null, "d", "M " + size + " " + size + " L "+x1+" "+y1+" A "+radius+ " " + radius + " 0 0 1 "+x2+" "+y2+"  Z");
 				// Randomize the color of the slice and finish styling
 				var hue = Math.floor((this.num * 117 % numSlices) * this.size) + 20;
 				slice.setAttributeNS(null, "fill", "hsl("+hue+", 100% , 30%)");
@@ -78,10 +82,12 @@
                                 label.innerHTML=this.name
                                 label.setAttributeNS(null, "fill", "white")
                                 label.setAttributeNS(null, "style", "font-size:16pt")
-                                label.setAttributeNS(null, "x", 200)
-                                label.setAttributeNS(null, "y", 200)
+                                label.setAttributeNS(null, "x", size + (radius / 4))
+                                label.setAttributeNS(null, "y", size)
+                                label.setAttributeNS(null, "text-anchor", "middle")
+                                label.setAttributeNS(null, "alignment-baseline", "central")
                                 label.setAttributeNS(null, "transform", 
-                                    "rotate( " + (-90 + this.offset + (this.size/2) + 2) + "," + 200 + "," + 200 + ")" +
+                                    "rotate( " + (-45 + this.offset) + "," + size + "," + size + ")" +
                                     "translate(" + fromCenter + ", 0)"
                                     
                                 )
@@ -89,41 +95,108 @@
 				return g;
 			},
 		};
+
+                function memoed (f) {
+                    var memo = {}
+                    return function () {
+                        var arg = arguments[0]
+                        if (memo[arg] !== undefined) {
+                            memo[arg] = f(arg)
+                        }
+                        return memo[arg]
+                    }
+                }
+
+                function calculateSpins (totalSpin, n, theta) {
+                    var y = 2 * totalSpin / Math.tan(theta)
+
+                    var h_i = memoed(function (i) {
+                        if (i <= 0) {
+                            return 0
+                        }
+                        return i * y * Math.tan(theta) / n
+                    })
+
+                    var A_i = memoed(function (i) {
+                        return i * h_i(i)
+                    })
+                    var ret = []
+                    for (var i = 1; i < n + 1; i++) {
+                        ret.push(A_i(i))
+                    }
+                    return ret
+                }
+
 		// Toggle the spinning of the wheel
+                function radians(degrees) {
+                    return degrees * Math.PI/180
+                }
+
 		function toggleSpinning() {
-			// Toggle the spinning animation
-			if (isSpinning) {
-				// Stop the arrow
-				isSpinning = false;
-				clearInterval(toggleSpinning.spinInt);
-				spinButton.removeAttribute("disabled");
-			}
-			else {
-				// Start spinning the arrow
-				isSpinning = true;
-				toggleSpinning.spinInt = setInterval(spinWheel, 10);
-				// Set how long the wheel will be spinning
-				var duration = 3000;
-				setTimeout(toggleSpinning, duration);
-				// Disable the spin button
-				spinButton.setAttribute("disabled", "true");
-			}
+                    var totalRotation = numberOfSpins * 360
+                    var resolution = 10
+                    var rotations = calculateSpins(totalRotation, spinDurationInMilliseconds/10, radians(45))
+                    var spins = spinTimes(3600, 5000, 50)
+                    spins.map(function(x) {
+                        setTimeout(function() {setRotation(x[0] % 360)}, x[1])
+                    })
+
+                    function setRotation (rotation) {
+                        arrow.setAttributeNS(null, "transform", "rotate("+rotation+"," + size + "," + size + ")");
+                    }
+
+                    function spinTimes (X, Y, n) {
+                        const arr = []
+                        for (let i = 0; i < n; i++) {
+                            arr.push([Xi(i), Yi(i)])
+                        }
+                        return arr
+
+                        function Xi (i) {
+                            return X * i / n
+                        }
+
+                        function Yi (i) {
+                            return Y/(X*X) * (Xi(i) - X) * (Xi(i) - X)
+                        }
+                    }
+
 		}
-		// Animation step for spinning the wheel arrow
-		function spinWheel() {
-			// Rotate the spinner arrow
-			rotation = (rotation + 12) % 360;
-			arrow.setAttributeNS(null, "transform", "rotate("+rotation+",200,200)");
-			// Highlight the slice the arrow is above
-			var newSlice = Math.floor(rotation / (360/numSlices));
-			if (newSlice != currentSlice) {
-				slices[currentSlice].toggleOverlay();
-				slices[newSlice].toggleOverlay();
-				currentSlice = newSlice;
-			}
-		}
+
 		// Document ready event
 		document.addEventListener("DOMContentLoaded", function() {
+                        document.getElementById('canvas').setAttributeNS(null, "width", size*2)
+                        document.getElementById('canvas').setAttributeNS(null, "height", size*2)
+                        document.getElementById('pivot-1').setAttributeNS(null, "cx", size)
+                        document.getElementById('pivot-1').setAttributeNS(null, "cy", size)
+                        document.getElementById('pivot-2').setAttributeNS(null, "cx", size)
+                        document.getElementById('pivot-2').setAttributeNS(null, "cy", size)
+
+                        var arrowPath = [
+                            "M",
+                            size-5,
+                            size+0,
+                            "L",
+                            size-5,
+                            size-60,
+                            "L",
+                            size-12,
+                            size-60,
+                            "L",
+                            size+0,
+                            size-75,
+                            "L",
+                            size+12,
+                            size-60,
+                            "L",
+                            size+5,
+                            size-60,
+                            size+5,
+                            size+0,
+                            "Z"
+                        ].join(" ")
+
+                        document.getElementById('spinner-arrow').setAttributeNS(null, "d", arrowPath)
 			// Get a handle to all necessary DOM elements
 			wheel = document.getElementById("spinner-board"); // DOM Object for the spinner board
 			arrow = document.getElementById("spinner-arrow"); // DOM Object for the spinner arrow
@@ -133,18 +206,17 @@
 				slices[i] = new Slice(i, wheel);
 			}
 			// Highlight the first slice
-			slices[0].toggleOverlay();
 		}, false);
 	</script>
 </head>
 <body>
 <div id="wrapper">
-	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="400" height="400">
-		<circle cx="200" cy="200" r="130" fill="#222222"/>
+	<svg id="canvas" xmlns="http://www.w3.org/2000/svg" version="1.1" width="400" height="400">
+		<circle id="spinner-background" cx="200" cy="200" r="130" fill="#222222"/>
 		<g id="spinner-board"></g>
 		<path id="spinner-arrow" d="M 195 200 L 195 140 L 188 140 L 200 125 L 212 140 L 205 140 205 200 Z" fill="#EEEEEE" stroke="#222222" style="stroke-width:2px"/>
-		<circle cx="200" cy="200" r="18" fill="#444444" stroke="#222222" style="stroke-width:2px"/>
-		<circle cx="200" cy="200" r="9" fill="#666666" stroke="#222222" style="stroke-width:2px"/>
+		<circle id="pivot-1" cx="200" cy="200" r="18" fill="#444444" stroke="#222222" style="stroke-width:2px"/>
+		<circle id="pivot-2" cx="200" cy="200" r="9" fill="#666666" stroke="#222222" style="stroke-width:2px"/>
 	</svg>
 	<div id="button-holder">
 		<button id="spinner-button" onclick="toggleSpinning();">Start the Spinner!</button>
