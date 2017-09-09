@@ -136,7 +136,7 @@
                     var totalRotation = numberOfSpins * 360
                     var resolution = 10
                     var rotations = calculateSpins(totalRotation, spinDurationInMilliseconds/10, radians(45))
-                    var spins = spinTimes(3600, 5000, 50)
+                    var spins = spinTimes(3600, 5000, 623)
                     spins.map(function(x) {
                         setTimeout(function() {setRotation(x[0] % 360)}, x[1])
                     })
