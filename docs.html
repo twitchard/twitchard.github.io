@@ -1,95 +1,101 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.line-block{white-space: pre-line;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
-<div id="TOC">
+<nav id="TOC">
 <ul>
-<li><a href="#richard-j-marmorstein-0.1.0-reference-manual">Richard J Marmorstein 0.1.0 Reference Manual</a><ul>
+<li><a href="#richard-j-marmorstein-1.0.0-reference-manual">Richard J Marmorstein 1.0.0 Reference Manual</a><ul>
 <li><a href="#legal-notices">Legal Notices</a></li>
 <li><a href="#synopsis">Synopsis</a></li>
 <li><a href="#about-this-documentation">About this documentation</a></li>
-<li><a href="#quick-start">Quick Start</a></li>
-<li><a href="#access-methods">Access methods</a><ul>
-<li><a href="#building-from-source">Building From Source</a></li>
-<li><a href="#acquiring-a-prebuilt-package">Acquiring a Prebuilt Package</a></li>
-<li><a href="#richard-as-a-service">Richard as a Service</a></li>
+<li><a href="#quick-start">1 - Quick Start</a></li>
+<li><a href="#access-methods">2 - Access methods</a><ul>
+<li><a href="#building-from-source">2.1 - Building From Source</a></li>
+<li><a href="#acquiring-a-prebuilt-package">2.2 - Acquiring a Prebuilt Package</a></li>
+<li><a href="#richard-as-a-service">2.3 - Richard as a Service</a></li>
+</ul></li>
+<li><a href="#oral-communication">3 - Oral Communication</a><ul>
+<li><a href="#invocation">3.1 - Invocation</a></li>
+<li><a href="#timeouts">3.2 - Timeouts</a></li>
+<li><a href="#clarity">3.3 - Clarity</a></li>
+<li><a href="#context">3.4 - Context</a></li>
+<li><a href="#passive-aggression">3.5 - Passive Aggression</a></li>
+<li><a href="#chit-chat">3.6 - Chit Chat</a></li>
+</ul></li>
+<li><a href="#kindness">4. Kindness</a><ul>
+<li><a href="#gifts">4.1 - Gifts</a></li>
+<li><a href="#sacrifices">4.2 - Sacrifices</a></li>
+<li><a href="#favors">4.3 - Favors</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#oral-communication">Oral Communication</a><ul>
-<li><a href="#invocation">Invocation</a></li>
-<li><a href="#interactive-mode">Interactive mode</a></li>
-<li><a href="#for-strangers">For Strangers</a></li>
-<li><a href="#for-acquaintancescolleagues">For Acquaintances/Colleagues</a></li>
-<li><a href="#for-family">For Family</a></li>
-<li><a href="#for-friends">For Friends</a></li>
-<li><a href="#for-enemies">For Enemies</a></li>
-<li><a href="#email">Email</a></li>
-<li><a href="#social-media">Social Media</a><ul>
-<li><a href="#twitter">Twitter</a></li>
-<li><a href="#facebook">Facebook</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#social-media-integration">Social Media Integration</a></li>
 </ul>
-</div>
-<h1 id="richard-j-marmorstein-0.1.0-reference-manual">Richard J Marmorstein 0.1.0 Reference Manual</h1>
+</nav>
+<h1 id="richard-j-marmorstein-1.0.0-reference-manual">Richard J Marmorstein 1.0.0 Reference Manual</h1>
 <h2 id="legal-notices">Legal Notices</h2>
-<p>Copyright (c) The Richard Marmorstein, 2016. All rights reserved.</p>
-<p>This documentation is provided free of charge, as a stand-alone document. Possession of this documentation in no way grants the reader right of access to RJM, or the services described herein. This documentation is provided &quot;as is&quot;, without warranty of any kind. Reverse engineering or disassembly of the system documented is strictly prohibited, except to the extent required by law.</p>
+<p>Copyright (c) The Richard Marmorstein, 2018. All rights reserved.</p>
+<p>This documentation is provided free of charge, as a stand-alone document. Possession of this documentation in no way grants the reader right of access to RJM, or the services described herein. This documentation is provided “as is”, without warranty of any kind. Reverse engineering or disassembly of the system documented is strictly prohibited, except to the extent required by law.</p>
 <h2 id="synopsis">Synopsis</h2>
 <p>Richard J Marmorstein (RJM) is a autonomous generalized problem-solving and entertainment system, implemented chiefly in deoxyribonucleic acid, featuring a robust natural language interface.</p>
 <h2 id="about-this-documentation">About this documentation</h2>
 <p>This documentation provides an opinionated exposition of RJM best practices. Read this documentation to avoid common pitfalls and achieve success in your interactions with RJM.</p>
-<h2 id="quick-start">Quick Start</h2>
-<ol style="list-style-type: decimal">
+<h2 id="quick-start">1 - Quick Start</h2>
+<ol type="1">
 <li>Approach the RJM system.</li>
 <li>Invoke.</li>
 </ol>
 <pre><code>&gt; Yo Richard
 
 Yo</code></pre>
-<ol start="3" style="list-style-type: decimal">
+<ol start="3" type="1">
 <li>Bestow with baked goods.</li>
 </ol>
 <pre><code>&gt; Have some cookies
 
 Hey, thanks!</code></pre>
-<h2 id="access-methods">Access methods</h2>
-<h3 id="building-from-source">Building From Source</h3>
-<p>Building human organisms from source is not recommended, as it requires a <a href="http://www.usccb.org/bible/genesis/2">very specialized build environment</a>, which is well beyond the scope of this documentation.</p>
-<h3 id="acquiring-a-prebuilt-package">Acquiring a Prebuilt Package</h3>
+<h2 id="access-methods">2 - Access methods</h2>
+<h3 id="building-from-source">2.1 - Building From Source</h3>
+<p>Building human organisms from source is not recommended, as it requires a specialized build environment, which is well beyond the scope of this documentation.</p>
+<h3 id="acquiring-a-prebuilt-package">2.2 - Acquiring a Prebuilt Package</h3>
 <p>Due to the practical and legal difficulties involved in the <a href="https://en.wikipedia.org/wiki/Human_mail#Real_occurrences">distribution of pre-packaged human beings</a>, this method is also no longer recommended.</p>
-<h3 id="richard-as-a-service">Richard as a Service</h3>
-<p>All the functionality of the RJM system is available on demand through the Richard Marmorstein Foundation's centralized Richard as a Service (RaaS) instance. Indeed, this is the recommended method of access.</p>
-<h1 id="oral-communication">Oral Communication</h1>
-<p>Much of RJM's functionality can be accessed through the email and social media interfaces. The oral interface, however, remains the most advanced and reliable method of access. English is the only fully supported language, support for German is very rudimentary.</p>
-<h3 id="invocation">Invocation</h3>
+<h3 id="richard-as-a-service">2.3 - Richard as a Service</h3>
+<p>All the functionality of the RJM system is available on demand through the Richard Marmorstein Foundation’s centralized Richard as a Service (RaaS) instance. Indeed, this is the recommended method of access.</p>
+<h2 id="oral-communication">3 - Oral Communication</h2>
+<p>Much of RJM’s functionality can be accessed through the email and social media interfaces. The oral interface, however, remains the most advanced and reliable method of access. English is the only fully supported language, support for German is very rudimentary.</p>
+<h3 id="invocation">3.1 - Invocation</h3>
 <p>You may trigger the RJM system to enter interactive mode through any of the following invocations.</p>
 <ul>
-<li>'Richard',</li>
-<li>'Rich',</li>
-<li>'Richie',</li>
-<li>'Rick',</li>
-<li>'Dick',</li>
-<li>'Dickie',</li>
-<li>'Ricardo',</li>
-<li>'Twitchard',</li>
-<li>'Twizzard',</li>
-<li>'RJ',</li>
-<li>'Arge',</li>
-<li>'Arge the J',</li>
-<li>'RJM',</li>
-<li>'Rijum',</li>
-<li>'Silly Uncle'.</li>
+<li>‘Richard’,</li>
+<li>‘Rich’,</li>
+<li>‘Richie’,</li>
+<li>‘Rick’,</li>
+<li>‘Dick’,</li>
+<li>‘Dickie’,</li>
+<li>‘Ricardo’,</li>
+<li>‘Twitchard’,</li>
+<li>‘Twizzard’,</li>
+<li>‘RJ’,</li>
+<li>‘Arge’,</li>
+<li>‘RJM’,</li>
+<li>‘Rijum’,</li>
+<li>‘Silly Uncle’.</li>
 </ul>
-<p>Please note, the invocations 'RJ', 'Arge', and 'Arge the J,' have been deprecated since like, middle school. They continue to be supported for legacy reasons.</p>
-<p>The invocation 'Dick' may cause confusion in some environments, where 'dick' is used as an insult or a reference to an unflattering feature of the male anatomy. Such usage will trigger RJM to enter into 'mock indignance' mode, which can be exited by supplying an apology.</p>
+<p>Please note, the invocations ‘RJ’ and ‘Arge’, have been deprecated since like, middle school. They continue to be supported for legacy reasons. The invocation ‘Arge the J’ has been deprecated since forever. Do not under any circumstances call me that.</p>
+<p>The invocation ‘Dick’ may cause confusion in some environments, where ‘dick’ is used as an insult or a reference to an unflattering feature of the male anatomy. Such usage will trigger RJM to enter into ‘mock indignance’ mode, which can be exited by supplying an apology.</p>
 <p><strong>Example</strong></p>
 <pre><code>&gt; The JVM is being a such a dick right now. I can&#39;t take it.
 
@@ -102,10 +108,12 @@ You know how I feel about using the word in such a way.
 &gt; Sorry, sorry! I know &#39;dick&#39; refers to individuals of the highest nobility and grace. It was wrong of me to demean that proud name, as I did.
 
 Apology accepted.</code></pre>
-<h3 id="interactive-mode">Interactive mode</h3>
+<h3 id="timeouts">3.2 - Timeouts</h3>
 <p>After invoking the RJM system, you will be entered into interactive mode. Upon entering interactive mode, you will be expected to provide further communications in short order. There is by default a fifteen second timeout, and if no communications are issued in this time period, interactive mode will terminate. To fight abuse, repeatedly invoking the RJM interface only to time out will cause the timeout to increase, and eventually for interactive mode to be disabled altogether.</p>
-<p>To maximize successful communication in interactive mode, enunciate well and speak loudly. Do not face away from the RJM instance. Failure to abide by these instructions will muddle your communications, causing the RJM instance to devote its problem-solving resources into puzzling out what sounds you have made, rather than processing your intended query. Similarly, avoid using pronouns such as &quot;it&quot; when there are many possible &quot;its,&quot; or noun phrases such as &quot;the function&quot; when there are many possible &quot;functions&quot;. Even if it is possible to guess your meaning from context, specificity will allow the RJM instance to devote less effort into guessing what you are trying to say, and more into thinking about what you have said.</p>
-<p>When issuing a communication, especially a lengthy one, whether a query, a narrative, or a technical explanation, prompt the RJM system to listen in the correct manner by providing a brief overview of your communication's purpose. &quot;Hey, did you want to hear a joke?&quot; &quot;Hey, can you help me with this error?&quot; &quot;Hey, what do you think of this?&quot; &quot;Hey, come look at this. This is crazy!&quot; This step allows the RJM system to optimally select which details of your communication it pays most attention, and increases the likelihood of an effective response.</p>
+<h3 id="clarity">3.3 - Clarity</h3>
+<p>To maximize successful communication in interactive mode, enunciate well and speak loudly. Do not face away from the RJM instance. Failure to abide by these instructions will muddle your communications, causing the RJM instance to devote its problem-solving resources into puzzling out what sounds you have made, rather than processing your intended query. Similarly, avoid using pronouns such as “it” when there are many possible “its,” or noun phrases such as “the function” when there are many possible “functions”. Even if it is possible to guess your meaning from context, specificity will allow the RJM instance to devote less effort into guessing what you are trying to say, and more into thinking about what you have said.</p>
+<h3 id="context">3.4 - Context</h3>
+<p>When issuing a communication, especially a lengthy one, whether a query, a narrative, or a technical explanation, prompt the RJM system to listen in the correct manner by providing a brief overview of your communication’s purpose. “Hey, did you want to hear a joke?” “Hey, can you help me with this error?” “Hey, what do you think of this?” “Hey, come look at this. This is crazy!” This step allows the RJM system to optimally select which details of your communication it pays most attention, and increases the likelihood of an effective response.</p>
 <p><strong>Bad:</strong></p>
 <pre><code>&gt; Yo Rijum, why did the function recurse infinitely?
 
@@ -135,44 +143,44 @@ Does it matter how I answer?
 &gt; Your code!! You accidentally wrote an infinitely recursive function.
 
 I find your comment rude. However, this is infinitely preferable to inadequately framed interchange.</code></pre>
-<h3 id="for-strangers">For Strangers</h3>
-<h4 id="shoelaces">Shoelaces</h4>
-<p>There is no need to inform the RJM system of its untied shoelaces. This is considered a valid state. The system is already completely aware. The shoelaces remain untied for political reasons.</p>
-<pre><code>&gt; Excuse me sir, your shoelace is untied.
+<h3 id="passive-aggression">3.5 - Passive Aggression</h3>
+<p>The RJM system has rudimentary support for the detection and analysis of passive aggression. The use of passive aggression is not recommended. The RJM system is most likely completely oblivious to your grievance, and your communications will likely remain unrecognized, and be either misinterpreted or ignored. Use direct methods, where possible.</p>
+<p><strong><em>Not recommended</em></strong></p>
+<pre><code>&gt; Those were some interesting ideas you laid out in that email.
+Uhh...thank you?
+&gt; Truly visionary. Where&#39;d you learn to think like that?
+Uhh, I don&#39;t know?
+&gt; You must have had some wonderful colleagues and mentors.
+I certainly have! Like you!
+&gt; Yes, like me! You&#39;ve learned a lot from me, haven&#39;t you.
+Yes... are you trying to get at something?
+&gt; No, no... just wanted to congratulate you on your fabulous email.</code></pre>
+<p><strong><em>Recommended</em></strong></p>
+<pre><code>&gt; Richard! You stole my idea and took credit for it in that email.
+&gt; I spit in your face, fiend! Feel the moisture of my spittle upon
+&gt; your brow.
 
-Oh.</code></pre>
-<h4 id="backpack">Backpack</h4>
-<p>On the other hand, if you observe RJM system walking around with an opened backpack, this is not intended. RJM has entered an invalid state. Filing a bug report will result in a sincere thank you and immediate action to correct it.</p>
-<h4 id="directions">Directions</h4>
-<p>Asking the RJM system for directions is <strong>not</strong> recommended. The directions module is known to be wildly inaccurate. Nevertheless, if you are lost and ask for directions, RJM's pity engine will execute and trigger a misplaced desire to help, which will generate directions, such as they may be. Do not trust them. You are better off asking the next person.</p>
-<h4 id="etiquette">Etiquette</h4>
-<h5 id="earbud-music">Earbud Music</h5>
-<p>Playing music from your earbuds at a volume such that the RJM system can sense the click, click, click, clicking of your snare drums, especially when in a confined space such as a subway car, will trigger RJM to enter into the murderous rage mode. Murderous rage mode is an experimental feature not yet ready for production use. In its current implementation, the murderous rage feature does not produce murders, or any action at all other than the tightening of the jaw and possibly enraged chat messages to other users of the RJM system. Only expert users should make use of this feature. It is not recommended for normal users.</p>
-<h3 id="for-acquaintancescolleagues">For Acquaintances/Colleagues</h3>
-<h4 id="chit-chat">Chit Chat</h4>
-<p>RJM includes support for chit chat within a number of topics, including: - The weather - Books (especially book recommendations) - Some TV Shows - New York City and its horrors - Dogs - Technology</p>
-<p>Chit chat about sports is not supported outside of the Olympics and the NBA playoffs.</p>
-<p>Chit chat about politics is not preferred. The RJM system will listen attentively to whatever your opinions, and echo back any sentiments it holds that may resonate with your own. Sincere chit-chat is unlikely.</p>
-<h4 id="meetings">Meetings</h4>
-<p>RJM typically operates according to EST, according to the Gregorian Calendar. It is possible to schedule a meeting with RJM via the voice interface or one of the several calendar integrations. Prepare as much as possible for the meeting ahead of time.</p>
-<p><strong>Arrivals</strong> It is strongly recommended to arrive on time or early to a meeting involving the RJM system, particularly if the meeting cannot take place without your presence. However, transit times can be unpredictable, and it is not always a realistic option to depart early enough for 100% certainty of arriving on time. In these cases, it is recommended to depart so that the expected value of how early you will be equals the expected value of how late you will be times the number of people whose time you will be wasting by arriving late.</p>
-<p><strong>Participation</strong> It is recommended that you do not say anything in a meeting of more than 3 people unless you have thought about what you are going to say, and can communicate it clearly on the first try. Unless you specifically address RJM, the RJM system will assume that anything you say that cannot immediately be understood is intended for somebody else in the meeting with more context.</p>
-<h3 id="for-family">For Family</h3>
-<h3 id="for-friends">For Friends</h3>
-<h4 id="gifts">Gifts</h4>
+I&#39;m so so sorry. Please stop spitting at me! Stop it, stop I say! 
+This instant! I&#39;ll make it right, I swear!</code></pre>
+<h3 id="chit-chat">3.6 - Chit Chat</h3>
+<p>In interactive mode, RJM includes support for chit chat within a number of topics, including: - The weather - Books (especially book recommendations) - Some TV Shows - New York City and its horrors - Dogs - Technology</p>
+<p>Chit chat about sports is supported during the Olympics only.</p>
+<p>Support for politically-themed chit chat is only superficially supported. The RJM system will listen attentively to whatever your opinions, and echo back any sentiments it holds that may resonate with your own. Do not expect sincerity.</p>
+<h2 id="kindness">4. Kindness</h2>
+<h3 id="gifts">4.1 - Gifts</h3>
 <p>The RJM system features the capacity to exhibit genuine enjoyment. One way to access this functionality is through the giving of gifts. However, this is not as straightforward as it may seem.</p>
 <p>The most reliably successful method of gift-giving is via small, ad-hoc gifts such as baked goods. The RJM system suffers from no allergies. Such gifts are almost always accepted and appreciated.</p>
 <p>Far riskier is the giving of significant gifts, or the giving of gifts upon special occasions such as a birthday or Christmas. Even if the gifted item is intrinsically something appreciated by the RJM system, when you give such a gift, you also give:</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>The gift of guilt, if the RJM system has not also given you a gift.</li>
 <li>The gift of guilt, if the RJM system has given you a gift but yours is perceived to be more valuable.</li>
 <li>The gift of the obligation to display gratitude.</li>
 </ol>
 <p>Often, these secondary gifts countervene any tendency of your gift to elicit genuine enjoyment from the RJM system. The recommended practice, therefore, is not to give such gifts at all. Stick with baked goods.</p>
-<h4 id="sacrifices">Sacrifices</h4>
+<h3 id="sacrifices">4.2 - Sacrifices</h3>
 <p>Offering sacrifices to the RJM system will instill immense spiritual disquiet. It is not recommended.</p>
-<h4 id="favors">Favors</h4>
-<p>When you are able to help the RJM system with a problem it has described to you, you may offer to perform a favor. The best practice is to offer the favor first, and ask about relevant details second. If the RJM system declines an offer, do not question or seek to change this.</p>
+<h3 id="favors">4.3 - Favors</h3>
+<p>When you are able to help the RJM system with a problem it has described to you, you may offer to perform a favor. The best practice is to offer the favor first, and ask about relevant details second. Do not persist in your offer if it is declined by the RJM system.</p>
 <p><strong><em>Not recommended</em></strong></p>
 <pre><code>&gt; You want a cookie?
 I can&#39;t, I&#39;m about to go to a dentist appointment.
@@ -192,34 +200,6 @@ I can&#39;t, I&#39;m about to go to a dentist appointment.
 &gt; Hey, you want me to fly you in my helicoptor? I&#39;m headed into town anyway.
 That&#39;s nice of you to offer, but no thanks, I think I&#39;m good.
 
-&gt; I respect, even welcome, your decision not to accept my offer.</code></pre>
-<h3 id="for-enemies">For Enemies</h3>
-<h4 id="passive-aggression">Passive Aggression</h4>
-<p>In isolation, the RJM system has very rudimentary support for the detection and analysis of passive aggression. Support is somewhat better when the &quot;significant other&quot; module is installed and present in the same environment; still, communicating dissatisfaction through the use of passive aggression is not recommended. The RJM system is most likely completely oblivious to your grievance, and your communications will likely remain unrecognized, and be either misinterpreted or ignored. Use direct methods, where possible.</p>
-<p><strong><em>Not recommended</em></strong></p>
-<pre><code>&gt; Those were some interesting ideas you laid out in that email.
-Uhh...thank you?
-&gt; Truly visionary. Where&#39;d you learn to think like that?
-Uhh, I don&#39;t know?
-&gt; You must have had some wonderful colleagues and mentors.
-I certainly have! Like you!
-&gt; Yes, like me! You&#39;ve learned a lot from me, haven&#39;t you.
-Yes... are you trying to get at something?
-&gt; No, no... just wanted to congratulate you on your fabulous email.</code></pre>
-<p><strong><em>Recommended</em></strong></p>
-<pre><code>&gt; Richard! You stole my idea and took credit for it in that email.
-&gt; I spit in your face, fiend! Feel the moisture of my spittle upon
-&gt; your brow.
-
-I&#39;m so so sorry. Please stop spitting at me! Stop it, stop I say! 
-This instant! I&#39;ll make it right, I swear!</code></pre>
-<h2 id="email">Email</h2>
-<h2 id="social-media">Social Media</h2>
-<h3 id="twitter">Twitter</h3>
-<ul>
-<li><em>Twitter</em> - Richard Marmorstein's <a href="http://www.twitter.com/twitchard">twitter</a> provides access to the <a href="#Social%20Media">social media interface</a></li>
-</ul>
-<h3 id="facebook">Facebook</h3>
-<h1 id="social-media-integration">Social Media Integration</h1>
+&gt; Cool, maybe next time.</code></pre>
 </body>
 </html>
