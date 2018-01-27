@@ -1,0 +1,55 @@
+==================================================================
+https://keybase.io/twitchard
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://twitchard.github.io
+  * I am twitchard (https://keybase.io/twitchard) on keybase.
+  * I have a public key ASDXkjWCkNNRziDZ66UZqtk-wYrWNgV0JnAPGF1CXS54gAo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01200f252891af8b0274ddde9e51bb24842866c13c023e0094d0825102b4ebf2f02b0a",
+      "host": "keybase.io",
+      "kid": "0120d792358290d351ce20d9eba519aad93ec18ad636057426700f185d425d2e78800a",
+      "uid": "31fcf3c63056690c179dd2c88a32ff19",
+      "username": "twitchard"
+    },
+    "merkle_root": {
+      "ctime": 1517086922,
+      "hash": "1197c8aab4ed1a71d28b14dabf2fb306e6730468192d3ca13add7956de3d829fa61fc8bdb6fb210897c004f71af935736113f7dd1d1a156889caade8705bf5b2",
+      "hash_meta": "dcb7cac7028e7f0e1282a184081f30e44b1c2a5cbcc40c49a6b8568db8d8aa7f",
+      "seqno": 1992742
+    },
+    "service": {
+      "hostname": "twitchard.github.io",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "1.0.37"
+  },
+  "ctime": 1517086957,
+  "expire_in": 504576000,
+  "prev": "5672f0891291e6f68add9ec5dafed6500577b08294ee8508ea2aa5baf22f9adc",
+  "seqno": 16,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEg15I1gpDTUc4g2eulGarZPsGK1jYFdCZwDxhdQl0ueIAKp3BheWxvYWTFA017ImJvZHkiOnsia2V5Ijp7ImVsZGVzdF9raWQiOiIwMTIwMGYyNTI4OTFhZjhiMDI3NGRkZGU5ZTUxYmIyNDg0Mjg2NmMxM2MwMjNlMDA5NGQwODI1MTAyYjRlYmYyZjAyYjBhIiwiaG9zdCI6ImtleWJhc2UuaW8iLCJraWQiOiIwMTIwZDc5MjM1ODI5MGQzNTFjZTIwZDllYmE1MTlhYWQ5M2VjMThhZDYzNjA1NzQyNjcwMGYxODVkNDI1ZDJlNzg4MDBhIiwidWlkIjoiMzFmY2YzYzYzMDU2NjkwYzE3OWRkMmM4OGEzMmZmMTkiLCJ1c2VybmFtZSI6InR3aXRjaGFyZCJ9LCJtZXJrbGVfcm9vdCI6eyJjdGltZSI6MTUxNzA4NjkyMiwiaGFzaCI6IjExOTdjOGFhYjRlZDFhNzFkMjhiMTRkYWJmMmZiMzA2ZTY3MzA0NjgxOTJkM2NhMTNhZGQ3OTU2ZGUzZDgyOWZhNjFmYzhiZGI2ZmIyMTA4OTdjMDA0ZjcxYWY5MzU3MzYxMTNmN2RkMWQxYTE1Njg4OWNhYWRlODcwNWJmNWIyIiwiaGFzaF9tZXRhIjoiZGNiN2NhYzcwMjhlN2YwZTEyODJhMTg0MDgxZjMwZTQ0YjFjMmE1Y2JjYzQwYzQ5YTZiODU2OGRiOGQ4YWE3ZiIsInNlcW5vIjoxOTkyNzQyfSwic2VydmljZSI6eyJob3N0bmFtZSI6InR3aXRjaGFyZC5naXRodWIuaW8iLCJwcm90b2NvbCI6Imh0dHBzOiJ9LCJ0eXBlIjoid2ViX3NlcnZpY2VfYmluZGluZyIsInZlcnNpb24iOjF9LCJjbGllbnQiOnsibmFtZSI6ImtleWJhc2UuaW8gZ28gY2xpZW50IiwidmVyc2lvbiI6IjEuMC4zNyJ9LCJjdGltZSI6MTUxNzA4Njk1NywiZXhwaXJlX2luIjo1MDQ1NzYwMDAsInByZXYiOiI1NjcyZjA4OTEyOTFlNmY2OGFkZDllYzVkYWZlZDY1MDA1NzdiMDgyOTRlZTg1MDhlYTJhYTViYWYyMmY5YWRjIiwic2Vxbm8iOjE2LCJ0YWciOiJzaWduYXR1cmUifaNzaWfEQNMH9s9PcR1znRUa4It1PtfdC5IL6OJpj3ZxUOerq4rXa8TQ0vkleeZiV9Gsyl6LBswn5eLzikuC+0iK6CpN0Quoc2lnX3R5cGUgpGhhc2iCpHR5cGUIpXZhbHVlxCD3nv/ClAPlAf5dw3IkvUeiDQr/hV9qQ95Ki830XdLCjqN0YWfNAgKndmVyc2lvbgE=
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/twitchard
+
+==================================================================
