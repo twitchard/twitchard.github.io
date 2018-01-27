@@ -5,24 +5,18 @@
 > 10 Liberty St. Apt 14e -
 > New York, NY 10005
 
-**I am** a versatile, pragmatic developer with 3 years of professional experience.
-
-**I am looking for** the opportunity to solve challenging problems with a colorful set of teammates, to build a product I can take pride in.
-
-**I value** imagination, thorough testing of code and ideas, and clear communication.
-
-
 ## Professional Experience {#experience}
 
-### Platform Backend Engineer - Livestream (Feb 2015 - Present)
+### Platform Backend Engineer - Livestream/Vimeo (Feb 2015 - Present)
+
+*Livestream was acquired by Vimeo in September 2017*
 
 **Application Development** -
 With a team of 5 other developers, I maintained and developed Livestream's internal REST API, which powers the SaaS live video platform. Some projects I was heavily involved in:
 
-- Rearchitecting Livestream's authentication service to withstand more load and be more secure.
-- Contributing to both the frontend (Angular.js) and backend of [Livestream's "Simulcast" feature](https://techcrunch.com/2017/01/24/livestream-simulcast/).
-- Developing "Dragonscaler", a custom autoscaler for GCS vms that met our video infrastructure's unique requirements.
-- Migrating our applications to the cloud.
+- Scaling Livestream's authentication service
+- Contributing to both the frontend and backend of [Livestream's "Simulcast" feature](https://techcrunch.com/2017/01/24/livestream-simulcast/).
+- Developing "Dragonscaler", a custom autoscaler that met our video infrastructure's unique requirements.
 
 **DevOps** -
 I also took an active role in the operations of the application. For example, I provisioned servers, load tested new services, set up monitoring and instrumentation, and I configured load balancers, databases, and HTTP caches.
@@ -32,7 +26,7 @@ In July of 2017, I adopted project management responsibilities for the team: pri
 
 **Blog** - I contributed several technical blog posts to the [Livestream engineering blog](https://medium.com/engineering-livestream).
 
-**Technologies -** Node.js, Go, Redis, MySQL, Varnish, GCS, Docker, Kubernetes, Angular.js, Puppet
+**Technologies ** - Node.js, Go, Redis, MySQL, Varnish, GCS, Docker, Kubernetes, Scala, Angular.js, Puppet
 
 ## Education
 

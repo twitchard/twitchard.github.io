@@ -9,11 +9,10 @@
 
 /* Whole document */
 body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    width: 800px;
+    font-family: verdana;
+    width: 8in;
     margin: auto;
     background: #FFFFFF;
-    padding: 10px 10px 10px 10px;
 }
 
 /*
@@ -24,10 +23,10 @@ body {
 
 /* Title of the resume */
 h1 {
-    font-size: 15px;
+    font-size: 17px;
     color: #757575;
     text-align:center;
-    margin-bottom:15px;
+    margin-bottom: 0px;
 }
 
 /* Titles of categories */
@@ -36,7 +35,12 @@ h2 {
     border-top: 1px black solid;
     border-bottom: 1px black solid;
 }
-
+h3 {
+    margin-bottom: 0px;
+}
+#acq {
+    margin-left: 0px;
+}
 h5 {
     margin: 0;
     font-weight: normal;
@@ -55,13 +59,17 @@ dd {
 }
 p {
     margin-top:0;
-    margin-bottom:7px;
+    margin-bottom:12px;
     margin-left: 15px;
+    line-height: 20px;
 }
 
 /* Blockquotes */
 blockquote {
-    text-align: center
+    text-align: center;
+    font-size: 12px;
+    margin: 0;
+    margin-top: 4px;
 }
 
 /* Links */
