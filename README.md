@@ -63,7 +63,7 @@ You may trigger the RJM system to enter interactive mode through any of the foll
 * 'Rijum',
 * 'Silly Uncle'.
 
-Please note, the invocations 'RJ' and 'Arge', have been deprecated since like, middle school. They continue to be supported for legacy reasons. The invocation 'Arge the J' has been deprecated since forever. Do not under any circumstances call me that.
+Please note, the invocations 'RJ' and 'Arge', have been deprecated since like, middle school. They continue to be supported for legacy reasons. The invocation 'Arge the J' has been deprecated since forever. Do not under any circumstances call me that. I'm talking to you, Dad.
 
 The invocation 'Dick' may cause confusion in some environments, where 'dick' is used as an insult or a reference to an unflattering feature of the male anatomy. Such usage will trigger RJM to enter into 'mock indignance' mode, which can be exited by supplying an apology.
 
