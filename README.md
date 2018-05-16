@@ -83,7 +83,7 @@ Apology accepted.
 ```
 
 ### 3.2 - Timeouts
-After invoking the RJM system, you will be entered into interactive mode. Upon entering interactive mode, you will be expected to provide further communications in short order. There is by default a fifteen second timeout, and if no communications are issued in this time period, interactive mode will terminate. To fight abuse, repeatedly invoking the RJM interface only to time out will cause the timeout to increase, and eventually for interactive mode to be disabled altogether.
+After invoking the RJM system, you will be entered into interactive mode. Upon entering interactive mode, you will be expected to provide further communications in short order. There is by default a fifteen second timeout, and if no communications are issued in this time period, interactive mode will terminate. To fight abuse, repeatedly invoking the RJM interface only to time out will cause the timeout to decrease, and eventually for interactive mode to be disabled altogether.
 
 ### 3.3 - Clarity
 To maximize successful communication in interactive mode, enunciate well and speak loudly. Do not face away from the RJM instance. Failure to abide by these instructions will muddle your communications, causing the RJM instance to devote its problem-solving resources into puzzling out what sounds you have made, rather than processing your intended query. Similarly, avoid using pronouns such as "it" when there are many possible "its," or noun phrases such as "the function" when there are many possible "functions". Even if it is possible to guess your meaning from context, specificity will allow the RJM instance to devote less effort into guessing what you are trying to say, and more into thinking about what you have said.
