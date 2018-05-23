@@ -218,3 +218,38 @@ That's nice of you to offer, but no thanks, I think I'm good.
 
 > Cool, maybe next time.
 ```
+
+## Social Media
+
+The RJM system officially integrates with Facebook, Twitter, and LinkedIn.
+
+### Twitter
+
+The RJM system's official twitter can be found [here](http://twitter.com/twitchard).
+
+#### Tweet generation
+
+The RJM system primarily generates tweets based on combinations or mutations of software concepts and English figures of speech that it has identified as surpassing a minimum threshold of humorousness.
+
+#### The Follow Protocol
+
+The RJM system can be triggered to follow your Twitter account. However, its behavior in this regard follows a non-deterministic protocol, and requires combinations of the following steps to be repeated, possibly one or more times.
+
+1. Include something relating to software, data, economics, or Irish Traditional Music in your Twitter bio.
+2. Tweet a joke about software.
+3. Tweet something insightful about software.
+4. Tweet original content about economics.
+5. Tweet about Taylor Swift.
+6. Be retweeted by an account that is already followed by the RJM system.
+7. Attract the attention of the RJM system by following it or by liking or retweet a tweet it has generated. 
+
+#### Argumentation
+
+In rare circumstances, advanced users can activate the RJM system's ego module, triggering the system to engage in a Twitter argument. This is a highly non-deterministic process, however the likeliest path to success is:
+
+1. Seem highly intelligent and reasonable.
+2. Post a controversial argument or sentiment with a subtle but exploitable weakness.
+
+### LinkedIn
+
+### Facebook
