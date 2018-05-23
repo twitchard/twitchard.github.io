@@ -63,7 +63,7 @@ You may trigger the RJM system to enter interactive mode through any of the foll
 * 'Rijum',
 * 'Silly Uncle'.
 
-Please note, the invocations 'RJ' and 'Arge', have been deprecated since like, middle school. They continue to be supported for legacy reasons. The invocation 'Arge the J' has been deprecated since forever. Do not under any circumstances call me that.
+Please note, the invocations 'RJ' and 'Arge', have been deprecated since like, middle school. They continue to be supported for legacy reasons. The invocation 'Arge the J' has been deprecated since forever. Do not under any circumstances call me that. I'm talking to you, Dad.
 
 The invocation 'Dick' may cause confusion in some environments, where 'dick' is used as an insult or a reference to an unflattering feature of the male anatomy. Such usage will trigger RJM to enter into 'mock indignance' mode, which can be exited by supplying an apology.
 
@@ -83,7 +83,7 @@ Apology accepted.
 ```
 
 ### 3.2 - Timeouts
-After invoking the RJM system, you will be entered into interactive mode. Upon entering interactive mode, you will be expected to provide further communications in short order. There is by default a fifteen second timeout, and if no communications are issued in this time period, interactive mode will terminate. To fight abuse, repeatedly invoking the RJM interface only to time out will cause the timeout to increase, and eventually for interactive mode to be disabled altogether.
+After invoking the RJM system, you will be entered into interactive mode. Upon entering interactive mode, you will be expected to provide further communications in short order. There is by default a fifteen second timeout, and if no communications are issued in this time period, interactive mode will terminate. To fight abuse, repeatedly invoking the RJM interface only to time out will cause the timeout to decrease, and eventually for interactive mode to be disabled altogether.
 
 ### 3.3 - Clarity
 To maximize successful communication in interactive mode, enunciate well and speak loudly. Do not face away from the RJM instance. Failure to abide by these instructions will muddle your communications, causing the RJM instance to devote its problem-solving resources into puzzling out what sounds you have made, rather than processing your intended query. Similarly, avoid using pronouns such as "it" when there are many possible "its," or noun phrases such as "the function" when there are many possible "functions". Even if it is possible to guess your meaning from context, specificity will allow the RJM instance to devote less effort into guessing what you are trying to say, and more into thinking about what you have said.
