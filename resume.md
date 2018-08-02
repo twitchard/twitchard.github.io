@@ -7,26 +7,28 @@
 
 ## Professional Experience {#experience}
 
-### Platform Backend Engineer - Livestream/Vimeo (Feb 2015 - Present)
+### Lead Engineer - Live Platform Team - Vimeo (Oct 2017 - Present)
+  - **Technical Strategy** - Planned and coordinated large-scale feature development relating to Live Video across multiple teams, outlining database schemas, APIs, instrumentation, migration strategies, release plans, development timelines and project milestones.
+  - **Mentorship** - Code pairing and personal development planning with intern/junior engineer.
+  - **Full Stack Development** - Feature development and maintenance on the Vimeo.com web application. In particular, my team and I improved the culture and tooling surrounding unit testing across engineering at Vimeo.
+  - **People Management** - One-on-one meetings, performance reviews, hiring responsibilities for a team of 5 engineers. 
 
-*Livestream was acquired by Vimeo in September 2017*
+### Platform Backend Engineer - Livestream (Feb 2015 - Oct 2017) (Acquired by Vimeo)
+  My team and I maintained Livestream's backend API, the core of Livestream's SaaS business.
 
-**Application Development** -
-With a team of 5 other developers, I maintained and developed Livestream's internal REST API, which powers the SaaS live video platform. Some projects I was heavily involved in:
+  Contributions:
 
-- Scaling Livestream's authentication service
-- Contributing to both the frontend and backend of [Livestream's "Simulcast" feature](https://techcrunch.com/2017/01/24/livestream-simulcast/).
-- Developing "Dragonscaler", a custom autoscaler that met our video infrastructure's unique requirements.
+  - Improved the scalability and security of Livestream's authentication service
+  - Introduced a suite of test helpers, and BDD-style testing into the app.
+  - Developed "dragonscaler", an autoscaler for cloud VMs that meets the unique requirements of live video (most notably the ability to scale down but not interrupt potentially long-running video sessions)
+  - Vastly simplified the integration with our payment processor.
+  - Championed incremental typing (typescript) of our node.js app.
 
-**DevOps** -
-I also took an active role in the operations of the application. For example, I provisioned servers, load tested new services, set up monitoring and instrumentation, and I configured load balancers, databases, and HTTP caches.
+## Side Projects
 
-**Agile Project Management** -
-In July of 2017, I adopted project management responsibilities for the team: prioritizing, speccing, and scheduling the team's work, conducting the weekly planning meeting and bi-weekly retrospective meetings, and coordinating with outside stakeholders. 
+I develop '[purescript-easy-alexa](https://github.com/twitchard/purescript-easy-alexa)' and related libraries, an experiment in using type-level programming so you can write type-safe Alexa skills with less boilerplate.
 
-**Blog** - I contributed several technical blog posts to the [Livestream engineering blog](https://medium.com/engineering-livestream).
-
-**Technologies ** - Node.js, Go, Redis, MySQL, Varnish, GCS, Docker, Kubernetes, Scala, Angular.js, Puppet
+**Technologies** - Node.js, Typescript, ♥️ Purescript ♥️, Go, Redis, MySQL, Varnish, GCS, Docker, Kubernetes
 
 ## Education
 
@@ -35,7 +37,3 @@ In July of 2017, I adopted project management responsibilities for the team: pri
 - B.S. Computer Science (with honors) / B.A. Economics
 - Minor in Mathematics
 - Graduated magna cum laude
-
-## Links
-- I'm very proud of my [blog posts](https://medium.com/@twitchard/latest).
-- There's some fun stuff on [my github](https://github.com/twitchard).
