@@ -5,30 +5,32 @@
 > 10 Liberty St. Apt 14e -
 > New York, NY 10005
 
+## Summary
+Engineering lead with experience in API design, full stack web development and devops technologies. I love math, strongly typed functional programming, and public speaking.
+
 ## Professional Experience {#experience}
 
-### Lead Engineer - Live Platform Team - Vimeo (Oct 2017 - Present)
-  - **Technical Strategy** - Planned and coordinated large-scale feature development relating to Live Video across multiple teams, outlining database schemas, APIs, instrumentation, migration strategies, release plans, development timelines and project milestones.
-  - **Mentorship** - Code pairing and personal development planning with intern/junior engineer.
-  - **Full Stack Development** - Feature development and maintenance on the Vimeo.com web application. In particular, my team and I improved the culture and tooling surrounding unit testing across engineering at Vimeo.
-  - **People Management** - One-on-one meetings, performance reviews, hiring responsibilities for a team of 5 engineers. 
+### Lead Engineer - Developer Experience - Vimeo (Oct 2018 - Present)
+  - Led a team of 3 senior developers to improve Vimeo's internal
+    developer tools and systems. This included introducing containers
+    into the local development environment, optimizing CI pipelines,
+    and improving the speed/reliability of the build.
+  - 25% management, 75% devops development
+  - Docker/kubernetes, GCP, terraform, chef, PHP
 
-### Platform Backend Engineer - Livestream (Feb 2015 - Oct 2017) (Acquired by Vimeo)
-  My team and I maintained Livestream's backend API, the core of Livestream's SaaS business.
+### Lead Engineer - Live Platform Team - Vimeo (Oct 2017 - Oct 2018)
+  - Led a team of 5 developers to deliver full-stack features to the Vimeo Live
+    web application.
+  - 50% project/people management, 50% full stack development
+  - PHP, React/Redux, MySQL, Memcached 
 
-  Contributions:
-
-  - Improved the scalability and security of Livestream's authentication service
-  - Introduced a suite of test helpers, and BDD-style testing into the app.
-  - Developed "dragonscaler", an autoscaler for cloud VMs that meets the unique requirements of live video (most notably the ability to scale down but not interrupt potentially long-running video sessions)
-  - Vastly simplified the integration with our payment processor.
-  - Championed incremental typing (typescript) of our node.js app.
-
-## Side Projects
-
-I develop '[purescript-easy-alexa](https://github.com/twitchard/purescript-easy-alexa)' and related libraries, an experiment in using type-level programming so you can write type-safe Alexa skills with less boilerplate.
-
-**Technologies** - Node.js, Typescript, ♥️ Purescript ♥️, Go, Redis, MySQL, Varnish, GCS, Docker, Kubernetes
+### Software Engineer - API Team - Livestream (Feb 2015 - Oct 2017) (Acquired by Vimeo)
+  - Feature development, API design, and devops support for Livestream's backend API, the core of the SaaS business, serving web, desktop, mobile, and embedded applications.
+  - Improved scalability of Livestream central auth service.
+  - Introduced improved library of integration test helpers.
+  - Broke a monolith into microservices.
+  - Built a custom autoscaler.
+  - Node.js, redis, mysql, docker/kubernetes, GCP, puppet
 
 ## Education
 
