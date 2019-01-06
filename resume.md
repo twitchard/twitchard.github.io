@@ -6,31 +6,35 @@
 > New York, NY 10005
 
 ## Summary
-Engineering lead with experience in API design, full stack web development and devops technologies. I love math, strongly typed functional programming, and public speaking.
+
+Backend web developer with experience in API design, full-stack development, devops, and management. I love math, strongly typed functional programming, and public speaking.
 
 ## Professional Experience {#experience}
 
 ### Lead Engineer - Developer Experience - Vimeo (Oct 2018 - Present)
   - Led a team of 3 senior developers to improve Vimeo's internal
-    developer tools and systems. This included introducing containers
-    into the local development environment, optimizing CI pipelines,
-    and improving the speed/reliability of the build.
-  - 25% management, 75% devops development
-  - Docker/kubernetes, GCP, terraform, chef, PHP
+    developer tools and systems. Projects like:
+      * Container-based local development environment
+      * Optimizing CI pipelines
+      * Improving speed/reliability of the build
+  - Docker/kubernetes, Google Cloud, Terraform, Chef, PHP, Typescript
+  - 75% engineering, 25% management
 
 ### Lead Engineer - Live Platform Team - Vimeo (Oct 2017 - Oct 2018)
   - Led a team of 5 developers to deliver full-stack features to the Vimeo Live
-    web application.
-  - 50% project/people management, 50% full stack development
-  - PHP, React/Redux, MySQL, Memcached 
+    web application
+    * Third-party Live Video API integrations
+    * Recurring Live Events
+  - 50% engineering, 50% management
+  - Flow, React/Redux, PHP, MySQL, Memcached 
 
 ### Software Engineer - API Team - Livestream (Feb 2015 - Oct 2017) (Acquired by Vimeo)
   - Feature development, API design, and devops support for Livestream's backend API, the core of the SaaS business, serving web, desktop, mobile, and embedded applications.
-  - Improved scalability of Livestream central auth service.
-  - Introduced improved library of integration test helpers.
-  - Broke a monolith into microservices.
-  - Built a custom autoscaler.
-  - Node.js, redis, mysql, docker/kubernetes, GCP, puppet
+  - Built a custom autoscaler, specialized for Live Video infra
+  - Redesigned authentication system for greater scalability
+  - Introduced improved library of integration test helpers
+  - Broke a monolith into microservices
+  - Node.js, Typescript, redis, mysql, docker/kubernetes, Google Cloud, Puppet, Varnish
 
 ## Education
 
