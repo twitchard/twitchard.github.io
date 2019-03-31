@@ -14,10 +14,11 @@ Backend web developer with experience in API design, full-stack development, dev
 ### Lead Engineer - Developer Experience - Vimeo (Oct 2018 - Present)
   - Led a team of 3 senior developers to improve Vimeo's internal
     developer tools and systems. Projects like:
-      * Container-based local development environment
-      * Optimizing CI pipelines
       * Improving speed/reliability of the build
-  - Docker/kubernetes, Google Cloud, Terraform, Chef, PHP, Typescript
+      * Container-based local development environment
+      * Building a CLI tool to automate / increase discoverability of common developer tasks.
+      * Optimizing CI pipelines
+  - Bash, Docker/kubernetes, Google Cloud, Terraform, Chef, PHP, Typescript
   - 75% engineering, 25% management
 
 ### Lead Engineer - Live Platform Team - Vimeo (Oct 2017 - Oct 2018)
@@ -25,13 +26,15 @@ Backend web developer with experience in API design, full-stack development, dev
     web application
     * Third-party Live Video API integrations
     * Recurring Live Events
+  - Worked with product manager to define feature roadmap.
+  - Professional support, 1:1 meetings, and mentorship with my reports.
   - 50% engineering, 50% management
   - Flow, React/Redux, PHP, MySQL, Memcached 
 
 ### Software Engineer - API Team - Livestream (Feb 2015 - Oct 2017) (Acquired by Vimeo)
   - Feature development, API design, and devops support for Livestream's backend API, the core of the SaaS business, serving web, desktop, mobile, and embedded applications.
+  - Shipped features related to discovery, syndication, billing, authentication, and more.
   - Built a custom autoscaler, specialized for Live Video infra
-  - Redesigned authentication system for greater scalability
   - Introduced improved library of integration test helpers
   - Broke a monolith into microservices
   - Node.js, Typescript, redis, mysql, docker/kubernetes, Google Cloud, Puppet, Varnish
