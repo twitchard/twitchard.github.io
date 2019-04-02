@@ -1,5 +1,3 @@
-Can "front matter" be at the end?
-
 ---
 field: somethingcool
 author: twitchard
@@ -9,3 +7,4 @@ can:
         - structured
         - data?
 ---
+Can "front matter" be at the end?
