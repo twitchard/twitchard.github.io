@@ -32,12 +32,11 @@ Backend web developer with experience in API design, full-stack development, dev
   - Flow, React/Redux, PHP, MySQL, Memcached 
 
 ### Software Engineer - API Team - Livestream (Feb 2015 - Oct 2017) (Acquired by Vimeo)
-  - Feature development, API design, and devops support for Livestream's backend API, the core of the SaaS business, serving web, desktop, mobile, and embedded applications.
-  - Shipped features related to discovery, syndication, billing, authentication, and more.
+  - Feature development, API design, and devops support for Livestream's backend API
+  - Shipped features related to discovery, syndication, billing, authentication, and more
   - Built a custom autoscaler, specialized for Live Video infra
   - Introduced improved library of integration test helpers
-  - Broke a monolith into microservices
-  - Node.js, Typescript, redis, mysql, docker/kubernetes, Google Cloud, Puppet, Varnish
+  - Node.js, MySQL, Typescript, redis, mysql, docker/kubernetes, Google Cloud, Puppet, Varnish
 
 ## Education
 
@@ -45,4 +44,4 @@ Backend web developer with experience in API design, full-stack development, dev
 
 - B.S. Computer Science (with honors) / B.A. Economics
 - Minor in Mathematics
-- Graduated magna cum laude
+- Magna cum laude
