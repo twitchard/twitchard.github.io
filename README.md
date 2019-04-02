@@ -1,6 +1,10 @@
+Can "front matter" be at the end?
 ---
 field: somethingcool
 author: twitchard
+can:
+    it:
+        be:
+        - structured
+        - data?
 ---
-
-This is my cool README.md -- does github.com support front matter?
