@@ -53,7 +53,7 @@ gtag('config', 'UA-149922579-1');
 <li>return 401 if a request lacks a valid authorization header</li>
 <li>log 10% of all incoming requests</li>
 </ol>
-<p>Written as middlewares in Express, this looks something like (code is illustrative only, please don’t try and run it)</p>
+<p>Written as middlewares in Express, this looks something like the following (code is illustrative only, please don’t try and run it)</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">const</span> rateLimitingMiddleware <span class="op">=</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> <span class="op">{</span></a>
 <a class="sourceLine" id="cb1-2" title="2">  <span class="kw">const</span> ip <span class="op">=</span> <span class="va">req</span>.<span class="at">headers</span>[<span class="st">'ip'</span>]</a>
 <a class="sourceLine" id="cb1-3" title="3">  <span class="va">db</span>.<span class="at">incrementNRequests</span>(ip)</a>
