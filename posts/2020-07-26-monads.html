@@ -8,7 +8,7 @@
         <meta name="twitter:site" content="@twitchard" />
         <meta name="twitter:title" content="Monads and Mom" />
         <meta name="twitter:description" content="The Oedipus Rex of Monad Tutorials" />
-        <title>Richard Marmorstein - Monads and Mom</title>
+        <title>Monads and Mom - Richard Marmorstein</title>
         <link rel="stylesheet" href="../css/default.css" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
         <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -180,7 +180,7 @@ gtag('config', 'UA-149922579-1');
 <span id="cb13-4"><a href="#cb13-4"></a>  for_ participants ((addMeeting_ details) <span class="op">.</span> calendarOf)</span>
 <span id="cb13-5"><a href="#cb13-5"></a>  for_ participants ((sendEmail_ details) <span class="op">.</span> emailOf)</span></code></pre></div>
 <p>Much better! Mom won’t dismember you for this. She might not even disown you.</p>
-<p>But now for the coup de gras! Let’s do <code>bookMeeting</code> with rollbacks. There isn’t a standard monad for “rollback” behavior as far as I am aware, so we’re going to have to build it up ourselves, out of smaller monads.</p>
+<p>But now for the coup de grâce! Let’s do <code>bookMeeting</code> with rollbacks. There isn’t a standard monad for “rollback” behavior as far as I am aware, so we’re going to have to build it up ourselves, out of smaller monads.</p>
 <p>But what does <code>Rollbackable</code> mean? It means when a failure occurs, you short-circuit and reverse all the operations leading up to the failure. Let’s break this down into two parts:</p>
 <ol type="1">
 <li>“when a failure occurs you short-circuit” should sound familiar. This is our friend the <code>Except</code> monad.</li>
