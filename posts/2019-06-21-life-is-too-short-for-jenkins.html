@@ -4,6 +4,10 @@
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@twitchard" />
+        <meta name="twitter:title" content="Life is Too Short for Jenkins" />
+        <meta name="twitter:description" content="Richard's software blog" />
         <title>Richard Marmorstein - Life is Too Short for Jenkins</title>
         <link rel="stylesheet" href="../css/default.css" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
@@ -96,8 +100,8 @@ gtag('config', 'UA-149922579-1');
 <p>The only problem is that this problem is solved by incorporating the idea of a “Jenkins worker” INTO the idea of a Docker container. These two ideas don’t always play well together. For example, one thing I kind of expected/hoped for was that, defining a Jenkinsfile to use a Dockerfile, and then giving it a build step like</p>
 <pre class="groovy"><code>  sh 'make test'</code></pre>
 <p>would be approximately the same thing as</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="ex">docker</span> build . -t foo</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="ex">docker</span> run foo make test</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="ex">docker</span> build . -t foo</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="ex">docker</span> run foo make test</span></code></pre></div>
 <p>But it different in one very significant way. With <code>docker run</code>, your cwd is whatever the Dockerfile defined. In a Jenkins job, the cwd is the Jenkins workspace – which is bind mounted in from the host node. Basically, Jenkins tries to <em>turn your docker container</em> into a regular old Jenkins worker. This makes a degree of sense, but has a number of inconveniences.</p>
 <ol type="1">
 <li>You probably can’t be root inside your docker container. If your build produces any sort of persistent artifact in the workspace, that artifact will be owned by root and will end up on the filesystem of the host. Jenkins on the host doesn’t run as root, so it doesn’t have permissions to wipe the workspace when it needs to, and you’ll get janky permissions errors.</li>
