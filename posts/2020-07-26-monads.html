@@ -77,7 +77,7 @@ gtag('config', 'UA-149922579-1');
 <span id="cb5-6"><a href="#cb5-6"></a>        <span class="cf">await</span> participants[i].<span class="va">calendar</span>.<span class="at">addMeeting</span>(details)</span>
 <span id="cb5-7"><a href="#cb5-7"></a>      <span class="op">}</span> <span class="cf">catch</span> (e) <span class="op">{</span></span>
 <span id="cb5-8"><a href="#cb5-8"></a>        <span class="cf">for</span> (<span class="kw">let</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> i<span class="op">;</span> j<span class="op">++</span>) <span class="op">{</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a>          <span class="cf">await</span> participants[i].<span class="va">calendar</span>.<span class="at">removeMeeting</span>(details)</span>
+<span id="cb5-9"><a href="#cb5-9"></a>          <span class="cf">await</span> participants[j].<span class="va">calendar</span>.<span class="at">removeMeeting</span>(details)</span>
 <span id="cb5-10"><a href="#cb5-10"></a>        <span class="op">}</span></span>
 <span id="cb5-11"><a href="#cb5-11"></a>        <span class="cf">throw</span> e</span>
 <span id="cb5-12"><a href="#cb5-12"></a>      <span class="op">}</span></span>
@@ -88,16 +88,19 @@ gtag('config', 'UA-149922579-1');
 <span id="cb5-17"><a href="#cb5-17"></a>        <span class="cf">await</span> <span class="at">sendEmail</span>(participants[i].<span class="at">email</span><span class="op">,</span> <span class="at">meetingEmail</span>(details))</span>
 <span id="cb5-18"><a href="#cb5-18"></a>      <span class="op">}</span> <span class="cf">catch</span> (e) <span class="op">{</span></span>
 <span id="cb5-19"><a href="#cb5-19"></a>        <span class="cf">for</span> (<span class="kw">let</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> i<span class="op">;</span> j<span class="op">++</span>) <span class="op">{</span></span>
-<span id="cb5-20"><a href="#cb5-20"></a>          <span class="cf">await</span> <span class="at">sendEmail</span>(participants[i].<span class="at">email</span><span class="op">,</span> <span class="at">cancelMeetingEmail</span>(details))</span>
+<span id="cb5-20"><a href="#cb5-20"></a>          <span class="cf">await</span> <span class="at">sendEmail</span>(participants[j].<span class="at">email</span><span class="op">,</span> <span class="at">cancelMeetingEmail</span>(details))</span>
 <span id="cb5-21"><a href="#cb5-21"></a>        <span class="op">}</span></span>
-<span id="cb5-22"><a href="#cb5-22"></a>        <span class="cf">throw</span> e</span>
-<span id="cb5-23"><a href="#cb5-23"></a>      <span class="op">}</span></span>
-<span id="cb5-24"><a href="#cb5-24"></a>    <span class="op">}</span></span>
-<span id="cb5-25"><a href="#cb5-25"></a>  <span class="op">}</span> <span class="cf">catch</span> (e) <span class="op">{</span></span>
-<span id="cb5-26"><a href="#cb5-26"></a>    <span class="cf">await</span> <span class="va">room</span>.<span class="va">calendar</span>.<span class="at">removeMeeting</span>(details)</span>
-<span id="cb5-27"><a href="#cb5-27"></a>    <span class="cf">throw</span> e</span>
-<span id="cb5-28"><a href="#cb5-28"></a>  <span class="op">}</span></span>
-<span id="cb5-29"><a href="#cb5-29"></a><span class="op">}</span></span></code></pre></div>
+<span id="cb5-22"><a href="#cb5-22"></a>        <span class="cf">for</span> (<span class="kw">let</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> <span class="va">participants</span>.<span class="at">length</span><span class="op">;</span> j<span class="op">++</span>) <span class="op">{</span></span>
+<span id="cb5-23"><a href="#cb5-23"></a>          <span class="cf">await</span> participants[j].<span class="va">calendar</span>.<span class="at">removeMeeting</span>(details)</span>
+<span id="cb5-24"><a href="#cb5-24"></a>        <span class="op">}</span></span>
+<span id="cb5-25"><a href="#cb5-25"></a>        <span class="cf">throw</span> e</span>
+<span id="cb5-26"><a href="#cb5-26"></a>      <span class="op">}</span></span>
+<span id="cb5-27"><a href="#cb5-27"></a>    <span class="op">}</span></span>
+<span id="cb5-28"><a href="#cb5-28"></a>  <span class="op">}</span> <span class="cf">catch</span> (e) <span class="op">{</span></span>
+<span id="cb5-29"><a href="#cb5-29"></a>    <span class="cf">await</span> <span class="va">room</span>.<span class="va">calendar</span>.<span class="at">removeMeeting</span>(details)</span>
+<span id="cb5-30"><a href="#cb5-30"></a>    <span class="cf">throw</span> e</span>
+<span id="cb5-31"><a href="#cb5-31"></a>  <span class="op">}</span></span>
+<span id="cb5-32"><a href="#cb5-32"></a><span class="op">}</span></span></code></pre></div>
 <p>It’s a monstrosity! It is littered with <code>try</code> and <code>catch</code>. That <code>for</code> loop is obscene! Show that to Mom, and she’ll have a lawyer over by lunch time to draw up her will, just so she can write you out of it.</p>
 <p>You’re better off with something like:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">const</span> bookMeeting <span class="op">=</span> (transaction<span class="op">,</span> participants<span class="op">,</span> room<span class="op">,</span> details) <span class="kw">=&gt;</span> <span class="op">{</span></span>
