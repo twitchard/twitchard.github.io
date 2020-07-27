@@ -25,9 +25,9 @@ gtag('config', 'UA-149922579-1');
         <main role="main">
             <article>
     <section class="header">
-      <h1><a href="../">← </a>
-        Beware Middleware</h1>
-        <h3>November  1, 2019</h3>
+      <h1>Beware Middleware</h1>
+      <h3>by Richard Marmorstein - November  1, 2019</h3>
+      <h4><a href="../">← More Posts</a></h4>
     </section>
     <section class="prose">
         <p><em>“Give a small boy a hammer, and he will find that everything he encounters needs pounding.” - Abraham Kaplan</em></p>
@@ -219,6 +219,7 @@ gtag('config', 'UA-149922579-1');
 <p>I’ve also fallen prey to this sort of thinking <a href="2019-06-21-life-is-too-short-for-jenkins.html">in other circumstances</a>. For example, I used <a href="https://jenkins.io/doc/book/pipeline/shared-libraries/">Jenkins shared libraries</a> when I wanted to re-use code across multiple CI jobs. I wrote }[&amp;%ing <em>Groovy</em> to do this, a language I abhor. What I should have done – and what I would have done had I not known that “Jenkins shared libraries” existed – is simply write the actions in whatever programming language I wanted (probably Bash in this case) and make them available to be called via shell on the CI workers.</p>
 <p>So the broader lesson here is, try to be aware of this tendency in your own thinking. Use the tools. Don’t let the tools use you. Especially if you’re a more experienced programmer, and using the tool the way it “wants” to be used doesn’t seem quite right – it probably isn’t.</p>
 <p>Use functions that take what they need as arguments, and put their result in their return value.And write applications like compilers, if you can – that’s a good lesson, too.</p>
+    <h4><a href="../">← More Posts</a></h4>
     </section>
 </article>
 
