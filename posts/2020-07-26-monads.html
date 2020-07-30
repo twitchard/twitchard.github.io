@@ -68,7 +68,7 @@ gtag('config', 'UA-149922579-1');
 <span id="cb4-9"><a href="#cb4-9"></a><span class="op">}</span></span></code></pre></div>
 <p>Again, “await” is plumbing, but much more succinct plumbing. Mom will forgive you, this once.</p>
 <p>She is, however, a real stickler for transactionality. I wouldn’t be surprised if she asked you for a version of <code>bookMeeting</code> that rolls back if an operation is not successful.</p>
-<p>Here what you <strong>don’t</strong> want to write:</p>
+<p>Here's what you <strong>don’t</strong> want to write:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">const</span> bookMeeting <span class="op">=</span> <span class="kw">async</span> (participants<span class="op">,</span> room<span class="op">,</span> details) <span class="kw">=&gt;</span> <span class="op">{</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a>  <span class="cf">await</span> <span class="va">room</span>.<span class="va">calendar</span>.<span class="at">addMeeting</span>(details)</span>
 <span id="cb5-3"><a href="#cb5-3"></a>  <span class="cf">try</span> <span class="op">{</span></span>
@@ -109,7 +109,7 @@ gtag('config', 'UA-149922579-1');
 <span id="cb6-4"><a href="#cb6-4"></a>    <span class="va">participant</span>.<span class="va">calendar</span>.<span class="at">addMeeting</span>(transaction<span class="op">,</span> details)</span>
 <span id="cb6-5"><a href="#cb6-5"></a>  )</span>
 <span id="cb6-6"><a href="#cb6-6"></a>  <span class="va">participants</span>.<span class="at">map</span>(participant <span class="kw">=&gt;</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a>    <span class="at">sendEmail</span>(transaction<span class="op">,</span> <span class="va">participant</span>.<span class="at">email</span><span class="op">,</span> <span class="at">meetingEmail</span>(details)</span>
+<span id="cb6-7"><a href="#cb6-7"></a>    <span class="at">sendEmail</span>(transaction<span class="op">,</span> <span class="va">participant</span>.<span class="at">email</span><span class="op">,</span> <span class="at">meetingEmail</span>(details))</span>
 <span id="cb6-8"><a href="#cb6-8"></a>  )</span>
 <span id="cb6-9"><a href="#cb6-9"></a>  <span class="cf">return</span> transaction</span>
 <span id="cb6-10"><a href="#cb6-10"></a><span class="op">}</span></span>
