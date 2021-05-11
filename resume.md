@@ -2,41 +2,36 @@
 
 > richard.marmorstein@gmail.com -
 > 781-733-9975 -
-> 10 Liberty St. Apt 14e -
-> New York, NY 10005
+> Staten Island, NY 10314
 
 ## Summary
 
-Backend web developer with experience in API design, full-stack development, devops, and management. I love math, strongly typed functional programming, and public speaking.
+Broadly experienced polyglot developer, specializing in developer tools and APIs
 
 ## Professional Experience {#experience}
 
-### Lead Engineer - Developer Experience - Vimeo (Oct 2018 - Present)
+### Software Engineer - Developer Experience - Stripe (July 2019 - Present)
+  - Primary contributor to "api-codegen", Stripe's internal tool for generating libraries and more from our OpenAPI specification
+  - Maintainer of Stripe's open-source server-side API libraries
+  - Full stack development on Stripe's Developer Dashboard
+
+### Lead Engineer - Developer Experience - Vimeo (Oct 2018 - July 2019)
   - Led a team of 3 senior developers to improve Vimeo's internal
     developer tools and systems. Projects like:
       * Improving speed/reliability of the build
       * Container-based local development environment
-      * Building a CLI tool to automate / increase discoverability of common developer tasks.
+      * Building a CLI tool to automate / increase discoverability of common developer tasks
       * Optimizing CI pipelines
   - Bash, Docker/kubernetes, Google Cloud, Terraform, Chef, PHP, Typescript
-  - 75% engineering, 25% management
 
 ### Lead Engineer - Live Platform Team - Vimeo (Oct 2017 - Oct 2018)
-  - Led a team of 5 developers to deliver full-stack features to the Vimeo Live
-    web application
-    * Third-party Live Video API integrations
-    * Recurring Live Events
-  - Worked with product manager to define feature roadmap.
-  - Professional support, 1:1 meetings, and mentorship with my reports.
-  - 50% engineering, 50% management
+  - Full stack feature development on Vimeo Live
   - Flow, React/Redux, PHP, MySQL, Memcached 
 
 ### Software Engineer - API Team - Livestream (Feb 2015 - Oct 2017) (Acquired by Vimeo)
-  - Feature development, API design, and devops support for Livestream's backend API
+  - Feature development and devops on Livestream's backend API
   - Shipped features related to discovery, syndication, billing, authentication, and more
-  - Built a custom autoscaler, specialized for Live Video infra
-  - Introduced improved library of integration test helpers
-  - Node.js, MySQL, Typescript, redis, mysql, docker/kubernetes, Google Cloud, Puppet, Varnish
+  - Node.js, MySQL, Redis, React, Puppet, GCP
 
 ## Education
 
