@@ -40,34 +40,34 @@ gtag('config', 'UA-149922579-1');
 <h2 id="exhaustiveness-checking">Exhaustiveness checking</h2>
 <p>While some hipster languages do exhaustiveness checking for you by default, in Flow/Typescript, though, you sometimes have to ask the type checker explicitly for an exhaustiveness check, and the way you do that is a little peculiar. You have to implement a function (I call it <code>exhaustive</code>) that has an impossible input type. Then, you call this function from places in your code that should be impossible to reach. The type checker will do a flow analysis. It will succeed if it can confirm the impossible function will never be called - otherwise it will report a type error.</p>
 <p>Here’s an example in Flow:</p>
-<pre class="flow"><code>type JSON =
-  | boolean
-  | number
-  | string
-  | Map&lt;string, JSON&gt;;
-
-type Impossible = true &amp; false;
-const exhaustive = (x: Impossible): any =&gt; {
-  throw new Error('This code should have been unreachable');
-}
-const prettyPrint = (json: JSON): string =&gt; {
-  if (typeof json === 'boolean') {
-    if (json === true) {
-      return '#t';
-    }
-    return '#f';
-  }
-  if (typeof json === 'number') {
-    return Math.round(json * 1000) / 1000;
-  }
-  if (typeof json === 'string') {
-    if (json.length &gt; 25) {
-      return '&quot;&lt;blah blah blah&gt;&quot;';
-    }
-    return `&quot;${json}&quot;`;
-  }
-  return exhaustive(json);
-};</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>type <span class="bu">JSON</span> <span class="op">=</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> boolean</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> number</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> string</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="bu">Map</span><span class="op">&lt;</span>string<span class="op">,</span> <span class="bu">JSON</span><span class="op">&gt;;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>type Impossible <span class="op">=</span> <span class="kw">true</span> <span class="op">&amp;</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> exhaustive <span class="op">=</span> (x<span class="op">:</span> Impossible)<span class="op">:</span> any <span class="kw">=&gt;</span> {</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Error</span>(<span class="st">'This code should have been unreachable'</span>)<span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> prettyPrint <span class="op">=</span> (json<span class="op">:</span> <span class="bu">JSON</span>)<span class="op">:</span> string <span class="kw">=&gt;</span> {</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="kw">typeof</span> json <span class="op">===</span> <span class="st">'boolean'</span>) {</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (json <span class="op">===</span> <span class="kw">true</span>) {</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="st">'#t'</span><span class="op">;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'#f'</span><span class="op">;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="kw">typeof</span> json <span class="op">===</span> <span class="st">'number'</span>) {</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">round</span>(json <span class="op">*</span> <span class="dv">1000</span>) <span class="op">/</span> <span class="dv">1000</span><span class="op">;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="kw">typeof</span> json <span class="op">===</span> <span class="st">'string'</span>) {</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (json<span class="op">.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">25</span>) {</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="st">'&quot;&lt;blah blah blah&gt;&quot;'</span><span class="op">;</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="vs">`&quot;</span><span class="sc">${</span>json<span class="sc">}</span><span class="vs">&quot;`</span><span class="op">;</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">exhaustive</span>(json)<span class="op">;</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
 <p>This code will fail the type checker, because we forgot the <code>Map&lt;string, JSON&gt;</code> case. Flow will report</p>
 <blockquote>
 <p>Cannot call <code>exhaustive</code> with <code>json</code> bound to <code>x</code> because <code>Map</code> is incompatible with string literal ‘impossible’.</p>
@@ -90,36 +90,36 @@ const prettyPrint = (json: JSON): string =&gt; {
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="kw">typeof</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span>]) <span class="co">// 'object'</span></span></code></pre></div>
 <p>What if we wanted to define our own set of cases, and separate arrays out into their own case?</p>
 <p>Recall our <code>JSON</code> type from the previous example:</p>
-<pre class="flow"><code>type JSON = boolean | number | string | Map&lt;string, JSON&gt;;</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>type <span class="bu">JSON</span> <span class="op">=</span> boolean <span class="op">|</span> number <span class="op">|</span> string <span class="op">|</span> <span class="bu">Map</span><span class="op">&lt;</span>string<span class="op">,</span> <span class="bu">JSON</span><span class="op">&gt;;</span></span></code></pre></div>
 <p>The “discriminated union” version of this type would be</p>
-<pre class="flow"><code>type TaggedJSON = 
-  | {tag: 'boolean', value: boolean}
-  | {tag: 'number', value: number}
-  | {tag: 'string', value: string}
-  | {tag: 'object', value: Map&lt;string, TaggedJSON&gt;}</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>type TaggedJSON <span class="op">=</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> {<span class="dt">tag</span><span class="op">:</span> <span class="st">'boolean'</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> boolean}</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> {<span class="dt">tag</span><span class="op">:</span> <span class="st">'number'</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> number}</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> {<span class="dt">tag</span><span class="op">:</span> <span class="st">'string'</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> string}</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> {<span class="dt">tag</span><span class="op">:</span> <span class="st">'object'</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="bu">Map</span><span class="op">&lt;</span>string<span class="op">,</span> TaggedJSON<span class="op">&gt;</span>}</span></code></pre></div>
 <p>The <code>tag</code> property here is called the “tag” or “discriminant” or the “sentinel”. The name of the property doesn’t have to be <code>tag</code>, it can be anything. A popular choice is <code>kind</code>. My primary codebase these days uses <code>shape</code>. The important thing is that the tag be present and unique for every branch of the union.</p>
 <p>Here is how the analog <code>prettyPrint</code> would look:</p>
-<pre class="flow"><code>const taggedPrettyPrint = (json: TaggedJSON): string =&gt; {
-  if (json.tag === 'boolean') {
-    if (json.value === 'true') {
-      return '#t'
-    }
-    return '#f'
-  }
-  if (json.tag === 'number') {
-    return (Math.round(json.value * 1000) / 1000).toString()
-  }
-  if (json.tag === 'string') {
-    if (json.value.length &gt; 25) {
-      return '&quot;&lt;blah blah blah&gt;&quot;'
-    }
-    return `&quot;${json.value}&quot;`
-  }
-  if (json.tag === 'object') {
-    return '[Object object]'
-  }
-  return exhaustive(json.tag)
-}</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> taggedPrettyPrint <span class="op">=</span> (json<span class="op">:</span> TaggedJSON)<span class="op">:</span> string <span class="kw">=&gt;</span> {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (json<span class="op">.</span><span class="at">tag</span> <span class="op">===</span> <span class="st">'boolean'</span>) {</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (json<span class="op">.</span><span class="at">value</span> <span class="op">===</span> <span class="st">'true'</span>) {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="st">'#t'</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'#f'</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (json<span class="op">.</span><span class="at">tag</span> <span class="op">===</span> <span class="st">'number'</span>) {</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">round</span>(json<span class="op">.</span><span class="at">value</span> <span class="op">*</span> <span class="dv">1000</span>) <span class="op">/</span> <span class="dv">1000</span>)<span class="op">.</span><span class="fu">toString</span>()</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (json<span class="op">.</span><span class="at">tag</span> <span class="op">===</span> <span class="st">'string'</span>) {</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (json<span class="op">.</span><span class="at">value</span><span class="op">.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">25</span>) {</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="st">'&quot;&lt;blah blah blah&gt;&quot;'</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="vs">`&quot;</span><span class="sc">${</span>json<span class="op">.</span><span class="at">value</span><span class="sc">}</span><span class="vs">&quot;`</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (json<span class="op">.</span><span class="at">tag</span> <span class="op">===</span> <span class="st">'object'</span>) {</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'[Object object]'</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">exhaustive</span>(json<span class="op">.</span><span class="at">tag</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Now, we can distinguish our array case if we want to</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode diff"><code class="sourceCode diff"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a> type TaggedJSON = </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>   | {tag: 'boolean', value: boolean}</span>
@@ -140,50 +140,50 @@ const prettyPrint = (json: JSON): string =&gt; {
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>   return exhaustive(json.tag);</span></code></pre></div>
 <p>Discriminated unions are, in a way, the <em>transpose</em> of interfaces. With interfaces - you add a new <em>operation</em> to your interface and you get a type error in all the <em>data types</em> of that interface that haven’t implemented that operation yet. With discriminated unions, you add a new <em>data type</em> to your interface, and you get a type error in all the <em>operations</em> that haven’t added support for that data type yet.</p>
 <p>Here’s what <code>prettyPrint</code> would look like if we encoded the problem with interfaces instead of discriminated unions</p>
-<pre class="flow"><code>type JSONInterface = interface {
-    prettyPrint: () =&gt; string
-}
-
-class JSONBool implements JSONInterface {
-  value: boolean
-  prettyPrint = () =&gt; {
-      if (this.value === true) {
-          return '#t'
-      }
-      return '#f'
-  }
-}
-
-class JSONNumber implements JSONInterface {
-  value: number
-  prettyPrint = () =&gt; {
-      return (Math.round(this.value * 1000) / 1000).toString()
-  }
-}
-
-class JSONString implements JSONInterface {
-  value: string
-  prettyPrint = () =&gt; {
-      if (this.value.length &gt; 25) {
-          return `${this.value}`
-      }
-      return this.value
-  }
-}
-
-class JSONObject implements JSONInterface {
-  value: Map&lt;String, JSON&gt;
-  prettyPrint = () =&gt; {
-      return '[Object object]'
-  }
-}
-
-class JSONArray implements JSONInterface {
-    value: Array&lt;JSONInterface&gt;
-    prettyPrint = () =&gt; {
-       return `[${this.value.map(j =&gt; j.prettyPrint()).join(', ')}]`
-    }
-}</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>type JSONInterface <span class="op">=</span> <span class="kw">interface</span> {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">prettyPrint</span><span class="op">:</span> () <span class="kw">=&gt;</span> string</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> JSONBool <span class="kw">implements</span> JSONInterface {</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">value</span><span class="op">:</span> boolean</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  prettyPrint <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">value</span> <span class="op">===</span> <span class="kw">true</span>) {</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>          <span class="cf">return</span> <span class="st">'#t'</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="st">'#f'</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> JSONNumber <span class="kw">implements</span> JSONInterface {</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">value</span><span class="op">:</span> number</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  prettyPrint <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">round</span>(<span class="kw">this</span><span class="op">.</span><span class="at">value</span> <span class="op">*</span> <span class="dv">1000</span>) <span class="op">/</span> <span class="dv">1000</span>)<span class="op">.</span><span class="fu">toString</span>()</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> JSONString <span class="kw">implements</span> JSONInterface {</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">value</span><span class="op">:</span> string</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>  prettyPrint <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">value</span><span class="op">.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">25</span>) {</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>          <span class="cf">return</span> <span class="vs">`</span><span class="sc">${</span><span class="kw">this</span><span class="op">.</span><span class="at">value</span><span class="sc">}</span><span class="vs">`</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="kw">this</span><span class="op">.</span><span class="at">value</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> JSONObject <span class="kw">implements</span> JSONInterface {</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>  <span class="dt">value</span><span class="op">:</span> <span class="bu">Map</span><span class="op">&lt;</span><span class="bu">String</span><span class="op">,</span> <span class="bu">JSON</span><span class="op">&gt;</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>  prettyPrint <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="st">'[Object object]'</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> JSONArray <span class="kw">implements</span> JSONInterface {</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>    <span class="dt">value</span><span class="op">:</span> <span class="bu">Array</span><span class="op">&lt;</span>JSONInterface<span class="op">&gt;</span></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>    prettyPrint <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>       <span class="cf">return</span> <span class="vs">`[</span><span class="sc">${</span><span class="kw">this</span><span class="op">.</span><span class="at">value</span><span class="op">.</span><span class="fu">map</span>(j <span class="kw">=&gt;</span> j<span class="op">.</span><span class="fu">prettyPrint</span>())<span class="op">.</span><span class="fu">join</span>(<span class="st">', '</span>)<span class="sc">}</span><span class="vs">]`</span></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>(See it in <a href="https://flow.org/try/#0PQKgBAAgZgNg9gdzCYAoVAXAngBwKZgBSAygPIByAkgHYZ4BOUAhgMYEC8YAlrQ822ADeqMKLA56eDNgAK9HhgBcYABQBKMOwB8YAM4Z51AOaoAvuhYwmu3UTLkAQnDgxuAWxww8bvLVskKGjpGVgJhUQA3JhgAVzxlACNnLyZqEXFJaSw5BU1VDW0hdLFuKFUMAAsuXQA6KNiOdk4DOI1wko7MmPpqMAByAGIMPuKxcw6wLp7+gagR0XNzVEtrf3tyGLcEhndPb18MNcDeEIF2+rjlak3t+nSJKVlDDDz1TR12kqnelQBZJkqNXocBi1AAJipKtU6tE4sgwABGAAMKI0wERKKRahqGDgxAMPCM6nSiwsVhsdgo+MMRl2Xh8fkpVBO-DC6Qu8T0BOM90yT1ynDehU+Yi4ZUhVVqHJqXmMlTAOgATABWNqjCbfMAAAwAJIIoVLYXhTFr1WBxp0pN1egaYQ0SWYyasmaQEgArPAsF5cDz0g5HZnBVlFSJG5T-HAAHmphIANEytLzHtlnq8Ch8zZq+gBtV0er1gODuz0YAC683NjuW5IDAEF6PQmFg6ftGQFA3xQiGxBzlPXG1hI+2gp22ImSsB0Q8sjlaGn3t3RJOvlbplrs3rbdK3EwcCo3Qu3TVp-zaOpsW64DwVH14301KZS6aJ+jFkA">Try Flow</a>)</p>
 <p>On paper, anything that you can express with a discriminated union, you can express with a group of classes that implement an interface.</p>
 <p>In practice, though, in most domains it is more natural to use discriminated unions. Interfaces are best when the <em>operations you are going to perform</em> are the known quantity, and the <em>shapes of the data you will operate upon</em> are the things you are going to discover, or leave open for extension. Discriminated unions work best when the <em>shapes of the data</em> are known, and the operations you will perform are the things you are going to discover and extend as you write the program.</p>
