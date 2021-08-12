@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@twitchard" />
+        <meta name="twitter:title" content="Discriminated Unions and Exhaustiveness Checking" />
+        <meta name="twitter:description" content="Use discriminated unions and exhaustiveness checking to level up your Javascript" />
+        <title>Discriminated Unions and Exhaustiveness Checking - Richard Marmorstein</title>
+        <link rel="stylesheet" href="../css/default.css" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149922579-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-149922579-1');
+        </script>
+    </head>
+    <body>
+        <main role="main">
+            <article>
+    <section class="header">
+      <h1>Discriminated Unions and Exhaustiveness Checking</h1>
+      <h3>by Richard Marmorstein - July 26, 2021</h3>
+      <h4><a href="../">← More Posts</a></h4>
+    </section>
+    <section class="prose">
+        <p>I extensively use a feature in Flow and Typescript called “discriminated unions with exhaustiveness checking”.</p>
+<p>The resulting code can look odd if you aren’t familiar with this style of programming. You probably won’t be, if you come to typed Javascript from a dynamically typed language, since discriminated unions make less sense in that context. You are likely not familiar even if you come from a statically typed language like Java, C#, or Go. They don’t support discriminated unions.</p>
+<p>I learned about discriminated unions from hipster programming languages, like Purescript, Elm, and Haskell. Other hipster languages have them too – Scala, Rust, F#, and Ocaml, but I haven’t written those very much. They are also called “tagged unions” or “sum types” or “algebraic data types”. All these phrases refer to essentially the same idea.</p>
+<p>The <a href="https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions">Typescript docs</a> and the <a href="https://flow.org/blog/2015/07/03/Disjoint-Unions/">Flow</a> docs both describe their support for discriminated unions, and exhaustively checking them, but it’s mentioned deep in the annals of the docs, as if it’s some obscure, advanced feature.</p>
+<p>I really wish it were more front and center. This feature is very useful, and I wish it were appreciated more broadly!</p>
+<h2 id="what-is-discriminated-unions-with-exhaustiveness-checking">What is “discriminated unions with exhaustiveness checking”?</h2>
+<p>High-level, it is a way for you to ask your type checker “make sure I have explicitly handled all the cases” * “make sure I have explicitly handled” = “exhaustiveness checking” * “all the cases” = “discriminated union”</p>
+<h2 id="exhaustiveness-checking">Exhaustiveness checking</h2>
+<p>While some hipster languages do exhaustiveness checking for you by default, in Flow/Typescript, though, you sometimes have to ask the type checker explicitly for an exhaustiveness check, and the way you do that is a little peculiar. You have to implement a function (I call it <code>exhaustive</code>) that has an impossible input type. Then, you call this function from places in your code that should be impossible to reach. The type checker will do a flow analysis. It will succeed if it can confirm the impossible function will never be called - otherwise it will report a type error.</p>
+<p>Here’s an example in Flow:</p>
+<pre class="flow"><code>type JSON =
+  | boolean
+  | number
+  | string
+  | Map&lt;string, JSON&gt;;
+
+type Impossible = true &amp; false;
+const exhaustive = (x: Impossible): any =&gt; {
+  throw new Error('This code should have been unreachable');
+}
+const prettyPrint = (json: JSON): string =&gt; {
+  if (typeof json === 'boolean') {
+    if (json === true) {
+      return '#t';
+    }
+    return '#f';
+  }
+  if (typeof json === 'number') {
+    return Math.round(json * 1000) / 1000;
+  }
+  if (typeof json === 'string') {
+    if (json.length &gt; 25) {
+      return '&quot;&lt;blah blah blah&gt;&quot;';
+    }
+    return `&quot;${json}&quot;`;
+  }
+  return exhaustive(json);
+};</code></pre>
+<p>This code will fail the type checker, because we forgot the <code>Map&lt;string, JSON&gt;</code> case. Flow will report</p>
+<blockquote>
+<p>Cannot call <code>exhaustive</code> with <code>json</code> bound to <code>x</code> because <code>Map</code> is incompatible with string literal ‘impossible’.</p>
+</blockquote>
+<p>But if we fix it</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode diff"><code class="sourceCode diff"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>       return '&quot;&lt;blah blah blah&gt;&quot;';</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>     }</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>     return `&quot;${json}&quot;`;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>   }</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="va">+  if (typeof json === 'object') {</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="va">+    return '[Object object]'</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="va">+  }</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>   return exhaustive(json);</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a> };</span></code></pre></div>
+<p>it will pass the type checker.</p>
+<h2 id="discriminated-unions">Discriminated Unions</h2>
+<p>In the previous example, “all the cases” meant “the different strings <code>typeof</code> can return”. But <code>typeof</code> is not very flexible.</p>
+<p>For instance, <code>typeof</code> can’t distinguish between key-value objects and arrays.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="kw">typeof</span> {<span class="dt">foo</span><span class="op">:</span> <span class="st">'bar'</span>}) <span class="co">// 'object'</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="kw">typeof</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span>]) <span class="co">// 'object'</span></span></code></pre></div>
+<p>What if we wanted to define our own set of cases, and separate arrays out into their own case?</p>
+<p>Recall our <code>JSON</code> type from the previous example:</p>
+<pre class="flow"><code>type JSON = boolean | number | string | Map&lt;string, JSON&gt;;</code></pre>
+<p>The “discriminated union” version of this type would be</p>
+<pre class="flow"><code>type TaggedJSON = 
+  | {tag: 'boolean', value: boolean}
+  | {tag: 'number', value: number}
+  | {tag: 'string', value: string}
+  | {tag: 'object', value: Map&lt;string, TaggedJSON&gt;}</code></pre>
+<p>The <code>tag</code> property here is called the “tag” or “discriminant” or the “sentinel”. The name of the property doesn’t have to be <code>tag</code>, it can be anything. A popular choice is <code>kind</code>. My primary codebase these days uses <code>shape</code>. The important thing is that the tag be present and unique for every branch of the union.</p>
+<p>Here is how the analog <code>prettyPrint</code> would look:</p>
+<pre class="flow"><code>const taggedPrettyPrint = (json: TaggedJSON): string =&gt; {
+  if (json.tag === 'boolean') {
+    if (json.value === 'true') {
+      return '#t'
+    }
+    return '#f'
+  }
+  if (json.tag === 'number') {
+    return (Math.round(json.value * 1000) / 1000).toString()
+  }
+  if (json.tag === 'string') {
+    if (json.value.length &gt; 25) {
+      return '&quot;&lt;blah blah blah&gt;&quot;'
+    }
+    return `&quot;${json.value}&quot;`
+  }
+  if (json.tag === 'object') {
+    return '[Object object]'
+  }
+  return exhaustive(json.tag)
+}</code></pre>
+<p>Now, we can distinguish our array case if we want to</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode diff"><code class="sourceCode diff"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a> type TaggedJSON = </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>   | {tag: 'boolean', value: boolean}</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>   | {tag: 'number', value: number}</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>   | {tag: 'string', value: string}</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>   | {tag: 'object', value: Map&lt;string, TaggedJSON&gt;}</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="va">+  | {tag: 'array', value: Array&lt;TaggedJSON&gt;}</span></span></code></pre></div>
+<p>Then, Flow will report a type error</p>
+<blockquote>
+<p>Cannot call <code>exhaustive</code> with <code>json.tag</code> bound to <code>x</code> because string literal <code>array</code> is incompatible with string literal <code>impossible</code></p>
+</blockquote>
+<p>And then we handle it</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode diff"><code class="sourceCode diff"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>     return '[Object object]';</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>   }</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="va">+  if (json.tag === 'array') {</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="va">+    return `[${json.value.map(taggedPrettyPrint).join(', ')}]`;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="va">+  }</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>   return exhaustive(json.tag);</span></code></pre></div>
+<p>Discriminated unions are, in a way, the <em>transpose</em> of interfaces. With interfaces - you add a new <em>operation</em> to your interface and you get a type error in all the <em>data types</em> of that interface that haven’t implemented that operation yet. With discriminated unions, you add a new <em>data type</em> to your interface, and you get a type error in all the <em>operations</em> that haven’t added support for that data type yet.</p>
+<p>Here’s what <code>prettyPrint</code> would look like if we encoded the problem with interfaces instead of discriminated unions</p>
+<pre class="flow"><code>type JSONInterface = interface {
+    prettyPrint: () =&gt; string
+}
+
+class JSONBool implements JSONInterface {
+  value: boolean
+  prettyPrint = () =&gt; {
+      if (this.value === true) {
+          return '#t'
+      }
+      return '#f'
+  }
+}
+
+class JSONNumber implements JSONInterface {
+  value: number
+  prettyPrint = () =&gt; {
+      return (Math.round(this.value * 1000) / 1000).toString()
+  }
+}
+
+class JSONString implements JSONInterface {
+  value: string
+  prettyPrint = () =&gt; {
+      if (this.value.length &gt; 25) {
+          return `${this.value}`
+      }
+      return this.value
+  }
+}
+
+class JSONObject implements JSONInterface {
+  value: Map&lt;String, JSON&gt;
+  prettyPrint = () =&gt; {
+      return '[Object object]'
+  }
+}
+
+class JSONArray implements JSONInterface {
+    value: Array&lt;JSONInterface&gt;
+    prettyPrint = () =&gt; {
+       return `[${this.value.map(j =&gt; j.prettyPrint()).join(', ')}]`
+    }
+}</code></pre>
+<p>(See it in <a href="https://flow.org/try/#0PQKgBAAgZgNg9gdzCYAoVAXAngBwKZgBSAygPIByAkgHYZ4BOUAhgMYEC8YAlrQ822ADeqMKLA56eDNgAK9HhgBcYABQBKMOwB8YAM4Z51AOaoAvuhYwmu3UTLkAQnDgxuAWxww8bvLVskKGjpGVgJhUQA3JhgAVzxlACNnLyZqEXFJaSw5BU1VDW0hdLFuKFUMAAsuXQA6KNiOdk4DOI1wko7MmPpqMAByAGIMPuKxcw6wLp7+gagR0XNzVEtrf3tyGLcEhndPb18MNcDeEIF2+rjlak3t+nSJKVlDDDz1TR12kqnelQBZJkqNXocBi1AAJipKtU6tE4sgwABGAAMKI0wERKKRahqGDgxAMPCM6nSiwsVhsdgo+MMRl2Xh8fkpVBO-DC6Qu8T0BOM90yT1ynDehU+Yi4ZUhVVqHJqXmMlTAOgATABWNqjCbfMAAAwAJIIoVLYXhTFr1WBxp0pN1egaYQ0SWYyasmaQEgArPAsF5cDz0g5HZnBVlFSJG5T-HAAHmphIANEytLzHtlnq8Ch8zZq+gBtV0er1gODuz0YAC683NjuW5IDAEF6PQmFg6ftGQFA3xQiGxBzlPXG1hI+2gp22ImSsB0Q8sjlaGn3t3RJOvlbplrs3rbdK3EwcCo3Qu3TVp-zaOpsW64DwVH14301KZS6aJ+jFkA">Try Flow</a>)</p>
+<p>On paper, anything that you can express with a discriminated union, you can express with a group of classes that implement an interface.</p>
+<p>In practice, though, in most domains it is more natural to use discriminated unions. Interfaces are best when the <em>operations you are going to perform</em> are the known quantity, and the <em>shapes of the data you will operate upon</em> are the things you are going to discover, or leave open for extension. Discriminated unions work best when the <em>shapes of the data</em> are known, and the operations you will perform are the things you are going to discover and extend as you write the program.</p>
+<p>Most programs have known inputs and known outputs, and their job is to transform inputs into outputs. Especially programs like web applications, or compilers.</p>
+<p>In any case, I think discriminated unions are <em>particularly</em> useful when you’re manipulating tree-like data structures – like the DOM, JSON or an AST. They’re also good for representing state machines.</p>
+<p>I also think they’re also good for representing state machines. Compare</p>
+<pre class="flow"><code>// Not a discriminated union, just a grab-bag of properties that might be set.
+type HTTPResponse = {|
+  status: 'sent' | 'received' | 'error' | 'done'
+  url: string,
+  verb: 'GET' | 'POST',
+  errorMessage?: string,
+  headers?: {[string]: string},
+  statusCode?: number
+|}
+
+// A discriminated union that will help prevent users of this data
+// type from assuming that &quot;headers&quot; or &quot;statusCode&quot; are set, when
+// in many cases they might not be.
+
+type TaggedHTTPResponse =
+  | {|
+      tag: 'sent',
+      url: string,
+      verb: 'GET' | 'POST'
+    |}
+  | {|
+      tag: 'connectionError',
+      url: string,
+      verb: 'GET' | 'POST',
+      errorMessage: string,
+    |}
+  | {|
+      tag: 'received',
+      url: string,
+      verb: 'GET' | 'POST'
+      headers: {[string]: string},
+      statusCode: number,
+    |}
+  | {|
+      tag: 'readError',
+      url: string,
+      verb: 'GET' | 'POST',
+      headers: {[string]: string},
+      statusCode: number,
+      errorMessage: string,
+    |}
+  | {|
+    tag: 'done',
+    url: string,
+    verb: 'POST',
+    headers: {[string]: string},
+    statusCode: number,
+    body: string
+  |}</code></pre>
+<p>Go forth and use discriminated unions!</p>
+    <h4><a href="../">← More Posts</a></h4>
+    <h4><a href="https://twitter.com/twitchard">Twitter</a></h4>
+    </section>
+</article>
+
+        </main>
+
+        <footer>
+          <div class="leftfootleftfootleftfoot">
+            Nothing I write represents the opinion of those foolish enough to employ me.
+          </div>
+          <div class="rightfeetatthemorningfeetatnight">
+            Site shamefully generated by <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+          </div>
+        </footer>
+    </body>
+</html>

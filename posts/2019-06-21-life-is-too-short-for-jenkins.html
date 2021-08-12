@@ -57,8 +57,8 @@ gtag('config', 'UA-149922579-1');
 <p>The worst thing about Jenkins is that it works. It can meet your needs. With a liiittle more effort, or by adopting sliiiightly lower standards, or with a liiiiitle more tolerance for pain, you can always get Jenkins to do aaaaalmost what you want it to. But let’s talk specifics. Jenkins features:</p>
 <h3 id="high-indirection-between-you-and-the-execution-of-your-code.">High indirection between you and the execution of your code.</h3>
 <p>For me, the bulk of the actual work of a CI pipeline takes the form of shell commands. are typically executed inside shell commands. In Jenkins pipeline, there is a ‘sh’ “step” that executes the shell. For example</p>
-<pre class="groovy"><code>  sh 'npm install'
-  sh 'make'</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode groovy"><code class="sourceCode groovy"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  sh <span class="st">'npm install'</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  sh <span class="st">'make'</span></span></code></pre></div>
 <p>So instead of writing Bash directly, you’re writing Bash inside Groovy. But:</p>
 <ul>
 <li>Your editor won’t syntax highlight the Bash inside Groovy.</li>
@@ -83,12 +83,12 @@ gtag('config', 'UA-149922579-1');
 <p>TL;DR, the feedback loop sucks. You’ll never be able to effectively test any of the code running in your pipeline. Your best bet is to build it all entirely in Bash, build your own mechanism for testing it and sharing functionality. The ability to write Groovy shared libraries is a trap and leads only to misery.</p>
 <h3 id="low-level-of-discoverability">Low level of discoverability</h3>
 <p>A lot of functionality that Jenkins has in the web UI – especially the functionality that comes through plugins – is also possible to define in pipelines, but the means for doing this is not well-documented. For example, there’s this <a href="https://github.com/jenkinsci/throttle-concurrent-builds-plugin">plugin</a> that permits you to “throttle” a job so that multiple jobs don’t fire at once. that you can see inside the UI. After probably half a day of Googling, trial and error, and thanks to a stroke of luck, I figured out that I could accomplish what I wanted by putting the following in my Jenkinsfile:</p>
-<pre class="groovy"><code>properties([[
-        $class: 'ThrottleJobProperty',
-        maxConcurrentTotal: 5,
-        throttleEnabled: true,
-        throttleOption: 'project'
-]])</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode groovy"><code class="sourceCode groovy"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">properties</span><span class="op">([[</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>        $class<span class="op">:</span> <span class="st">'ThrottleJobProperty'</span><span class="op">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        maxConcurrentTotal<span class="op">:</span> <span class="dv">5</span><span class="op">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        throttleEnabled<span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        throttleOption<span class="op">:</span> <span class="st">'project'</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="op">]])</span></span></code></pre></div>
 <p>Maybe if I were a Java/Groovy expert I could have read the source code for the plugin and determined this was possible. But I shouldn’t have to be. And the application developers trying to implement their own pipelines for there code <em>definitely</em> shouldn’t have to be.</p>
 <p>There are two tricks I’ve developed to help the discovery of these magic incantations. Trick 1 is the “Snippet Generator”, which is basically a drop down box in the Jenkins UI with a pretty comprehensive list of options to explore and can help you find what you need maybe 15% of the time. Even if you can’t produce something usable, the snippet generator can give you an idea what to Google for.</p>
 <p>Trick 2 I’ve had much more success with. Use the snippet generator or Google things just enough to find a function name or keyword relevant to whatever you’re trying to do. Then, go to <code>github.com/search</code> and put <code>filename:Jenkinsfile &lt;keyword&gt;</code>. You’ll probably find something you can copy and paste. It’s worked 90% of the time, for me.</p>
@@ -98,10 +98,10 @@ gtag('config', 'UA-149922579-1');
 <h3 id="docker">Docker</h3>
 <p>It is possible to have your builds run inside docker containers. Jenkins 2 does let the job author specify a docker image, or dockerfile – even kubernetes configurations for autoscaling! So, in principle, the problem of letting job authors own their job’s environment is solved.</p>
 <p>The only problem is that this problem is solved by incorporating the idea of a “Jenkins worker” INTO the idea of a Docker container. These two ideas don’t always play well together. For example, one thing I kind of expected/hoped for was that, defining a Jenkinsfile to use a Dockerfile, and then giving it a build step like</p>
-<pre class="groovy"><code>  sh 'make test'</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode groovy"><code class="sourceCode groovy"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  sh <span class="st">'make test'</span></span></code></pre></div>
 <p>would be approximately the same thing as</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="ex">docker</span> build . -t foo</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="ex">docker</span> run foo make test</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build . <span class="at">-t</span> foo</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run foo make test</span></code></pre></div>
 <p>But it different in one very significant way. With <code>docker run</code>, your cwd is whatever the Dockerfile defined. In a Jenkins job, the cwd is the Jenkins workspace – which is bind mounted in from the host node. Basically, Jenkins tries to <em>turn your docker container</em> into a regular old Jenkins worker. This makes a degree of sense, but has a number of inconveniences.</p>
 <ol type="1">
 <li>You probably can’t be root inside your docker container. If your build produces any sort of persistent artifact in the workspace, that artifact will be owned by root and will end up on the filesystem of the host. Jenkins on the host doesn’t run as root, so it doesn’t have permissions to wipe the workspace when it needs to, and you’ll get janky permissions errors.</li>

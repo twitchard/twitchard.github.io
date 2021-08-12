@@ -59,71 +59,71 @@ gtag('config', 'UA-149922579-1');
 <li>log 10% of all incoming requests</li>
 </ol>
 <p>Written as middlewares in Express, this looks something like the following (code is illustrative only, please don’t try and run it)</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">const</span> rateLimitingMiddleware <span class="op">=</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>  <span class="kw">const</span> ip <span class="op">=</span> <span class="va">req</span>.<span class="at">headers</span>[<span class="st">'ip'</span>]</span>
-<span id="cb1-3"><a href="#cb1-3"></a>  <span class="va">db</span>.<span class="at">incrementNRequests</span>(ip)</span>
-<span id="cb1-4"><a href="#cb1-4"></a>  <span class="cf">if</span> (<span class="cf">await</span> <span class="va">db</span>.<span class="at">nRequestsSince</span>(<span class="va">Date</span>.<span class="at">now</span>() <span class="op">-</span> <span class="dv">60000</span><span class="op">,</span> ip) <span class="op">&gt;</span> <span class="dv">100</span>) <span class="op">{</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a>    <span class="cf">return</span> <span class="va">res</span>.<span class="at">send</span>(<span class="dv">423</span>)</span>
-<span id="cb1-6"><a href="#cb1-6"></a>  <span class="op">}</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="op">}</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="kw">const</span> authorizationMiddleware <span class="op">=</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a>  <span class="kw">const</span> account <span class="op">=</span> <span class="cf">await</span> <span class="va">db</span>.<span class="at">accountByAuthorization</span>(<span class="va">req</span>.<span class="at">headers</span>[<span class="st">'authorization'</span>])</span>
-<span id="cb1-11"><a href="#cb1-11"></a>  <span class="cf">if</span> (<span class="op">!</span>account) <span class="op">{</span> <span class="cf">return</span> <span class="va">res</span>.<span class="at">send</span>(<span class="dv">401</span>) <span class="op">}</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="op">}</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a></span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="kw">const</span> loggingMiddleware <span class="op">=</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb1-15"><a href="#cb1-15"></a>  <span class="cf">if</span> (<span class="va">Math</span>.<span class="at">random</span>() <span class="op">&lt;=</span> <span class="fl">.1</span>) <span class="op">{</span></span>
-<span id="cb1-16"><a href="#cb1-16"></a>    <span class="va">console</span>.<span class="at">log</span>(<span class="vs">`request received </span><span class="sc">${</span><span class="va">req</span>.<span class="at">method</span><span class="sc">}</span><span class="vs"> </span><span class="sc">${</span><span class="va">req</span>.<span class="at">path</span><span class="sc">}\n${</span><span class="va">req</span>.<span class="at">body</span><span class="sc">}</span><span class="vs">`</span>)</span>
-<span id="cb1-17"><a href="#cb1-17"></a>  <span class="op">}</span></span>
-<span id="cb1-18"><a href="#cb1-18"></a><span class="op">}</span></span>
-<span id="cb1-19"><a href="#cb1-19"></a></span>
-<span id="cb1-20"><a href="#cb1-20"></a><span class="va">app</span>.<span class="at">use</span>([</span>
-<span id="cb1-21"><a href="#cb1-21"></a>  rateLimitingMiddleware<span class="op">,</span></span>
-<span id="cb1-22"><a href="#cb1-22"></a>  authorizationMiddleware<span class="op">,</span></span>
-<span id="cb1-23"><a href="#cb1-23"></a>  loggingMiddleware</span>
-<span id="cb1-24"><a href="#cb1-24"></a>].<span class="at">map</span>(</span>
-<span id="cb1-25"><a href="#cb1-25"></a>  <span class="co">// Not important, quick and dirty plumbing to make express play nice with</span></span>
-<span id="cb1-26"><a href="#cb1-26"></a>  <span class="co">// async/await</span></span>
-<span id="cb1-27"><a href="#cb1-27"></a>  (f) <span class="kw">=&gt;</span> (req<span class="op">,</span> res<span class="op">,</span> next) <span class="kw">=&gt;</span></span>
-<span id="cb1-28"><a href="#cb1-28"></a>    <span class="at">f</span>(req<span class="op">,</span> res)</span>
-<span id="cb1-29"><a href="#cb1-29"></a>      .<span class="at">then</span>(() <span class="kw">=&gt;</span> <span class="at">next</span>())</span>
-<span id="cb1-30"><a href="#cb1-30"></a>      .<span class="at">catch</span>(err <span class="kw">=&gt;</span> <span class="at">next</span>(err))</span>
-<span id="cb1-31"><a href="#cb1-31"></a>))</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> rateLimitingMiddleware <span class="op">=</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> ip <span class="op">=</span> req<span class="op">.</span><span class="at">headers</span>[<span class="st">'ip'</span>]</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  db<span class="op">.</span><span class="fu">incrementNRequests</span>(ip)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="cf">await</span> db<span class="op">.</span><span class="fu">nRequestsSince</span>(<span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>() <span class="op">-</span> <span class="dv">60000</span><span class="op">,</span> ip) <span class="op">&gt;</span> <span class="dv">100</span>) {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> res<span class="op">.</span><span class="fu">send</span>(<span class="dv">423</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> authorizationMiddleware <span class="op">=</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> account <span class="op">=</span> <span class="cf">await</span> db<span class="op">.</span><span class="fu">accountByAuthorization</span>(req<span class="op">.</span><span class="at">headers</span>[<span class="st">'authorization'</span>])</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>account) { <span class="cf">return</span> res<span class="op">.</span><span class="fu">send</span>(<span class="dv">401</span>) }</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> loggingMiddleware <span class="op">=</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>() <span class="op">&lt;=</span> <span class="op">.</span><span class="dv">1</span>) {</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`request received </span><span class="sc">${</span>req<span class="op">.</span><span class="at">method</span><span class="sc">}</span><span class="vs"> </span><span class="sc">${</span>req<span class="op">.</span><span class="at">path</span><span class="sc">}\n${</span>req<span class="op">.</span><span class="at">body</span><span class="sc">}</span><span class="vs">`</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">use</span>([</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  rateLimitingMiddleware<span class="op">,</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  authorizationMiddleware<span class="op">,</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  loggingMiddleware</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>]<span class="op">.</span><span class="fu">map</span>(</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Not important, quick and dirty plumbing to make express play nice with</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="co">// async/await</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  (f) <span class="kw">=&gt;</span> (req<span class="op">,</span> res<span class="op">,</span> next) <span class="kw">=&gt;</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">f</span>(req<span class="op">,</span> res)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">then</span>(() <span class="kw">=&gt;</span> <span class="fu">next</span>())</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">catch</span>(err <span class="kw">=&gt;</span> <span class="fu">next</span>(err))</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
 <p>What I advocate for is more along the lines of this:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">const</span> shouldRateLimit <span class="op">=</span> <span class="kw">async</span> (ip) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a>  <span class="cf">return</span> <span class="cf">await</span> <span class="va">db</span>.<span class="at">nRequestsSince</span>(<span class="va">Date</span>.<span class="at">now</span>() <span class="op">-</span> <span class="dv">60000</span><span class="op">,</span> ip) <span class="op">&lt;</span> <span class="dv">100</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="op">}</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="kw">const</span> isAuthorizationValid <span class="op">=</span> <span class="kw">async</span> (authorization) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a>  <span class="cf">return</span> <span class="op">!!</span><span class="cf">await</span> <span class="va">db</span>.<span class="at">accountByAuthorization</span>(authorization)</span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="op">}</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="kw">const</span> emitLog <span class="op">=</span> (method<span class="op">,</span> path<span class="op">,</span> body) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a>  <span class="cf">if</span> (<span class="va">Math</span>.<span class="at">random</span>() <span class="op">&lt;</span> <span class="fl">.1</span>) <span class="op">{</span></span>
-<span id="cb2-11"><a href="#cb2-11"></a>    <span class="va">console</span>.<span class="at">log</span>(<span class="vs">`request received </span><span class="sc">${</span>method<span class="sc">}</span><span class="vs"> </span><span class="sc">${</span>path<span class="sc">}\n${</span>body<span class="sc">}</span><span class="vs">`</span>)</span>
-<span id="cb2-12"><a href="#cb2-12"></a>  <span class="op">}</span></span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="op">}</span></span>
-<span id="cb2-14"><a href="#cb2-14"></a></span>
-<span id="cb2-15"><a href="#cb2-15"></a><span class="kw">const</span> mw <span class="op">=</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb2-16"><a href="#cb2-16"></a>  <span class="kw">const</span> <span class="op">{</span>ip<span class="op">,</span> authorization<span class="op">}</span> <span class="op">=</span> <span class="va">req</span>.<span class="at">headers</span></span>
-<span id="cb2-17"><a href="#cb2-17"></a>  <span class="kw">const</span> <span class="op">{</span>method<span class="op">,</span> path<span class="op">,</span> body<span class="op">}</span> <span class="op">=</span> req</span>
-<span id="cb2-18"><a href="#cb2-18"></a></span>
-<span id="cb2-19"><a href="#cb2-19"></a>  <span class="cf">if</span> (<span class="cf">await</span> <span class="at">shouldRateLimit</span>(ip)) <span class="op">{</span></span>
-<span id="cb2-20"><a href="#cb2-20"></a>    <span class="cf">return</span> <span class="va">res</span>.<span class="at">send</span>(<span class="dv">423</span>)</span>
-<span id="cb2-21"><a href="#cb2-21"></a>  <span class="op">}</span></span>
-<span id="cb2-22"><a href="#cb2-22"></a></span>
-<span id="cb2-23"><a href="#cb2-23"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="cf">await</span> <span class="at">isAuthorizationValid</span>(authorization)) <span class="op">{</span></span>
-<span id="cb2-24"><a href="#cb2-24"></a>    <span class="cf">return</span> <span class="va">res</span>.<span class="at">send</span>(<span class="dv">401</span>)</span>
-<span id="cb2-25"><a href="#cb2-25"></a>  <span class="op">}</span></span>
-<span id="cb2-26"><a href="#cb2-26"></a></span>
-<span id="cb2-27"><a href="#cb2-27"></a>  <span class="at">emitLog</span>(method<span class="op">,</span> path<span class="op">,</span> body)</span>
-<span id="cb2-28"><a href="#cb2-28"></a><span class="op">}</span></span>
-<span id="cb2-29"><a href="#cb2-29"></a></span>
-<span id="cb2-30"><a href="#cb2-30"></a><span class="va">app</span>.<span class="at">use</span>((req<span class="op">,</span> res<span class="op">,</span> next) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb2-31"><a href="#cb2-31"></a>  <span class="co">// async/await plumbing</span></span>
-<span id="cb2-32"><a href="#cb2-32"></a>  <span class="at">mw</span>(req<span class="op">,</span> res).<span class="at">then</span>(() <span class="kw">=&gt;</span> <span class="at">next</span>()).<span class="at">catch</span>(err <span class="kw">=&gt;</span> <span class="at">next</span>(err))</span>
-<span id="cb2-33"><a href="#cb2-33"></a><span class="op">}</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> shouldRateLimit <span class="op">=</span> <span class="kw">async</span> (ip) <span class="kw">=&gt;</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="cf">await</span> db<span class="op">.</span><span class="fu">nRequestsSince</span>(<span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>() <span class="op">-</span> <span class="dv">60000</span><span class="op">,</span> ip) <span class="op">&lt;</span> <span class="dv">100</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> isAuthorizationValid <span class="op">=</span> <span class="kw">async</span> (authorization) <span class="kw">=&gt;</span> {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="op">!!</span><span class="cf">await</span> db<span class="op">.</span><span class="fu">accountByAuthorization</span>(authorization)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> emitLog <span class="op">=</span> (method<span class="op">,</span> path<span class="op">,</span> body) <span class="kw">=&gt;</span> {</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>() <span class="op">&lt;</span> <span class="op">.</span><span class="dv">1</span>) {</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`request received </span><span class="sc">${</span>method<span class="sc">}</span><span class="vs"> </span><span class="sc">${</span>path<span class="sc">}\n${</span>body<span class="sc">}</span><span class="vs">`</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mw <span class="op">=</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> {ip<span class="op">,</span> authorization} <span class="op">=</span> req<span class="op">.</span><span class="at">headers</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> {method<span class="op">,</span> path<span class="op">,</span> body} <span class="op">=</span> req</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="cf">await</span> <span class="fu">shouldRateLimit</span>(ip)) {</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> res<span class="op">.</span><span class="fu">send</span>(<span class="dv">423</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="cf">await</span> <span class="fu">isAuthorizationValid</span>(authorization)) {</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> res<span class="op">.</span><span class="fu">send</span>(<span class="dv">401</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">emitLog</span>(method<span class="op">,</span> path<span class="op">,</span> body)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">use</span>((req<span class="op">,</span> res<span class="op">,</span> next) <span class="kw">=&gt;</span> {</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="co">// async/await plumbing</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mw</span>(req<span class="op">,</span> res)<span class="op">.</span><span class="fu">then</span>(() <span class="kw">=&gt;</span> <span class="fu">next</span>())<span class="op">.</span><span class="fu">catch</span>(err <span class="kw">=&gt;</span> <span class="fu">next</span>(err))</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
 <p>Instead of registering each operation as its own middleware and relying on Express to call them in sequence, passing in unconstrained request and response objects, I write each operation as as a function with its constrained inputs declared as parameters, and its result described in its return value. Then I register a single middleware which is responsible for “translating” HTTP into the more constrained language of these operations (and executing them). This, I believe, is the moral equivalent of “thin controllers”.</p>
 <p>In this simple example, my approach doesn’t really have a clear advantage. So lets introduce some complications.</p>
 <p>Suppose some new requirements come in</p>
@@ -133,82 +133,82 @@ gtag('config', 'UA-149922579-1');
 <li>Admin requests shouldn’t be subject to the rate limit, either.</li>
 </ol>
 <p>The simplest way to do this is to do the lookup and the check in the logging and rate limiting middlewares.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">const</span> rateLimitingMiddleware <span class="op">=</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="kw">const</span> account <span class="op">=</span> <span class="cf">await</span> <span class="va">db</span>.<span class="at">accountByAuthorization</span>(<span class="va">req</span>.<span class="at">headers</span>[<span class="st">'authorization'</span>])</span>
-<span id="cb3-3"><a href="#cb3-3"></a>  <span class="cf">if</span> (<span class="va">account</span>.<span class="at">isAdmin</span>()) <span class="op">{</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a>    <span class="cf">return</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a>  <span class="op">}</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a>  <span class="kw">const</span> ip <span class="op">=</span> <span class="va">req</span>.<span class="at">headers</span>[<span class="st">'ip'</span>]</span>
-<span id="cb3-7"><a href="#cb3-7"></a>  <span class="va">db</span>.<span class="at">incrementNRequests</span>(ip)</span>
-<span id="cb3-8"><a href="#cb3-8"></a>  <span class="cf">if</span> (<span class="cf">await</span> <span class="va">db</span>.<span class="at">nRequestsSince</span>(<span class="va">Date</span>.<span class="at">now</span>() <span class="op">-</span> <span class="dv">60000</span><span class="op">,</span> ip) <span class="op">&gt;</span> <span class="dv">100</span>) <span class="op">{</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a>    <span class="cf">return</span> <span class="va">res</span>.<span class="at">send</span>(<span class="dv">423</span>)</span>
-<span id="cb3-10"><a href="#cb3-10"></a>  <span class="op">}</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="op">}</span></span>
-<span id="cb3-12"><a href="#cb3-12"></a></span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="kw">const</span> loggingMiddleware <span class="op">=</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb3-14"><a href="#cb3-14"></a>  <span class="kw">const</span> account <span class="op">=</span> <span class="cf">await</span> <span class="va">db</span>.<span class="at">accountByAuthorization</span>(<span class="va">req</span>.<span class="at">headers</span>[<span class="st">'authorization'</span>])</span>
-<span id="cb3-15"><a href="#cb3-15"></a>  <span class="cf">if</span> (<span class="va">account</span>.<span class="at">isAdmin</span>() <span class="op">||</span> <span class="va">Math</span>.<span class="at">random</span>() <span class="op">&lt;=</span> <span class="fl">.1</span>) <span class="op">{</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a>    <span class="va">console</span>.<span class="at">log</span>(<span class="vs">`request received </span><span class="sc">${</span><span class="va">req</span>.<span class="at">method</span><span class="sc">}</span><span class="vs"> </span><span class="sc">${</span><span class="va">req</span>.<span class="at">path</span><span class="sc">}\n${</span><span class="va">req</span>.<span class="at">body</span><span class="sc">}</span><span class="vs">`</span>)</span>
-<span id="cb3-17"><a href="#cb3-17"></a>  <span class="op">}</span></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> rateLimitingMiddleware <span class="op">=</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> account <span class="op">=</span> <span class="cf">await</span> db<span class="op">.</span><span class="fu">accountByAuthorization</span>(req<span class="op">.</span><span class="at">headers</span>[<span class="st">'authorization'</span>])</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (account<span class="op">.</span><span class="fu">isAdmin</span>()) {</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> ip <span class="op">=</span> req<span class="op">.</span><span class="at">headers</span>[<span class="st">'ip'</span>]</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  db<span class="op">.</span><span class="fu">incrementNRequests</span>(ip)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="cf">await</span> db<span class="op">.</span><span class="fu">nRequestsSince</span>(<span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>() <span class="op">-</span> <span class="dv">60000</span><span class="op">,</span> ip) <span class="op">&gt;</span> <span class="dv">100</span>) {</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> res<span class="op">.</span><span class="fu">send</span>(<span class="dv">423</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> loggingMiddleware <span class="op">=</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> account <span class="op">=</span> <span class="cf">await</span> db<span class="op">.</span><span class="fu">accountByAuthorization</span>(req<span class="op">.</span><span class="at">headers</span>[<span class="st">'authorization'</span>])</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (account<span class="op">.</span><span class="fu">isAdmin</span>() <span class="op">||</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>() <span class="op">&lt;=</span> <span class="op">.</span><span class="dv">1</span>) {</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`request received </span><span class="sc">${</span>req<span class="op">.</span><span class="at">method</span><span class="sc">}</span><span class="vs"> </span><span class="sc">${</span>req<span class="op">.</span><span class="at">path</span><span class="sc">}\n${</span>req<span class="op">.</span><span class="at">body</span><span class="sc">}</span><span class="vs">`</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>but this is unsatisfying. Wouldn’t it be better to call <code>db.accountByAuthorization</code> only once and avoid three round-trips to the database? Middlewares cannot produce return values, nor accept as arguments values produced by other middlewares, so the way this must be done is by mutating the request (or response) object, like so:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">const</span> authorizationMiddleware <span class="op">=</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>  <span class="kw">const</span> account <span class="op">=</span> <span class="cf">await</span> <span class="va">db</span>.<span class="at">accountByAuthorization</span>(<span class="va">req</span>.<span class="at">headers</span>[<span class="st">'authorization'</span>])</span>
-<span id="cb4-3"><a href="#cb4-3"></a>  <span class="cf">if</span> (<span class="op">!</span>account) <span class="op">{</span> <span class="cf">return</span> <span class="va">res</span>.<span class="at">send</span>(<span class="dv">401</span>) <span class="op">}</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a>  <span class="va">req</span>.<span class="at">isAdmin</span> <span class="op">=</span> <span class="va">account</span>.<span class="at">isAdmin</span>()</span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="op">}</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="kw">const</span> rateLimitingMiddleware <span class="op">=</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a>  <span class="cf">if</span> (<span class="va">req</span>.<span class="at">isAdmin</span>) <span class="cf">return</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a>  <span class="kw">const</span> ip <span class="op">=</span> <span class="va">req</span>.<span class="at">headers</span>[<span class="st">'ip'</span>]</span>
-<span id="cb4-10"><a href="#cb4-10"></a>  <span class="va">db</span>.<span class="at">incrementNRequests</span>(ip)</span>
-<span id="cb4-11"><a href="#cb4-11"></a>  <span class="cf">if</span> (<span class="cf">await</span> <span class="va">db</span>.<span class="at">nRequestsSince</span>(<span class="va">Date</span>.<span class="at">now</span>() <span class="op">-</span> <span class="dv">60000</span><span class="op">,</span> ip) <span class="op">&gt;</span> <span class="dv">100</span>) <span class="op">{</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a>    <span class="cf">return</span> <span class="va">res</span>.<span class="at">send</span>(<span class="dv">423</span>)</span>
-<span id="cb4-13"><a href="#cb4-13"></a>  <span class="op">}</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="op">}</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="kw">const</span> loggingMiddleware <span class="op">=</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb4-17"><a href="#cb4-17"></a>  <span class="cf">if</span> (<span class="va">req</span>.<span class="at">isAdmin</span> <span class="op">||</span> <span class="va">Math</span>.<span class="at">random</span>() <span class="op">&lt;=</span> <span class="fl">.1</span>) <span class="op">{</span></span>
-<span id="cb4-18"><a href="#cb4-18"></a>    <span class="va">console</span>.<span class="at">log</span>(<span class="vs">`request received </span><span class="sc">${</span><span class="va">req</span>.<span class="at">method</span><span class="sc">}</span><span class="vs"> </span><span class="sc">${</span><span class="va">req</span>.<span class="at">path</span><span class="sc">}\n${</span><span class="va">req</span>.<span class="at">body</span><span class="sc">}</span><span class="vs">`</span>)</span>
-<span id="cb4-19"><a href="#cb4-19"></a>  <span class="op">}</span></span>
-<span id="cb4-20"><a href="#cb4-20"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> authorizationMiddleware <span class="op">=</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> account <span class="op">=</span> <span class="cf">await</span> db<span class="op">.</span><span class="fu">accountByAuthorization</span>(req<span class="op">.</span><span class="at">headers</span>[<span class="st">'authorization'</span>])</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>account) { <span class="cf">return</span> res<span class="op">.</span><span class="fu">send</span>(<span class="dv">401</span>) }</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  req<span class="op">.</span><span class="at">isAdmin</span> <span class="op">=</span> account<span class="op">.</span><span class="fu">isAdmin</span>()</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> rateLimitingMiddleware <span class="op">=</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (req<span class="op">.</span><span class="at">isAdmin</span>) <span class="cf">return</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> ip <span class="op">=</span> req<span class="op">.</span><span class="at">headers</span>[<span class="st">'ip'</span>]</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  db<span class="op">.</span><span class="fu">incrementNRequests</span>(ip)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="cf">await</span> db<span class="op">.</span><span class="fu">nRequestsSince</span>(<span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>() <span class="op">-</span> <span class="dv">60000</span><span class="op">,</span> ip) <span class="op">&gt;</span> <span class="dv">100</span>) {</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> res<span class="op">.</span><span class="fu">send</span>(<span class="dv">423</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> loggingMiddleware <span class="op">=</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (req<span class="op">.</span><span class="at">isAdmin</span> <span class="op">||</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>() <span class="op">&lt;=</span> <span class="op">.</span><span class="dv">1</span>) {</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`request received </span><span class="sc">${</span>req<span class="op">.</span><span class="at">method</span><span class="sc">}</span><span class="vs"> </span><span class="sc">${</span>req<span class="op">.</span><span class="at">path</span><span class="sc">}\n${</span>req<span class="op">.</span><span class="at">body</span><span class="sc">}</span><span class="vs">`</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>This should morally disturb you. First of all, mutation is bad – or at least these days it’s fallen out of fashion (rightly so, in my opinion). Second of all <code>isAdmin</code> has nothing to do with an HTTP request, so it should seem unnatural to smuggle it onto an object purporting to represent an HTTP request.</p>
 <p>Moreover, there is a practical issue. The code is broken. <code>rateLimitingMiddleware</code> now implicitly depends on being run after <code>authorizationMiddleware</code> has run. Until I fix it and put authorizationMiddleware first, admins will not properly be exempted from the rate limit.</p>
 <p>So what does this look like without middlewares? (Well, with only the one…)</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">const</span> shouldRateLimit <span class="op">=</span> <span class="kw">async</span> (ip<span class="op">,</span> account) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a>  <span class="cf">return</span> <span class="op">!</span><span class="va">account</span>.<span class="at">isAdmin</span>() <span class="op">&amp;&amp;</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a>    <span class="cf">await</span> <span class="va">db</span>.<span class="at">nRequestsSince</span>(<span class="va">Date</span>.<span class="at">now</span>() <span class="op">-</span> <span class="dv">60000</span><span class="op">,</span> ip) <span class="op">&lt;</span> <span class="dv">100</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="op">}</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="kw">const</span> authorizedAccount <span class="op">=</span> <span class="kw">async</span> (authorization) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a>  <span class="cf">return</span> <span class="cf">await</span> <span class="va">db</span>.<span class="at">accountByAuthorization</span>(authorization)</span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="op">}</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="kw">const</span> emitLog <span class="op">=</span> (method<span class="op">,</span> path<span class="op">,</span> body<span class="op">,</span> account) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a>  <span class="cf">if</span> (<span class="va">account</span>.<span class="at">isAdmin</span>()) <span class="op">{</span> <span class="cf">return</span> <span class="op">}</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a>  <span class="cf">if</span> (<span class="va">Math</span>.<span class="at">random</span>() <span class="op">&lt;</span> <span class="fl">.1</span>) <span class="op">{</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a>    <span class="va">console</span>.<span class="at">log</span>(<span class="vs">`request received </span><span class="sc">${</span>method<span class="sc">}</span><span class="vs"> </span><span class="sc">${</span>path<span class="sc">}\n${</span>body<span class="sc">}</span><span class="vs">`</span>)</span>
-<span id="cb5-14"><a href="#cb5-14"></a>  <span class="op">}</span></span>
-<span id="cb5-15"><a href="#cb5-15"></a><span class="op">}</span></span>
-<span id="cb5-16"><a href="#cb5-16"></a></span>
-<span id="cb5-17"><a href="#cb5-17"></a><span class="kw">const</span> mw <span class="op">=</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb5-18"><a href="#cb5-18"></a>  <span class="kw">const</span> <span class="op">{</span>ip<span class="op">,</span> authorization<span class="op">}</span> <span class="op">=</span> <span class="va">req</span>.<span class="at">headers</span></span>
-<span id="cb5-19"><a href="#cb5-19"></a>  <span class="kw">const</span> <span class="op">{</span>method<span class="op">,</span> path<span class="op">,</span> body<span class="op">}</span> <span class="op">=</span> req</span>
-<span id="cb5-20"><a href="#cb5-20"></a></span>
-<span id="cb5-21"><a href="#cb5-21"></a>  <span class="kw">const</span> account <span class="op">=</span> <span class="at">authorizedAccount</span>(authorization)</span>
-<span id="cb5-22"><a href="#cb5-22"></a>  <span class="cf">if</span> (<span class="op">!</span>account) <span class="op">{</span> <span class="cf">return</span> <span class="va">res</span>.<span class="at">send</span>(<span class="dv">401</span>) <span class="op">}</span></span>
-<span id="cb5-23"><a href="#cb5-23"></a></span>
-<span id="cb5-24"><a href="#cb5-24"></a>  <span class="cf">if</span> (<span class="cf">await</span> <span class="at">shouldRateLimit</span>(ip<span class="op">,</span> account)) <span class="op">{</span></span>
-<span id="cb5-25"><a href="#cb5-25"></a>    <span class="cf">return</span> <span class="va">res</span>.<span class="at">send</span>(<span class="dv">423</span>)</span>
-<span id="cb5-26"><a href="#cb5-26"></a>  <span class="op">}</span></span>
-<span id="cb5-27"><a href="#cb5-27"></a></span>
-<span id="cb5-28"><a href="#cb5-28"></a>  <span class="at">emitLog</span>(method<span class="op">,</span> path<span class="op">,</span> body<span class="op">,</span> account)</span>
-<span id="cb5-29"><a href="#cb5-29"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> shouldRateLimit <span class="op">=</span> <span class="kw">async</span> (ip<span class="op">,</span> account) <span class="kw">=&gt;</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="op">!</span>account<span class="op">.</span><span class="fu">isAdmin</span>() <span class="op">&amp;&amp;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">await</span> db<span class="op">.</span><span class="fu">nRequestsSince</span>(<span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>() <span class="op">-</span> <span class="dv">60000</span><span class="op">,</span> ip) <span class="op">&lt;</span> <span class="dv">100</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> authorizedAccount <span class="op">=</span> <span class="kw">async</span> (authorization) <span class="kw">=&gt;</span> {</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="cf">await</span> db<span class="op">.</span><span class="fu">accountByAuthorization</span>(authorization)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> emitLog <span class="op">=</span> (method<span class="op">,</span> path<span class="op">,</span> body<span class="op">,</span> account) <span class="kw">=&gt;</span> {</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (account<span class="op">.</span><span class="fu">isAdmin</span>()) { <span class="cf">return</span> }</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>() <span class="op">&lt;</span> <span class="op">.</span><span class="dv">1</span>) {</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`request received </span><span class="sc">${</span>method<span class="sc">}</span><span class="vs"> </span><span class="sc">${</span>path<span class="sc">}\n${</span>body<span class="sc">}</span><span class="vs">`</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> mw <span class="op">=</span> <span class="kw">async</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> {ip<span class="op">,</span> authorization} <span class="op">=</span> req<span class="op">.</span><span class="at">headers</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> {method<span class="op">,</span> path<span class="op">,</span> body} <span class="op">=</span> req</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> account <span class="op">=</span> <span class="fu">authorizedAccount</span>(authorization)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>account) { <span class="cf">return</span> res<span class="op">.</span><span class="fu">send</span>(<span class="dv">401</span>) }</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="cf">await</span> <span class="fu">shouldRateLimit</span>(ip<span class="op">,</span> account)) {</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> res<span class="op">.</span><span class="fu">send</span>(<span class="dv">423</span>)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">emitLog</span>(method<span class="op">,</span> path<span class="op">,</span> body<span class="op">,</span> account)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>The equivalent bug here would involve writing e.g.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1"></a><span class="cf">if</span> (<span class="cf">await</span> <span class="at">shouldRateLimit</span>(ip<span class="op">,</span> account)) <span class="op">{</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a>  ...</span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="op">}</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="kw">const</span> account <span class="op">=</span> <span class="at">authorizedAccount</span>(authorization)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="cf">await</span> <span class="fu">shouldRateLimit</span>(ip<span class="op">,</span> account)) {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">...</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> account <span class="op">=</span> <span class="fu">authorizedAccount</span>(authorization)</span></code></pre></div>
 <p>which – defining a variable <code>account</code> before it is used is miles easier to spot. ESLint will catch it, if you don’t. Again, this is made possible by defining functions with <em>constrained</em> parameters and return values. Static analysis won’t get you very far on unconstrained “request” objects that are grab-bags of arbitrary properties.</p>
 <p>I hope this example convinces you, or resonates with your experience using middleware, even though the issues in my example are still quite mild. It becomes much worse in real applications, especially when you add more complications into the mix – admins being able to act as other accounts, resource-level rate-limits and ip restrictions, feature flags, and so on.</p>
 <h2 id="whence-cometh-this-darkness">Whence cometh this darkness?</h2>

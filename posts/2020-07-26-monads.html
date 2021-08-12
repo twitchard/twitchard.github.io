@@ -31,93 +31,93 @@ gtag('config', 'UA-149922579-1');
     </section>
     <section class="prose">
         <p>Mom would be ashamed of you if you wrote a function like</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">const</span> nameOfLandlordsDog <span class="op">=</span> person <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>  <span class="kw">const</span> landlord <span class="op">=</span> <span class="va">person</span>.<span class="at">landlord</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a>  <span class="cf">if</span> (<span class="op">!</span>landlord) <span class="cf">return</span> <span class="kw">null</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a>  <span class="kw">const</span> dog <span class="op">=</span> <span class="va">landlord</span>.<span class="at">dog</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a>  <span class="cf">if</span> (<span class="op">!</span>dog) <span class="cf">return</span> <span class="kw">null</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a>  <span class="cf">return</span> <span class="va">dog</span>.<span class="at">name</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> nameOfLandlordsDog <span class="op">=</span> person <span class="kw">=&gt;</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> landlord <span class="op">=</span> person<span class="op">.</span><span class="at">landlord</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>landlord) <span class="cf">return</span> <span class="kw">null</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> dog <span class="op">=</span> landlord<span class="op">.</span><span class="at">dog</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>dog) <span class="cf">return</span> <span class="kw">null</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> dog<span class="op">.</span><span class="at">name</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>For one thing, it’s Javascript. The neighbors might begin to talk if they found out about your double life as a Javascript enthusiast. What’s more, there’s too much <em>plumbing</em> in this function, too much <code>if (blah) return null</code>. Wouldn’t it be much better if you wrote something like</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">const</span> nameOfLandlordsDog <span class="op">=</span> person <span class="kw">=&gt;</span> person<span class="op">?</span>.<span class="at">landlord</span><span class="op">?</span>.<span class="at">dog</span><span class="op">?</span>.<span class="at">name</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> nameOfLandlordsDog <span class="op">=</span> person <span class="kw">=&gt;</span> person<span class="op">?.</span><span class="at">landlord</span><span class="op">?.</span><span class="at">dog</span><span class="op">?.</span><span class="at">name</span></span></code></pre></div>
 <p>The <code>?.</code> optional chaining operator is still technically “plumbing”. But the business logic here is much more apparent; moreover, this is significantly less Javascript, maybe even little enough to quell the growing rumors of your Javascriptian proclivities.</p>
 <p>You don’t really want to write this, either:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">const</span> bookMeeting <span class="op">=</span> (participants<span class="op">,</span> room<span class="op">,</span> details<span class="op">,</span> callback) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="cf">return</span> <span class="va">room</span>.<span class="va">calendar</span>.<span class="at">addMeeting</span>(details<span class="op">,</span> (err) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a>    <span class="cf">if</span> (err) <span class="cf">return</span> <span class="at">callback</span>(err)</span>
-<span id="cb3-4"><a href="#cb3-4"></a>    <span class="cf">return</span> <span class="kw">async</span>.<span class="at">map</span>(participants<span class="op">,</span> (participant<span class="op">,</span> callback) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a>      <span class="va">participant</span>.<span class="va">calendar</span>.<span class="at">addMeeting</span>(room<span class="op">,</span> details<span class="op">,</span> callback)</span>
-<span id="cb3-6"><a href="#cb3-6"></a>    <span class="op">},</span> (err) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb3-7"><a href="#cb3-7"></a>      <span class="cf">if</span> (err) <span class="cf">return</span> <span class="at">callback</span>(err)</span>
-<span id="cb3-8"><a href="#cb3-8"></a>      <span class="cf">return</span> <span class="kw">async</span>.<span class="at">map</span>(participants<span class="op">,</span> (participant<span class="op">,</span> callback) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a>        <span class="at">sendEmail</span>(<span class="va">participant</span>.<span class="at">email</span><span class="op">,</span> <span class="at">meetingEmail</span>(details)<span class="op">,</span> callback)</span>
-<span id="cb3-10"><a href="#cb3-10"></a>      <span class="op">},</span> callback)</span>
-<span id="cb3-11"><a href="#cb3-11"></a>    <span class="op">}</span>)</span>
-<span id="cb3-12"><a href="#cb3-12"></a>  <span class="op">}</span>)</span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> bookMeeting <span class="op">=</span> (participants<span class="op">,</span> room<span class="op">,</span> details<span class="op">,</span> callback) <span class="kw">=&gt;</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> room<span class="op">.</span><span class="at">calendar</span><span class="op">.</span><span class="fu">addMeeting</span>(details<span class="op">,</span> (err) <span class="kw">=&gt;</span> {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (err) <span class="cf">return</span> <span class="fu">callback</span>(err)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">async</span><span class="op">.</span><span class="fu">map</span>(participants<span class="op">,</span> (participant<span class="op">,</span> callback) <span class="kw">=&gt;</span> {</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      participant<span class="op">.</span><span class="at">calendar</span><span class="op">.</span><span class="fu">addMeeting</span>(room<span class="op">,</span> details<span class="op">,</span> callback)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span> (err) <span class="kw">=&gt;</span> {</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (err) <span class="cf">return</span> <span class="fu">callback</span>(err)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="kw">async</span><span class="op">.</span><span class="fu">map</span>(participants<span class="op">,</span> (participant<span class="op">,</span> callback) <span class="kw">=&gt;</span> {</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sendEmail</span>(participant<span class="op">.</span><span class="at">email</span><span class="op">,</span> <span class="fu">meetingEmail</span>(details)<span class="op">,</span> callback)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span> callback)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>This, too, is rife with plumbing. A <code>callback</code> parameter in every function call? An <code>if (err) return callback(err)</code> in every corner? Revolting! Do you kiss your mother with that Javascript?</p>
 <p>It would be far more pleasant if you wrote:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">const</span> bookMeeting <span class="op">=</span> <span class="kw">async</span> (participants<span class="op">,</span> room<span class="op">,</span> details) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>  <span class="cf">await</span> <span class="va">room</span>.<span class="va">calendar</span>.<span class="at">addMeeting</span>(details)</span>
-<span id="cb4-3"><a href="#cb4-3"></a>  <span class="cf">await</span> <span class="va">Promise</span>.<span class="at">all</span>(<span class="va">participants</span>.<span class="at">map</span>(participant <span class="kw">=&gt;</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a>    <span class="va">participant</span>.<span class="va">calendar</span>.<span class="at">addMeeting</span>(details)</span>
-<span id="cb4-5"><a href="#cb4-5"></a>  ))</span>
-<span id="cb4-6"><a href="#cb4-6"></a>  <span class="cf">await</span> <span class="va">Promise</span>.<span class="at">all</span>(<span class="va">participants</span>.<span class="at">map</span>(participant <span class="kw">=&gt;</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a>    <span class="at">sendEmail</span>(<span class="va">participant</span>.<span class="at">email</span><span class="op">,</span> <span class="at">meetingEmail</span>(details))</span>
-<span id="cb4-8"><a href="#cb4-8"></a>  ))</span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> bookMeeting <span class="op">=</span> <span class="kw">async</span> (participants<span class="op">,</span> room<span class="op">,</span> details) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">await</span> room<span class="op">.</span><span class="at">calendar</span><span class="op">.</span><span class="fu">addMeeting</span>(details)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">await</span> <span class="bu">Promise</span><span class="op">.</span><span class="fu">all</span>(participants<span class="op">.</span><span class="fu">map</span>(participant <span class="kw">=&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    participant<span class="op">.</span><span class="at">calendar</span><span class="op">.</span><span class="fu">addMeeting</span>(details)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">await</span> <span class="bu">Promise</span><span class="op">.</span><span class="fu">all</span>(participants<span class="op">.</span><span class="fu">map</span>(participant <span class="kw">=&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sendEmail</span>(participant<span class="op">.</span><span class="at">email</span><span class="op">,</span> <span class="fu">meetingEmail</span>(details))</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Again, “await” is plumbing, but much more succinct plumbing. Mom will forgive you, this once.</p>
 <p>She is, however, a real stickler for transactionality. I wouldn’t be surprised if she asked you for a version of <code>bookMeeting</code> that rolls back if an operation is not successful.</p>
 <p>Here what you <strong>don’t</strong> want to write:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">const</span> bookMeeting <span class="op">=</span> <span class="kw">async</span> (participants<span class="op">,</span> room<span class="op">,</span> details) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a>  <span class="cf">await</span> <span class="va">room</span>.<span class="va">calendar</span>.<span class="at">addMeeting</span>(details)</span>
-<span id="cb5-3"><a href="#cb5-3"></a>  <span class="cf">try</span> <span class="op">{</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a>    <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="va">participants</span>.<span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) <span class="op">{</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a>      <span class="cf">try</span> <span class="op">{</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a>        <span class="cf">await</span> participants[i].<span class="va">calendar</span>.<span class="at">addMeeting</span>(details)</span>
-<span id="cb5-7"><a href="#cb5-7"></a>      <span class="op">}</span> <span class="cf">catch</span> (e) <span class="op">{</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a>        <span class="cf">for</span> (<span class="kw">let</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> i<span class="op">;</span> j<span class="op">++</span>) <span class="op">{</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a>          <span class="cf">await</span> participants[j].<span class="va">calendar</span>.<span class="at">removeMeeting</span>(details)</span>
-<span id="cb5-10"><a href="#cb5-10"></a>        <span class="op">}</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a>        <span class="cf">throw</span> e</span>
-<span id="cb5-12"><a href="#cb5-12"></a>      <span class="op">}</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a>    <span class="op">}</span></span>
-<span id="cb5-14"><a href="#cb5-14"></a></span>
-<span id="cb5-15"><a href="#cb5-15"></a>    <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="va">participants</span>.<span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) <span class="op">{</span></span>
-<span id="cb5-16"><a href="#cb5-16"></a>      <span class="cf">try</span> <span class="op">{</span></span>
-<span id="cb5-17"><a href="#cb5-17"></a>        <span class="cf">await</span> <span class="at">sendEmail</span>(participants[i].<span class="at">email</span><span class="op">,</span> <span class="at">meetingEmail</span>(details))</span>
-<span id="cb5-18"><a href="#cb5-18"></a>      <span class="op">}</span> <span class="cf">catch</span> (e) <span class="op">{</span></span>
-<span id="cb5-19"><a href="#cb5-19"></a>        <span class="cf">for</span> (<span class="kw">let</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> i<span class="op">;</span> j<span class="op">++</span>) <span class="op">{</span></span>
-<span id="cb5-20"><a href="#cb5-20"></a>          <span class="cf">await</span> <span class="at">sendEmail</span>(participants[j].<span class="at">email</span><span class="op">,</span> <span class="at">cancelMeetingEmail</span>(details))</span>
-<span id="cb5-21"><a href="#cb5-21"></a>        <span class="op">}</span></span>
-<span id="cb5-22"><a href="#cb5-22"></a>        <span class="cf">for</span> (<span class="kw">let</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> <span class="va">participants</span>.<span class="at">length</span><span class="op">;</span> j<span class="op">++</span>) <span class="op">{</span></span>
-<span id="cb5-23"><a href="#cb5-23"></a>          <span class="cf">await</span> participants[j].<span class="va">calendar</span>.<span class="at">removeMeeting</span>(details)</span>
-<span id="cb5-24"><a href="#cb5-24"></a>        <span class="op">}</span></span>
-<span id="cb5-25"><a href="#cb5-25"></a>        <span class="cf">throw</span> e</span>
-<span id="cb5-26"><a href="#cb5-26"></a>      <span class="op">}</span></span>
-<span id="cb5-27"><a href="#cb5-27"></a>    <span class="op">}</span></span>
-<span id="cb5-28"><a href="#cb5-28"></a>  <span class="op">}</span> <span class="cf">catch</span> (e) <span class="op">{</span></span>
-<span id="cb5-29"><a href="#cb5-29"></a>    <span class="cf">await</span> <span class="va">room</span>.<span class="va">calendar</span>.<span class="at">removeMeeting</span>(details)</span>
-<span id="cb5-30"><a href="#cb5-30"></a>    <span class="cf">throw</span> e</span>
-<span id="cb5-31"><a href="#cb5-31"></a>  <span class="op">}</span></span>
-<span id="cb5-32"><a href="#cb5-32"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> bookMeeting <span class="op">=</span> <span class="kw">async</span> (participants<span class="op">,</span> room<span class="op">,</span> details) <span class="kw">=&gt;</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">await</span> room<span class="op">.</span><span class="at">calendar</span><span class="op">.</span><span class="fu">addMeeting</span>(details)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">try</span> {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> participants<span class="op">.</span><span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>      <span class="cf">try</span> {</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">await</span> participants[i]<span class="op">.</span><span class="at">calendar</span><span class="op">.</span><span class="fu">addMeeting</span>(details)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      } <span class="cf">catch</span> (e) {</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> (<span class="kw">let</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> i<span class="op">;</span> j<span class="op">++</span>) {</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>          <span class="cf">await</span> participants[j]<span class="op">.</span><span class="at">calendar</span><span class="op">.</span><span class="fu">removeMeeting</span>(details)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">throw</span> e</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> participants<span class="op">.</span><span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>      <span class="cf">try</span> {</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">await</span> <span class="fu">sendEmail</span>(participants[i]<span class="op">.</span><span class="at">email</span><span class="op">,</span> <span class="fu">meetingEmail</span>(details))</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>      } <span class="cf">catch</span> (e) {</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> (<span class="kw">let</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> i<span class="op">;</span> j<span class="op">++</span>) {</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>          <span class="cf">await</span> <span class="fu">sendEmail</span>(participants[j]<span class="op">.</span><span class="at">email</span><span class="op">,</span> <span class="fu">cancelMeetingEmail</span>(details))</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> (<span class="kw">let</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> participants<span class="op">.</span><span class="at">length</span><span class="op">;</span> j<span class="op">++</span>) {</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>          <span class="cf">await</span> participants[j]<span class="op">.</span><span class="at">calendar</span><span class="op">.</span><span class="fu">removeMeeting</span>(details)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">throw</span> e</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">catch</span> (e) {</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">await</span> room<span class="op">.</span><span class="at">calendar</span><span class="op">.</span><span class="fu">removeMeeting</span>(details)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">throw</span> e</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>It’s a monstrosity! It is littered with <code>try</code> and <code>catch</code>. That <code>for</code> loop is obscene! Show that to Mom, and she’ll have a lawyer over by lunch time to draw up her will, just so she can write you out of it.</p>
 <p>You’re better off with something like:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">const</span> bookMeeting <span class="op">=</span> (transaction<span class="op">,</span> participants<span class="op">,</span> room<span class="op">,</span> details) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a>  <span class="va">room</span>.<span class="va">calendar</span>.<span class="at">addMeeting</span>(transaction<span class="op">,</span> details)</span>
-<span id="cb6-3"><a href="#cb6-3"></a>  <span class="va">participants</span>.<span class="at">map</span>(participant <span class="kw">=&gt;</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a>    <span class="va">participant</span>.<span class="va">calendar</span>.<span class="at">addMeeting</span>(transaction<span class="op">,</span> details)</span>
-<span id="cb6-5"><a href="#cb6-5"></a>  )</span>
-<span id="cb6-6"><a href="#cb6-6"></a>  <span class="va">participants</span>.<span class="at">map</span>(participant <span class="kw">=&gt;</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a>    <span class="at">sendEmail</span>(transaction<span class="op">,</span> <span class="va">participant</span>.<span class="at">email</span><span class="op">,</span> <span class="at">meetingEmail</span>(details)</span>
-<span id="cb6-8"><a href="#cb6-8"></a>  )</span>
-<span id="cb6-9"><a href="#cb6-9"></a>  <span class="cf">return</span> transaction</span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="op">}</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="co">// And then the caller can do e.g.</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a></span>
-<span id="cb6-13"><a href="#cb6-13"></a><span class="kw">const</span> tx <span class="op">=</span> <span class="at">newTransaction</span>()</span>
-<span id="cb6-14"><a href="#cb6-14"></a><span class="at">bookMeeting</span>(tx<span class="op">,</span> participants<span class="op">,</span> room<span class="op">,</span> details)</span>
-<span id="cb6-15"><a href="#cb6-15"></a><span class="cf">await</span> <span class="va">tx</span>.<span class="at">run</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> bookMeeting <span class="op">=</span> (transaction<span class="op">,</span> participants<span class="op">,</span> room<span class="op">,</span> details) <span class="kw">=&gt;</span> {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  room<span class="op">.</span><span class="at">calendar</span><span class="op">.</span><span class="fu">addMeeting</span>(transaction<span class="op">,</span> details)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  participants<span class="op">.</span><span class="fu">map</span>(participant <span class="kw">=&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    participant<span class="op">.</span><span class="at">calendar</span><span class="op">.</span><span class="fu">addMeeting</span>(transaction<span class="op">,</span> details)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  participants<span class="op">.</span><span class="fu">map</span>(participant <span class="kw">=&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sendEmail</span>(transaction<span class="op">,</span> participant<span class="op">.</span><span class="at">email</span><span class="op">,</span> <span class="fu">meetingEmail</span>(details)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> transaction</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">// And then the caller can do e.g.</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tx <span class="op">=</span> <span class="fu">newTransaction</span>()</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">bookMeeting</span>(tx<span class="op">,</span> participants<span class="op">,</span> room<span class="op">,</span> details)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> tx<span class="op">.</span><span class="fu">run</span>()</span></code></pre></div>
 <p>You have to implement the right <code>newTransaction</code> and the right <code>.run</code>, and lug this magical “transaction” object around, and implement <code>addMeeting</code> and <code>runMeeting</code> to interact with the transaction correctly, but in the end it’s worth it, the plumbing is much reduced. Explicit praise from Mom might be too much to hope for, but perhaps a half-smile, laced with the merest hint of approval? That could go a long way.</p>
 <p>If we’re really going to lock in that half-smile, though, we’re going to have to do more.</p>
 <p>We addressed one type of plumbing with <code>?.</code>, another type of plumbing with <code>async/await</code>, and another type of plumbing with a handcrafted <code>transaction</code> object. What if there were some single abstraction that captured this idea of “plumbing” more generally? Wouldn’t it be incredible?</p>
@@ -125,60 +125,60 @@ gtag('config', 'UA-149922579-1');
 <p>What are monads, exactly? Don’t worry about that, for now. That’s kind of like asking “what is TCP, exactly?” You can use TCP to reliably send messages over a network, and that’s really all you need to know to get started. Sure, one fine morning you’ll wake up to servers crashing down around your ears for reasons involving something called <code>TIME_WAIT</code>, and on that day you’ll begin to tackle the remainder of what there is to know about TCP, but the inevitability of that day shouldn’t prevent you from living a happy, carefree life in the meanwhile. Similarly, all you need to know about monads to get started – as far as I am concerned, anyway – is that you can use them to define the “plumbing” inside your code separately from defining those sequences of operations that your “plumbing” connects. Where “plumbing” can be anything from “short-circuit when an operation returns a null”, or “short-circuit when an operation returns an error”, or “short-circuit when an operation returns an error and roll back all the previous operations”, or even “when an operation returns multiple results, feed each of those results separately into the next operation”</p>
 <p>So let’s recap all the examples in this blog post, but do it in Haskell, which has good support for monads. Don’t worry if you’re not familiar with Haskell – the point isn’t that you will follow and understand every statement, but that you can see the “before” and “after” of Monads removing the “plumbing” from the implementations.</p>
 <p>Here is <code>nameOfLandlordsDog</code> again, without monads, but in Haskell:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1"></a><span class="ot">nameOfLandlordsDog ::</span> <span class="dt">Person</span> <span class="ot">-&gt;</span> <span class="dt">Maybe</span> <span class="dt">String</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a>nameOfLandlordsDog person <span class="ot">=</span> </span>
-<span id="cb7-3"><a href="#cb7-3"></a>  <span class="kw">case</span> landlordOf person <span class="kw">of</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a>    <span class="dt">Nothing</span> <span class="ot">-&gt;</span> <span class="dt">Nothing</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a>    <span class="dt">Just</span> landlord <span class="ot">-&gt;</span> <span class="kw">case</span> dogOf landlord <span class="kw">of</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a>      <span class="dt">Nothing</span> <span class="ot">-&gt;</span> <span class="dt">Nothing</span></span>
-<span id="cb7-7"><a href="#cb7-7"></a>      <span class="dt">Just</span> dog <span class="ot">-&gt;</span> <span class="kw">case</span> nameOf dog <span class="kw">of</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a>        <span class="dt">Nothing</span> <span class="ot">-&gt;</span> <span class="dt">Nothing</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a>        <span class="dt">Just</span> name <span class="ot">-&gt;</span> <span class="dt">Just</span> name</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ot">nameOfLandlordsDog ::</span> <span class="dt">Person</span> <span class="ot">-&gt;</span> <span class="dt">Maybe</span> <span class="dt">String</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>nameOfLandlordsDog person <span class="ot">=</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">case</span> landlordOf person <span class="kw">of</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Nothing</span> <span class="ot">-&gt;</span> <span class="dt">Nothing</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Just</span> landlord <span class="ot">-&gt;</span> <span class="kw">case</span> dogOf landlord <span class="kw">of</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">Nothing</span> <span class="ot">-&gt;</span> <span class="dt">Nothing</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">Just</span> dog <span class="ot">-&gt;</span> <span class="kw">case</span> nameOf dog <span class="kw">of</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">Nothing</span> <span class="ot">-&gt;</span> <span class="dt">Nothing</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">Just</span> name <span class="ot">-&gt;</span> <span class="dt">Just</span> name</span></code></pre></div>
 <p>Even more plumbing-ridden than <code>if (!blah) return null</code>, right? Luckily, because <code>Maybe</code> is a monad, you can instead write:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1"></a>nameOfLandlordsDog person <span class="ot">=</span> nameOf <span class="op">=&lt;&lt;</span> dogOf <span class="op">=&lt;&lt;</span> landlordOf person</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>nameOfLandlordsDog person <span class="ot">=</span> nameOf <span class="op">=&lt;&lt;</span> dogOf <span class="op">=&lt;&lt;</span> landlordOf person</span></code></pre></div>
 <p>Where <code>=&lt;&lt;</code> is like Javascript’s <code>?.</code>. It is the (reverse) monadic “bind” operator that combines operations together, according to the particular “plumbing” of the monad they are in. For the <code>Maybe</code> monad, the plumbing behavior is “short circuit on Nothing”.</p>
 <p>Using <code>=&lt;&lt;</code> (or its twin <code>&gt;&gt;=</code>) is a good way to succinctly string together simple sequences of operations that return <code>Maybe</code> or other monads. But Haskell has a special notation called “do notation” that is often more readable when you have to combine the results of operations in a more complicated way than simple sequencing. So here is <code>nameOfLandlordsDog</code> with do notation:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1"></a><span class="ot">nameOfLandlordsDog ::</span> <span class="dt">Person</span> <span class="ot">-&gt;</span> <span class="dt">Maybe</span> <span class="dt">String</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a>nameOfLandlordsDog person <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a>  landlord <span class="ot">&lt;-</span> landlordOf person</span>
-<span id="cb9-4"><a href="#cb9-4"></a>  dog <span class="ot">&lt;-</span> dogOf landlord</span>
-<span id="cb9-5"><a href="#cb9-5"></a>  nameOf dog</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ot">nameOfLandlordsDog ::</span> <span class="dt">Person</span> <span class="ot">-&gt;</span> <span class="dt">Maybe</span> <span class="dt">String</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>nameOfLandlordsDog person <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  landlord <span class="ot">&lt;-</span> landlordOf person</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  dog <span class="ot">&lt;-</span> dogOf landlord</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  nameOf dog</span></code></pre></div>
 <p>This isn’t as succinct as the <code>=&lt;&lt;</code> version, but it is still pretty cool. The equivalent in Javascript would be if there were this magical “plumbing” keyword that let you write e.g.:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">const</span> nameOfLandlordsDog <span class="op">=</span> (person) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a>  <span class="at">plumbing</span> (shortcircuit_nulls) <span class="op">{</span></span>
-<span id="cb10-3"><a href="#cb10-3"></a>    <span class="kw">const</span> landlord <span class="op">=</span> <span class="va">person</span>.<span class="at">landlord</span></span>
-<span id="cb10-4"><a href="#cb10-4"></a>    <span class="kw">const</span> dog <span class="op">=</span> <span class="va">landlord</span>.<span class="at">dog</span></span>
-<span id="cb10-5"><a href="#cb10-5"></a>    <span class="cf">return</span> <span class="va">dog</span>.<span class="at">name</span></span>
-<span id="cb10-6"><a href="#cb10-6"></a>  <span class="op">}</span></span>
-<span id="cb10-7"><a href="#cb10-7"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> nameOfLandlordsDog <span class="op">=</span> (person) <span class="kw">=&gt;</span> {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plumbing</span> (shortcircuit_nulls) {</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> landlord <span class="op">=</span> person<span class="op">.</span><span class="at">landlord</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> dog <span class="op">=</span> landlord<span class="op">.</span><span class="at">dog</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dog<span class="op">.</span><span class="at">name</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>and then you can just write your code so you just don’t have to worry about short-circuiting on nulls.</p>
 <p>So now let’s move on to the next example: <code>bookMeeting</code>. Here it is in Haskell, written with callbacks (or in <a href="https://en.wikipedia.org/wiki/Continuation-passing_style">“continuation-passing style”</a>, which is the fancy way to say “callbacks”). You wouldn’t write Haskell with callbacks in typical circumstances, but for the sake of the example here it is (<a href="https://repl.it/@twitchard/MomAndMonads#bookMeetingCallbacks.hs">full example</a>):</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1"></a><span class="ot">bookMeeting ::</span> [<span class="dt">Person</span>] <span class="ot">-&gt;</span> <span class="dt">Room</span> <span class="ot">-&gt;</span> <span class="dt">Details</span> <span class="ot">-&gt;</span> (<span class="dt">Either</span> <span class="dt">String</span> () <span class="ot">-&gt;</span> <span class="dt">IO</span> r) <span class="ot">-&gt;</span> <span class="dt">IO</span> r</span>
-<span id="cb11-2"><a href="#cb11-2"></a>bookMeeting participants room details callback <span class="ot">=</span> </span>
-<span id="cb11-3"><a href="#cb11-3"></a>  addMeeting details (calendarOf room) <span class="op">$</span> \result <span class="ot">-&gt;</span> <span class="kw">case</span> result <span class="kw">of</span></span>
-<span id="cb11-4"><a href="#cb11-4"></a>    <span class="dt">Left</span> err <span class="ot">-&gt;</span> callback (<span class="dt">Left</span> err)</span>
-<span id="cb11-5"><a href="#cb11-5"></a>    <span class="dt">Right</span> () <span class="ot">-&gt;</span> forEach participants </span>
-<span id="cb11-6"><a href="#cb11-6"></a>      (\p <span class="ot">-&gt;</span> addMeeting details (calendarOf p)) <span class="op">$</span> \results <span class="ot">-&gt;</span></span>
-<span id="cb11-7"><a href="#cb11-7"></a>        <span class="kw">case</span> results <span class="kw">of</span></span>
-<span id="cb11-8"><a href="#cb11-8"></a>          <span class="dt">Left</span> err <span class="ot">-&gt;</span> callback (<span class="dt">Left</span> err)</span>
-<span id="cb11-9"><a href="#cb11-9"></a>          <span class="dt">Right</span> _ <span class="ot">-&gt;</span> forEach participants (\p <span class="ot">-&gt;</span></span>
-<span id="cb11-10"><a href="#cb11-10"></a>            sendEmail details (emailOf p)) callback</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ot">bookMeeting ::</span> [<span class="dt">Person</span>] <span class="ot">-&gt;</span> <span class="dt">Room</span> <span class="ot">-&gt;</span> <span class="dt">Details</span> <span class="ot">-&gt;</span> (<span class="dt">Either</span> <span class="dt">String</span> () <span class="ot">-&gt;</span> <span class="dt">IO</span> r) <span class="ot">-&gt;</span> <span class="dt">IO</span> r</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>bookMeeting participants room details callback <span class="ot">=</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  addMeeting details (calendarOf room) <span class="op">$</span> \result <span class="ot">-&gt;</span> <span class="kw">case</span> result <span class="kw">of</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Left</span> err <span class="ot">-&gt;</span> callback (<span class="dt">Left</span> err)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Right</span> () <span class="ot">-&gt;</span> forEach participants </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>      (\p <span class="ot">-&gt;</span> addMeeting details (calendarOf p)) <span class="op">$</span> \results <span class="ot">-&gt;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">case</span> results <span class="kw">of</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>          <span class="dt">Left</span> err <span class="ot">-&gt;</span> callback (<span class="dt">Left</span> err)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>          <span class="dt">Right</span> _ <span class="ot">-&gt;</span> forEach participants (\p <span class="ot">-&gt;</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>            sendEmail details (emailOf p)) callback</span></code></pre></div>
 <p>Again, the plumbing here is out of control. Mom is irate! If you’re going to write code like this, why don’t you just do in it Javascript, or dance on her grave?</p>
 <p>Luckily for us, Haskell has a monad that captures “callbacks that short-circuit on error”. This monad is called <code>ExceptT Error (ContT r IO)</code>, and the reason it has such a confusing name is because it’s actually a combination of three monads: <code>Except String</code>, which is the monad that captures short-circuiting on errors (specifically, errors of type String), <code>Cont</code>, which is the monad that captures sequential execution of functions that accept callbacks, and <code>IO</code>, which is the monad that lets you do IO – access the network and the operating system and stuff.</p>
 <p>So first, with a bit of boilerplate, we can wrap the callbacky <code>addMeeting</code> and <code>sendEmail</code> operations in this monad:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1"></a><span class="ot">addMeeting ::</span> <span class="dt">Details</span> <span class="ot">-&gt;</span> <span class="dt">Calendar</span> <span class="ot">-&gt;</span> <span class="dt">ExceptT</span> <span class="dt">String</span> (<span class="dt">ContT</span> r <span class="dt">IO</span>) ()</span>
-<span id="cb12-2"><a href="#cb12-2"></a>addMeeting details calendar <span class="ot">=</span></span>
-<span id="cb12-3"><a href="#cb12-3"></a>  <span class="dt">ExceptT</span> <span class="op">.</span> <span class="dt">ContT</span> <span class="op">.</span> Callbacks.addMeeting details <span class="op">$</span> calendar</span>
-<span id="cb12-4"><a href="#cb12-4"></a></span>
-<span id="cb12-5"><a href="#cb12-5"></a><span class="ot">sendEmail ::</span> <span class="dt">Details</span> <span class="ot">-&gt;</span> <span class="dt">Email</span> <span class="ot">-&gt;</span> <span class="dt">ExceptT</span> <span class="dt">String</span> (<span class="dt">ContT</span> r <span class="dt">IO</span>) ()</span>
-<span id="cb12-6"><a href="#cb12-6"></a>sendEmail details email <span class="ot">=</span></span>
-<span id="cb12-7"><a href="#cb12-7"></a>  <span class="dt">ExceptT</span> <span class="op">.</span> <span class="dt">ContT</span> <span class="op">.</span> Callbacks.sendEmail details <span class="op">$</span> email</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ot">addMeeting ::</span> <span class="dt">Details</span> <span class="ot">-&gt;</span> <span class="dt">Calendar</span> <span class="ot">-&gt;</span> <span class="dt">ExceptT</span> <span class="dt">String</span> (<span class="dt">ContT</span> r <span class="dt">IO</span>) ()</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>addMeeting details calendar <span class="ot">=</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">ExceptT</span> <span class="op">.</span> <span class="dt">ContT</span> <span class="op">.</span> Callbacks.addMeeting details <span class="op">$</span> calendar</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ot">sendEmail ::</span> <span class="dt">Details</span> <span class="ot">-&gt;</span> <span class="dt">Email</span> <span class="ot">-&gt;</span> <span class="dt">ExceptT</span> <span class="dt">String</span> (<span class="dt">ContT</span> r <span class="dt">IO</span>) ()</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>sendEmail details email <span class="ot">=</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">ExceptT</span> <span class="op">.</span> <span class="dt">ContT</span> <span class="op">.</span> Callbacks.sendEmail details <span class="op">$</span> email</span></code></pre></div>
 <p>then we can implement <code>bookMeeting</code> again, plumbing-free:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1"></a><span class="ot">bookMeeting ::</span> [<span class="dt">Person</span>] <span class="ot">-&gt;</span> <span class="dt">Room</span> <span class="ot">-&gt;</span> <span class="dt">Details</span> <span class="ot">-&gt;</span> <span class="dt">ExceptT</span> <span class="dt">String</span> (<span class="dt">Cont</span> r) ()</span>
-<span id="cb13-2"><a href="#cb13-2"></a>bookMeeting participants room details <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a>  addMeeting details (calendarOf room)</span>
-<span id="cb13-4"><a href="#cb13-4"></a>  for_ participants ((addMeeting details) <span class="op">.</span> calendarOf)</span>
-<span id="cb13-5"><a href="#cb13-5"></a>  for_ participants ((sendEmail details) <span class="op">.</span> emailOf)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ot">bookMeeting ::</span> [<span class="dt">Person</span>] <span class="ot">-&gt;</span> <span class="dt">Room</span> <span class="ot">-&gt;</span> <span class="dt">Details</span> <span class="ot">-&gt;</span> <span class="dt">ExceptT</span> <span class="dt">String</span> (<span class="dt">Cont</span> r) ()</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>bookMeeting participants room details <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  addMeeting details (calendarOf room)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  for_ participants ((addMeeting details) <span class="op">.</span> calendarOf)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  for_ participants ((sendEmail details) <span class="op">.</span> emailOf)</span></code></pre></div>
 <p>Much better! Mom won’t dismember you for this. She might not even disown you.</p>
 <p>Now for the pièce de résistance! Let’s do <code>bookMeeting</code> with rollbacks. There isn’t a standard monad for “rollback” behavior as far as I am aware, so we’re going to have to build it up ourselves, out of smaller monads.</p>
 <p>But what does <code>Rollbackable</code> mean? It means when a failure occurs, you short-circuit and reverse all the operations leading up to the failure. Let’s break this down into two parts:</p>
@@ -187,87 +187,87 @@ gtag('config', 'UA-149922579-1');
 <li>“reverse all the operations” probably doesn’t sound familiar. But the right monad for the job here is the <code>Writer</code> monad, which you can think of as capturing the idea of “emitting” while your sequence of operations executes. The classic example of something to “emit” with the Writer monad is log statements, but in this case, what we’ll be emitting is “undo instructions”. That is, as each operation executes, if it is successful, it should “emit” its inverse, so to speak, and then if any operation fails, we should take that list of emitted inverse operations and run that (in reverse). (For this example, we’ll ignore failures of the inverses, but in a real application you’d likely want to attempt to report corruption if the rollback failed)</li>
 </ol>
 <p>So we can define <code>Rollbackable</code> by combining “Except” and “Writer”, like this:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">type</span> <span class="dt">InverseOperation</span> <span class="ot">=</span> <span class="dt">ExceptT</span> <span class="dt">String</span> <span class="dt">IO</span> ()</span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="kw">type</span> <span class="dt">Rollbackable</span> <span class="ot">=</span></span>
-<span id="cb14-3"><a href="#cb14-3"></a>  <span class="dt">ExceptT</span> <span class="dt">String</span> </span>
-<span id="cb14-4"><a href="#cb14-4"></a>    ( <span class="dt">WriterT</span> [<span class="dt">InverseOperation</span>]</span>
-<span id="cb14-5"><a href="#cb14-5"></a>      <span class="dt">IO</span></span>
-<span id="cb14-6"><a href="#cb14-6"></a>    )</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">InverseOperation</span> <span class="ot">=</span> <span class="dt">ExceptT</span> <span class="dt">String</span> <span class="dt">IO</span> ()</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Rollbackable</span> <span class="ot">=</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">ExceptT</span> <span class="dt">String</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    ( <span class="dt">WriterT</span> [<span class="dt">InverseOperation</span>]</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">IO</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
 <p>Let’s break this apart from the inside. <code>IO</code> is the monad in haskell that is allowed to do IO – i.e. it can write to databases, send http requests, access the filesystem, etc. So we wrap that in <code>WriterT [InverseOperation]</code>. This adds the ability to “emit” things of type <code>InverseOperation</code>. Then we wrap all this <code>ExceptT String</code>, which adds the ability to error to short-circuit execution (and trigger the rollback).</p>
 <p>The definition of <code>InverseOperation</code> is <code>ExceptT String IO ()</code> – our rollbacks can fail, too. And when an attempt to roll back fails, we should short-circuit.</p>
 <p>So now we need to define versions of <code>addMeeting</code> and <code>sendEmail</code> that produce values in this monad. Assume that we have non-rollbackable operations defined like:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1"></a><span class="ot">addMeeting_ ::</span> <span class="dt">Details</span> <span class="ot">-&gt;</span> <span class="dt">Calendar</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> (<span class="dt">Either</span> <span class="dt">String</span> ())</span>
-<span id="cb15-2"><a href="#cb15-2"></a>addMeeting_ details (<span class="dt">Calendar</span> c) <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">putStrLn</span> <span class="op">$</span> <span class="st">&quot;Adding meeting to calendar &quot;</span> <span class="op">&lt;&gt;</span> c</span>
-<span id="cb15-4"><a href="#cb15-4"></a>  <span class="fu">return</span> (<span class="dt">Right</span> ())</span>
-<span id="cb15-5"><a href="#cb15-5"></a>  </span>
-<span id="cb15-6"><a href="#cb15-6"></a><span class="ot">sendEmail_ ::</span> <span class="dt">Details</span> <span class="ot">-&gt;</span> <span class="dt">Email</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> (<span class="dt">Either</span> <span class="dt">String</span> ())</span>
-<span id="cb15-7"><a href="#cb15-7"></a>sendEmail_ details (<span class="dt">Email</span> e) <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb15-8"><a href="#cb15-8"></a>  <span class="fu">putStrLn</span> <span class="op">$</span> <span class="st">&quot;Queueing email to email address &quot;</span> <span class="op">&lt;&gt;</span> e</span>
-<span id="cb15-9"><a href="#cb15-9"></a>  <span class="kw">if</span> (e <span class="op">==</span> <span class="st">&quot;pope&quot;</span>)</span>
-<span id="cb15-10"><a href="#cb15-10"></a>    <span class="kw">then</span> <span class="fu">putStrLn</span> <span class="st">&quot;failed&quot;</span> <span class="op">&gt;&gt;</span> <span class="fu">return</span> (<span class="dt">Left</span> <span class="st">&quot;failed&quot;</span>)</span>
-<span id="cb15-11"><a href="#cb15-11"></a>    <span class="kw">else</span> <span class="fu">return</span> (<span class="dt">Right</span> ())</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ot">addMeeting_ ::</span> <span class="dt">Details</span> <span class="ot">-&gt;</span> <span class="dt">Calendar</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> (<span class="dt">Either</span> <span class="dt">String</span> ())</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>addMeeting_ details (<span class="dt">Calendar</span> c) <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">putStrLn</span> <span class="op">$</span> <span class="st">&quot;Adding meeting to calendar &quot;</span> <span class="op">&lt;&gt;</span> c</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span> (<span class="dt">Right</span> ())</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="ot">sendEmail_ ::</span> <span class="dt">Details</span> <span class="ot">-&gt;</span> <span class="dt">Email</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> (<span class="dt">Either</span> <span class="dt">String</span> ())</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>sendEmail_ details (<span class="dt">Email</span> e) <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">putStrLn</span> <span class="op">$</span> <span class="st">&quot;Queueing email to email address &quot;</span> <span class="op">&lt;&gt;</span> e</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> (e <span class="op">==</span> <span class="st">&quot;pope&quot;</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">then</span> <span class="fu">putStrLn</span> <span class="st">&quot;failed&quot;</span> <span class="op">&gt;&gt;</span> <span class="fu">return</span> (<span class="dt">Left</span> <span class="st">&quot;failed&quot;</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">else</span> <span class="fu">return</span> (<span class="dt">Right</span> ())</span></code></pre></div>
 <p>And then we also define their inverses:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb16-1"><a href="#cb16-1"></a><span class="ot">removeMeeting_ ::</span> <span class="dt">Details</span> <span class="ot">-&gt;</span> <span class="dt">Calendar</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> (<span class="dt">Either</span> <span class="dt">String</span> ())</span>
-<span id="cb16-2"><a href="#cb16-2"></a>removeMeeting_ details (<span class="dt">Calendar</span> c) <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">putStrLn</span> <span class="op">$</span> <span class="st">&quot;Removing meeting from calendar &quot;</span> <span class="op">&lt;&gt;</span> c</span>
-<span id="cb16-4"><a href="#cb16-4"></a>  <span class="fu">return</span> (<span class="dt">Right</span> ())</span>
-<span id="cb16-5"><a href="#cb16-5"></a></span>
-<span id="cb16-6"><a href="#cb16-6"></a><span class="ot">sendCancelEmail_ ::</span> <span class="dt">Details</span> <span class="ot">-&gt;</span> <span class="dt">Email</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> (<span class="dt">Either</span> <span class="dt">String</span> ())</span>
-<span id="cb16-7"><a href="#cb16-7"></a>sendCancelEmail_ details (<span class="dt">Email</span> e) <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb16-8"><a href="#cb16-8"></a>  <span class="fu">putStrLn</span> <span class="op">$</span> <span class="st">&quot;Queueing cancel email to email address &quot;</span> <span class="op">&lt;&gt;</span> e</span>
-<span id="cb16-9"><a href="#cb16-9"></a>  <span class="fu">return</span> (<span class="dt">Right</span> ())</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ot">removeMeeting_ ::</span> <span class="dt">Details</span> <span class="ot">-&gt;</span> <span class="dt">Calendar</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> (<span class="dt">Either</span> <span class="dt">String</span> ())</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>removeMeeting_ details (<span class="dt">Calendar</span> c) <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">putStrLn</span> <span class="op">$</span> <span class="st">&quot;Removing meeting from calendar &quot;</span> <span class="op">&lt;&gt;</span> c</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span> (<span class="dt">Right</span> ())</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="ot">sendCancelEmail_ ::</span> <span class="dt">Details</span> <span class="ot">-&gt;</span> <span class="dt">Email</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> (<span class="dt">Either</span> <span class="dt">String</span> ())</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>sendCancelEmail_ details (<span class="dt">Email</span> e) <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">putStrLn</span> <span class="op">$</span> <span class="st">&quot;Queueing cancel email to email address &quot;</span> <span class="op">&lt;&gt;</span> e</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span> (<span class="dt">Right</span> ())</span></code></pre></div>
 <p>These are dummy implementations that don’t do anything fancy except log – in a real application they would obviously actually mutate calendars, or send emails. We’ve hardcoded <code>sendEmail_</code> to fail when you try and email <code>"pope"</code>, though. The pontiff is busy enough, and that will make it easy to test the rollback behavior.</p>
 <p>What we want is a <code>makeRollbackable</code> helper function that we can use to combine non-rollbackable operations with their inverses to create rollbackable operations. For example:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb17-1"><a href="#cb17-1"></a>addMeeting details cal <span class="ot">=</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a>  makeRollbackable (addMeeting_ details cal) (removeMeeting_ details cal)</span>
-<span id="cb17-3"><a href="#cb17-3"></a>sendEmail details email <span class="ot">=</span></span>
-<span id="cb17-4"><a href="#cb17-4"></a>  makeRollbackable (sendEmail_ details email) (sendCancelEmail_ details email)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>addMeeting details cal <span class="ot">=</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  makeRollbackable (addMeeting_ details cal) (removeMeeting_ details cal)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>sendEmail details email <span class="ot">=</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  makeRollbackable (sendEmail_ details email) (sendCancelEmail_ details email)</span></code></pre></div>
 <p>An appropriate <code>makeRollbackable</code> can be defined like this:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb18-1"><a href="#cb18-1"></a>makeRollbackable</span>
-<span id="cb18-2"><a href="#cb18-2"></a><span class="ot">  ::</span> <span class="dt">IO</span> (<span class="dt">Either</span> <span class="dt">String</span> a)</span>
-<span id="cb18-3"><a href="#cb18-3"></a>  <span class="ot">-&gt;</span> <span class="dt">IO</span> (<span class="dt">Either</span> <span class="dt">String</span> ())</span>
-<span id="cb18-4"><a href="#cb18-4"></a>  <span class="ot">-&gt;</span> <span class="dt">Rollbackable</span> a</span>
-<span id="cb18-5"><a href="#cb18-5"></a>makeRollbackable doIt undoIt <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb18-6"><a href="#cb18-6"></a>  <span class="co">-- `liftIO` makes &quot;doIt&quot; return a `Rollbackable (Either String a)`</span></span>
-<span id="cb18-7"><a href="#cb18-7"></a>  <span class="co">-- instead of an `IO (Either String a)`</span></span>
-<span id="cb18-8"><a href="#cb18-8"></a>  result <span class="ot">&lt;-</span> liftIO doIt</span>
-<span id="cb18-9"><a href="#cb18-9"></a>  <span class="kw">case</span> result <span class="kw">of</span></span>
-<span id="cb18-10"><a href="#cb18-10"></a>    <span class="co">-- If `doIt` fails, then we use </span></span>
-<span id="cb18-11"><a href="#cb18-11"></a>    <span class="co">-- `throwError` from `Except` to short-circuit.</span></span>
-<span id="cb18-12"><a href="#cb18-12"></a>    <span class="dt">Left</span> err <span class="ot">-&gt;</span> throwError err</span>
-<span id="cb18-13"><a href="#cb18-13"></a>    <span class="dt">Right</span> result <span class="ot">-&gt;</span> <span class="kw">do</span></span>
-<span id="cb18-14"><a href="#cb18-14"></a>      <span class="co">-- If `doIt` succeeds, then we use `tell` from the</span></span>
-<span id="cb18-15"><a href="#cb18-15"></a>      <span class="co">-- `Writer` monad to &quot;emit&quot; its inverse, `undoIt`.</span></span>
-<span id="cb18-16"><a href="#cb18-16"></a>      lift <span class="op">.</span> tell <span class="op">$</span> [<span class="dt">ExceptT</span> undoIt]</span>
-<span id="cb18-17"><a href="#cb18-17"></a>      <span class="fu">return</span> result</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>makeRollbackable</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ot">  ::</span> <span class="dt">IO</span> (<span class="dt">Either</span> <span class="dt">String</span> a)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="ot">-&gt;</span> <span class="dt">IO</span> (<span class="dt">Either</span> <span class="dt">String</span> ())</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="ot">-&gt;</span> <span class="dt">Rollbackable</span> a</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>makeRollbackable doIt undoIt <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- `liftIO` makes &quot;doIt&quot; return a `Rollbackable (Either String a)`</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- instead of an `IO (Either String a)`</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> liftIO doIt</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">case</span> result <span class="kw">of</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- If `doIt` fails, then we use </span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- `throwError` from `Except` to short-circuit.</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Left</span> err <span class="ot">-&gt;</span> throwError err</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Right</span> result <span class="ot">-&gt;</span> <span class="kw">do</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>      <span class="co">-- If `doIt` succeeds, then we use `tell` from the</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>      <span class="co">-- `Writer` monad to &quot;emit&quot; its inverse, `undoIt`.</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>      lift <span class="op">.</span> tell <span class="op">$</span> [<span class="dt">ExceptT</span> undoIt]</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span> result</span></code></pre></div>
 <p>Now you’ve got Mom’s attention! It’s about time you started to make something of your life. There’s one thing that doesn’t quite satisfy her, though: this will allow us to construct <code>Rollbackable</code> sequences of operations – but if all we ever do is construct them, that’s pretty useless. We’ll eventually want to run them. How does that work?</p>
 <p>Ideally, like this:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb19-1"><a href="#cb19-1"></a>main <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a>  <span class="kw">let</span> richard <span class="ot">=</span> <span class="dt">Person</span> <span class="st">&quot;richard&quot;</span></span>
-<span id="cb19-3"><a href="#cb19-3"></a>  <span class="kw">let</span> the_pope <span class="ot">=</span> <span class="dt">Person</span> <span class="st">&quot;pope&quot;</span></span>
-<span id="cb19-4"><a href="#cb19-4"></a>  <span class="kw">let</span> captain_crunch <span class="ot">=</span> <span class="dt">Person</span> <span class="st">&quot;crunch&quot;</span></span>
-<span id="cb19-5"><a href="#cb19-5"></a>  <span class="kw">let</span> details <span class="ot">=</span> <span class="dt">Details</span></span>
-<span id="cb19-6"><a href="#cb19-6"></a>  <span class="kw">let</span> room <span class="ot">=</span> <span class="dt">Room</span> <span class="st">&quot;recording studio&quot;</span></span>
-<span id="cb19-7"><a href="#cb19-7"></a>  runRollbackable <span class="op">$</span> bookMeeting [richard, the_pope, captain_crunch] room details</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> richard <span class="ot">=</span> <span class="dt">Person</span> <span class="st">&quot;richard&quot;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> the_pope <span class="ot">=</span> <span class="dt">Person</span> <span class="st">&quot;pope&quot;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> captain_crunch <span class="ot">=</span> <span class="dt">Person</span> <span class="st">&quot;crunch&quot;</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> details <span class="ot">=</span> <span class="dt">Details</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> room <span class="ot">=</span> <span class="dt">Room</span> <span class="st">&quot;recording studio&quot;</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  runRollbackable <span class="op">$</span> bookMeeting [richard, the_pope, captain_crunch] room details</span></code></pre></div>
 <p>This depends upon implementing a <code>runRollbackable</code> function, capable of taking a <code>Rollbackable</code> value and unrolling it into the correct sequence of <code>IO</code> actions. That looks like this:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb20-1"><a href="#cb20-1"></a>runRollbackable</span>
-<span id="cb20-2"><a href="#cb20-2"></a><span class="ot">  ::</span> <span class="dt">Rollbackable</span> a</span>
-<span id="cb20-3"><a href="#cb20-3"></a>  <span class="ot">-&gt;</span> <span class="dt">IO</span> (<span class="dt">Either</span> <span class="dt">Error</span> a)</span>
-<span id="cb20-4"><a href="#cb20-4"></a>runRollbackable action <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb20-5"><a href="#cb20-5"></a>  (result, undos) <span class="ot">&lt;-</span> runWriterT <span class="op">.</span> runExceptT <span class="op">$</span> action</span>
-<span id="cb20-6"><a href="#cb20-6"></a>  <span class="kw">case</span> result <span class="kw">of</span></span>
-<span id="cb20-7"><a href="#cb20-7"></a>    <span class="dt">Left</span> err <span class="ot">-&gt;</span> <span class="kw">do</span></span>
-<span id="cb20-8"><a href="#cb20-8"></a>      traverse_ runExceptT (<span class="fu">reverse</span> undos)</span>
-<span id="cb20-9"><a href="#cb20-9"></a>      <span class="fu">return</span> <span class="op">$</span> <span class="dt">Left</span> err</span>
-<span id="cb20-10"><a href="#cb20-10"></a>    <span class="dt">Right</span> x <span class="ot">-&gt;</span> <span class="fu">return</span> <span class="op">$</span> <span class="dt">Right</span> x</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>runRollbackable</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ot">  ::</span> <span class="dt">Rollbackable</span> a</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="ot">-&gt;</span> <span class="dt">IO</span> (<span class="dt">Either</span> <span class="dt">Error</span> a)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>runRollbackable action <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  (result, undos) <span class="ot">&lt;-</span> runWriterT <span class="op">.</span> runExceptT <span class="op">$</span> action</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">case</span> result <span class="kw">of</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Left</span> err <span class="ot">-&gt;</span> <span class="kw">do</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>      traverse_ runExceptT (<span class="fu">reverse</span> undos)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span> <span class="op">$</span> <span class="dt">Left</span> err</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Right</span> x <span class="ot">-&gt;</span> <span class="fu">return</span> <span class="op">$</span> <span class="dt">Right</span> x</span></code></pre></div>
 <p>Here, we do <code>runWriterT . runExceptT</code> which is the standard way of “running” a <code>Writer</code> monad inside an <code>Except</code> monad. This won’t actually <em>perform</em> the rollback itself, but it will give us <code>result</code> – a success or failure – and <code>undos</code>, which will be the “emitted” inverses of the operations that were successful. After that, it’s a straightforward matter of checking to see if <code>result</code> is a failure, running the sequence of <code>undos</code>, and passing <code>result</code> back to the caller.</p>
 <p>At last, we’re ready to implement rollbackable <code>bookMeeting</code>:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb21-1"><a href="#cb21-1"></a><span class="ot">bookMeeting ::</span> [<span class="dt">Person</span>] <span class="ot">-&gt;</span> <span class="dt">Room</span> <span class="ot">-&gt;</span> <span class="dt">Details</span> <span class="ot">-&gt;</span> <span class="dt">Rollbackable</span> ()</span>
-<span id="cb21-2"><a href="#cb21-2"></a>bookMeeting participants room details <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb21-3"><a href="#cb21-3"></a>  addMeeting details (calendarOf room)</span>
-<span id="cb21-4"><a href="#cb21-4"></a>  for_ participants ((addMeeting details) <span class="op">.</span> calendarOf)</span>
-<span id="cb21-5"><a href="#cb21-5"></a>  for_ participants ((sendEmail details) <span class="op">.</span> emailOf)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ot">bookMeeting ::</span> [<span class="dt">Person</span>] <span class="ot">-&gt;</span> <span class="dt">Room</span> <span class="ot">-&gt;</span> <span class="dt">Details</span> <span class="ot">-&gt;</span> <span class="dt">Rollbackable</span> ()</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>bookMeeting participants room details <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  addMeeting details (calendarOf room)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  for_ participants ((addMeeting details) <span class="op">.</span> calendarOf)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  for_ participants ((sendEmail details) <span class="op">.</span> emailOf)</span></code></pre></div>
 <p>Notably, except for the type definition, this looks <em>identical</em> to the version of “callback” version of <code>bookMeeting</code> we wrote earlier because the sequence of actions is the same. Only the plumbing is different.</p>
 <p>Mom seems vaguely pleased about this, but she’s still not satisfied. There’s an important, unresolved question here. And it’s a big one: when are you going to give her grandchildren?</p>
 <p>But Mom doesn’t need to be the center of your newfound passion for monads. Monads let you take the idea of “plumbing” and reify it! The plumbing of your operations is no longer latent patterns smattered around the codebase (perhaps inconsistently). It is a datatype that you can manipulate, and build up from smaller pieces. Monads are not the only way to do this, of course – the first half of this post was about various strategies of extracting “plumbing” non-monadically in Javascript; and it is often a useful thing to do, I think, monads or no – but monads impose a certain discipline and consistency to the practice.</p>
