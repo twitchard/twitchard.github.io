@@ -10,7 +10,14 @@
         <meta name="twitter:description" content="The Oedipus Rex of Monad Tutorials" />
         <title>Monads and Mom - Richard Marmorstein</title>
         <link rel="stylesheet" href="../css/default.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
         <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <!-- Used for drop cap for the first character of blog posts-->
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet"> 
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149922579-1"></script>
         <script>
@@ -30,7 +37,7 @@ gtag('config', 'UA-149922579-1');
       <h4><a href="../">← More Posts</a></h4>
     </section>
     <section class="prose">
-        <p>Mom would be ashamed of you if you wrote a function like</p>
+        <p><img src="../images/dropCapM.png" class="dropCap" alt="M" />om would be ashamed of you if you wrote a function like</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> nameOfLandlordsDog <span class="op">=</span> person <span class="kw">=&gt;</span> {</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> landlord <span class="op">=</span> person<span class="op">.</span><span class="at">landlord</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>landlord) <span class="cf">return</span> <span class="kw">null</span></span>

@@ -10,7 +10,14 @@
         <meta name="twitter:description" content="Use discriminated unions and exhaustiveness checking to level up your Javascript" />
         <title>Discriminated Unions and Exhaustiveness Checking - Richard Marmorstein</title>
         <link rel="stylesheet" href="../css/default.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
         <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <!-- Used for drop cap for the first character of blog posts-->
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet"> 
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149922579-1"></script>
         <script>
@@ -30,11 +37,12 @@ gtag('config', 'UA-149922579-1');
       <h4><a href="../">← More Posts</a></h4>
     </section>
     <section class="prose">
-        <p>I extensively use a feature in Flow and Typescript called “discriminated unions with exhaustiveness checking”.</p>
-<p>The resulting code can look odd if you aren’t familiar with this style of programming. You probably won’t be, if you come to typed Javascript from a dynamically typed language, since discriminated unions make less sense in that context. You are likely not familiar even if you come from a statically typed language like Java, C#, or Go. They don’t support discriminated unions.</p>
-<p>I learned about discriminated unions from hipster programming languages, like Purescript, Elm, and Haskell. Other hipster languages have them too – Scala, Rust, F#, and Ocaml, but I haven’t written those very much. They are also called “tagged unions” or “sum types” or “algebraic data types”. All these phrases refer to essentially the same idea.</p>
-<p>The <a href="https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions">Typescript docs</a> and the <a href="https://flow.org/blog/2015/07/03/Disjoint-Unions/">Flow</a> docs both describe their support for discriminated unions, and exhaustively checking them, but it’s mentioned deep in the annals of the docs, as if it’s some obscure, advanced feature.</p>
-<p>I really wish it were more front and center. This feature is very useful, and I wish it were appreciated more broadly! What is “discriminated unions with exhaustiveness checking”? High-level, it is a way for you to ask your type checker “make sure I have explicitly handled all the cases”</p>
+        <p><img src="../images/dropCapF.png" alt="F" class="dropCap" />low and Typescript have a feature called “discriminated unions with exhaustiveness checking”. I use this feature extensively. The resulting code can look odd if you aren’t familiar with this style of programming, but I think any Typed Javascript developer really should learn about this to really take full advantage of the type system.</p>
+<p>Discriminated unions aren’t that well-known. You won’t have encountered them in a dynamically typed language, of course, and the most popular statically typed languages Java, C#, or Go don’t support them. The <a href="https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions">Typescript docs</a> and the <a href="https://flow.org/blog/2015/07/03/Disjoint-Unions/">Flow</a> docs both describe their support for discriminated unions, and exhaustively checking them, but it’s mentioned deep in the annals of the docs, as if it’s some obscure, advanced feature. Myself, I learned about discriminated unions from hipster programming languages, like Purescript, Elm, and Haskell. Other hipster languages have them too – Scala, Rust, F#, and Ocaml, but I haven’t written those very much. They are also called “tagged unions” or “sum types” or “algebraic data types”. These phrases have slightly different meanings, but refer to approximately the same language feature.</p>
+<p>In any case, I think you should know how to program this way, so I wrote this post to briefly explain what this technique is, and why you might use it.</p>
+<hr />
+<h2 id="what-is-discriminated-unions-with-exhaustiveness-checking">What is “discriminated unions with exhaustiveness checking?”</h2>
+<p>High-level, <em>exhaustiveness checking</em> is a way for you to ask your type checker “make sure I have explicitly handled all the cases.” And <em>discriminated unions</em> are a way for you to define what the cases are that you want the type checker to enforce that you handle.</p>
 <h2 id="exhaustiveness-checking">Exhaustiveness checking</h2>
 <p>While some hipster languages do exhaustiveness checking for you by default, in Flow/Typescript, though, you sometimes have to ask the type checker explicitly for an exhaustiveness check, and the way you do that is a little peculiar. You have to implement a function (I call it <code>exhaustive</code>) that has an impossible input type. Then, you call this function from places in your code that should be impossible to reach. The type checker will do a flow analysis. It will succeed if it can confirm the impossible function will never be called - otherwise it will report a type error.</p>
 <p>Here’s an example in Flow:</p>

@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@twitchard" />
+        <meta name="twitter:title" content="Artisanal, Machine-Generated API Libraries" />
+        <meta name="twitter:description" content="Generating Stripe's seven server-side sdks" />
+        <title>Artisanal, Machine-Generated API Libraries - Richard Marmorstein</title>
+        <link rel="stylesheet" href="../css/default.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <!-- Used for drop cap for the first character of blog posts-->
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet"> 
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149922579-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-149922579-1');
+        </script>
+    </head>
+    <body>
+        <main role="main">
+            <article>
+    <section class="header">
+      <h1>Artisanal, Machine-Generated API Libraries</h1>
+      <h3>by Richard Marmorstein - September  5, 2021</h3>
+      <h4><a href="../">← More Posts</a></h4>
+    </section>
+    <section class="prose">
+        <h2 id="my-upcoming-conference-talk">My upcoming conference talk</h2>
+<p><img src="../images/dropCapE.png" alt="E" class="dropCap" style="height: 50px; width: 50px;" />xciting news! I will be speaking <a href="https://thestrangeloop.com/2021/artisanal-machine-generated-api-libraries.html">at Strangeloop</a> in a few weeks about some of my work at Stripe. The abstract:</p>
+<blockquote>
+<p>Stripe recently began generating API libraries in seven different programming languages, after maintaining them by hand for eight years. We wanted the generated code to offer just as good a user experience and be no less readable than the handcrafted code, while keeping breaking changes to a minimum, so we built a tool for this ourselves: a compiler of sorts. This talk is a deep dive into how we built our tool and lessons we learned along the way.</p>
+</blockquote>
+<p>My process for writing presentations is fickle. I need a flash of inspiration. Typically, I think of some gimmick I think is clever or funny and I build the presentation around that. That hasn’t happened yet and time is ticking.</p>
+<p>As a technique to search for inspiration, I present to you this blog post, a prototype of my conference talk.</p>
+<h2 id="what-is-stripe">What is Stripe?</h2>
+<p>Stripe is a company with a public API. The details of the API don’t matter too much for my purposes here, but here’s a word cloud I generated from the API definition to give you a general flavor.</p>
+<p><img src="../images/stripe-wordcloud.png" style="position: relative;width: 100%" alt="word cloud featuring big words like 'payment', 'customer', 'account', 'create', 'subscription', and 'invoice'; medium words like 'currency', 'refund', 'document', and 'bill'; and small words like 'checkout', 'report', 'identify', and 'schedule'" /></p>
+<h2 id="what-is-an-api-library">What is an API Library?</h2>
+<p>Stripe has seven API libraries: stripe-ruby, stripe-python, stripe-php, stripe-node, stripe-java, stripe-dotnet, and stripe-go.</p>
+<p>I’m sure you’re wondering “Richard, which is your favorite library?”. That’s a ridiculous question: I love them all equally.</p>
+<p>What do these libraries do? Primarily, the aim is to make invoking an endpoint on Stripe API as simple as invoking a method in your programming language of choice.</p>
+<p>Here’s an example of invoking the <code>POST /v1/coupons</code> endpoint in stripe-php.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">$stripe</span> <span class="op">=</span> <span class="kw">new</span> \<span class="cn">S</span>tripe\<span class="cn">S</span>tripeClient(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'sk_test_xyz'</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>)<span class="ot">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="va">$stripe</span>-&gt;coupons-&gt;create([</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">'percent_off'</span> =&gt; <span class="kw">null</span><span class="ot">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">'duration'</span> =&gt; <span class="st">'repeating'</span><span class="ot">,</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">'duration_in_months'</span> =&gt; <span class="dv">3</span><span class="ot">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>])<span class="ot">;</span></span></code></pre></div>
+<p>It’s a simple purpose. But this is software; every simple purpose turns out to be more involved than you might expect.</p>
+<h2 id="what-are-the-three-aspects-of-an-api-library">What are the three aspects of an API library?</h2>
+<p>I like to divide the responsibilities of an API library into three categories: transport, vocabulary, and ergonomics.</p>
+<p>A message to the Stripe API looks like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>POST /v1/coupons HTTP/1.1</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Authorization: Bearer sk_test_xyz</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Accept: application/json</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>Content-Type: application/x-www-form-urlencoded</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>Content-Length: 70</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>User-Agent: Stripe/v1 NodeBindings/8.174.0</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>Host: localhost:4444</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>Connection: keep-alive</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>percent_off=0.1&amp;duration=repeating&amp;duration_in_months=3&amp;metadata[foo]=bar</span></code></pre></div>
+<p>A response from the Stripe API looks like this:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>HTTP/1.1 200 OK</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Server: nginx</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>Date: Sat, 11 Sep 2021 20:38:39 GMT</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>Content-Type: application/json</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>Content-Length: 334</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>Connection: keep-alive</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>stripe-version: 2019-02-19</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  &quot;id&quot;: &quot;hxPDwuVz&quot;,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  &quot;object&quot;: &quot;coupon&quot;,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  &quot;amount_off&quot;: null,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+    <h4><a href="../">← More Posts</a></h4>
+    <h4><a href="https://twitter.com/twitchard">Twitter</a></h4>
+    </section>
+</article>
+
+        </main>
+
+        <footer>
+          <div class="leftfootleftfootleftfoot">
+            Nothing I write represents the opinion of those foolish enough to employ me.
+          </div>
+          <div class="rightfeetatthemorningfeetatnight">
+            Site shamefully generated by <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+          </div>
+        </footer>
+    </body>
+</html>

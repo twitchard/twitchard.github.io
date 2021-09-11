@@ -10,7 +10,14 @@
         <meta name="twitter:description" content="Richard's Software Blog" />
         <title>Software Development and the False Promise of Science - Richard Marmorstein</title>
         <link rel="stylesheet" href="../css/default.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
         <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <!-- Used for drop cap for the first character of blog posts-->
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet"> 
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149922579-1"></script>
         <script>
@@ -30,7 +37,7 @@ gtag('config', 'UA-149922579-1');
       <h4><a href="../">← More Posts</a></h4>
     </section>
     <section class="prose">
-        <p>You are, I will assume, the typical software developer. In arguments about anything from “will single payer healthcare be good for the economy?” to “can Myers-Briggs personality tests be a meaningful basis for business decisions” – your habitual response is to cite a peer-reviewed, scientific study to bolster your argument.</p>
+        <p><img src="../images/dropCapY.jpeg" alt="Y" class="dropCap" />ou are, I will assume, the typical software developer. In arguments about anything from “will single payer healthcare be good for the economy?” to “can Myers-Briggs personality tests be a meaningful basis for business decisions” – your habitual response is to cite a peer-reviewed, scientific study to bolster your argument.</p>
 <p>That is, except when it comes to software. You have opinions – strong opinions – on questions such as “do microservices encourage modular code design?” and “should software projects stick to a ‘novelty budget’?” and “should composition be preferred to inheritance?”. But are your opinions backed by peer-reviewed analyses of hypotheses subjected to statistical tests of empirical data? Not really. Your view that software projects should stick to a ‘novelty budget’, for instance, is backed by your experience reading about this idea in some rando’s blog post and the argument seeming plausible in light of the recent bankruptcy of your friend’s web startup built on WebAssembly, CockroachDB, Elixir and Unikernels.</p>
 <p>You’re not entirely happy with this. You’d like your opinions on software development to have a more objective grounding. So you’ve turned to books.</p>
 <p>You were disappointed with <a href="https://www.amazon.com/dp/B07B9F83WM"><em>Accelerate: The Science of Lean Software and DevOps</em></a>. You agreed with most of its prescriptions. It made liberal use of descriptive statistics. Still, there wasn’t too much hypothesis testing or causal inference involved, with the exception of “continuous delivery improves organization performance,” which most of your peer group already accepts, anyway. And the methodology didn’t seem as conclusive as you had hoped. If the statistics had turned out the opposite way, would that really have shaken your conviction that CD is a good idea?</p>

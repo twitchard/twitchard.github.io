@@ -10,7 +10,14 @@
         <meta name="twitter:description" content="Analyzes several general-purpose languages' suitability for doing 'shelly' things" />
         <title>For serious projects, don't use Bash, use... what? - Richard Marmorstein</title>
         <link rel="stylesheet" href="../css/default.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
         <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <!-- Used for drop cap for the first character of blog posts-->
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet"> 
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149922579-1"></script>
         <script>
@@ -31,12 +38,12 @@ gtag('config', 'UA-149922579-1');
     </section>
     <section class="prose">
         <h1 id="which-general-purpose-programming-language-is-the-best-alternative-to-shell-scripting">Which general-purpose programming language is the best alternative to shell scripting?</h1>
-<p>Sometimes, I need to write a program whose main job is to run other programs.</p>
-<p>For this, I often choose to write a Bash script. Bash makes it easy to run other programs, and the Bash prompt is this amazingly powerful interactive tool that many programmers are just kind of accidentally familiar with, because unix culture. You, dear reader, likely have a bash prompt running right now, open in another window!</p>
+<p><img class="dropCap" src="../images/dropCapS.png" alt="S" />S</span>ometimes, I need to write a program whose main job is to run other programs.</p>
+<p>For this, I often choose to write a Bash script. Bash makes it easy to run other programs, and the Bash prompt is this amazingly powerful interactive tool that many programmers are just kind of accidentally familiar with. You, dear reader, likely have a bash prompt running right now, open in another window!</p>
 <p>But the conventional wisdom is that, while Bash is great for one-offs and experiments, for sufficiently serious projects, you should probably use a general-purpose programming language instead, where it’s easier to write modular, testable, well-abstracted code.</p>
 <p>But which one? Does there exist a general-purpose programming language with similar advantages to Bash, but fewer gotchas? Let’s explore!</p>
 <h3 id="bashs-strengths">Bash’s strengths</h3>
-<p>Any viable Bash substitute will need to share Bash’s strengths. What are Bash’s strengths? I would list: - <strong>Execution ergonomics</strong>: it’s easy to run external programs in Bash. In particular, bash has: * Lightweight syntax for running programs. * Single-character pipes/redirects <code>|</code>, <code>&gt;</code>, etc. * Command substitution - <strong>Interactive Development</strong>: Bash has a great REPL that everybody already has open. - <strong>Familiarity</strong>: Again, everybody already has a Bash prompt open. - <strong>Flexible package management</strong>: AKA <code>$PATH</code>. (</p>
+<p>Any viable Bash substitute will need to share Bash’s strengths. What are Bash’s strengths? I would list: - <strong>Execution ergonomics</strong>: it’s easy to run external programs in Bash. In particular, bash has: * Lightweight syntax for running programs. * Single-character pipes/redirects <code>|</code>, <code>&gt;</code>, etc. * Command substitution - <strong>Interactive Development</strong>: Bash has a great REPL that everybody already has open. - <strong>Familiarity</strong>: Again, everybody already has a Bash prompt open. - <strong>Flexible package management</strong>: AKA <code>$PATH</code></p>
 <h3 id="the-contenders">The contenders</h3>
 <p>I’m going to consider</p>
 <ul>
