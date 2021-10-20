@@ -171,7 +171,12 @@ gtag('config', 'UA-149922579-1');
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>          <span class="dt">Right</span> _ <span class="ot">-&gt;</span> forEach participants (\p <span class="ot">-&gt;</span></span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>            sendEmail details (emailOf p)) callback</span></code></pre></div>
 <p>Again, the plumbing here is out of control. Mom is irate! If you’re going to write code like this, why don’t you just do in it Javascript, or dance on her grave?</p>
-<p>Luckily for us, Haskell has a monad that captures “callbacks that short-circuit on error”. This monad is called <code>ExceptT Error (ContT r IO)</code>, and the reason it has such a confusing name is because it’s actually a combination of three monads: <code>Except String</code>, which is the monad that captures short-circuiting on errors (specifically, errors of type String), <code>Cont</code>, which is the monad that captures sequential execution of functions that accept callbacks, and <code>IO</code>, which is the monad that lets you do IO – access the network and the operating system and stuff.</p>
+<p>Luckily for us, Haskell has a monad that captures “callbacks that short-circuit on error”. This monad is called <code>ExceptT String (ContT r IO)</code>, and the reason it has such a confusing name is because it’s actually a combination of three monads:</p>
+<ol type="1">
+<li><code>Except String</code>, which is the monad that captures short-circuiting on errors (specifically, errors described by type <code>String</code>),</li>
+<li><code>Cont</code>, which is the monad that captures sequential execution of functions that accept callbacks, and</li>
+<li><code>IO</code>, which is the monad that lets you do IO – access the network and the operating system and stuff.</li>
+</ol>
 <p>So first, with a bit of boilerplate, we can wrap the callbacky <code>addMeeting</code> and <code>sendEmail</code> operations in this monad:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ot">addMeeting ::</span> <span class="dt">Details</span> <span class="ot">-&gt;</span> <span class="dt">Calendar</span> <span class="ot">-&gt;</span> <span class="dt">ExceptT</span> <span class="dt">String</span> (<span class="dt">ContT</span> r <span class="dt">IO</span>) ()</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>addMeeting details calendar <span class="ot">=</span></span>
