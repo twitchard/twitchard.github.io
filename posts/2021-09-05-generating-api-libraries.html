@@ -42,53 +42,59 @@ gtag('config', 'UA-149922579-1');
 <blockquote>
 <p>Stripe recently began generating API libraries in seven different programming languages, after maintaining them by hand for eight years. We wanted the generated code to offer just as good a user experience and be no less readable than the handcrafted code, while keeping breaking changes to a minimum, so we built a tool for this ourselves: a compiler of sorts. This talk is a deep dive into how we built our tool and lessons we learned along the way.</p>
 </blockquote>
-<p>My process for writing presentations is fickle. I need a flash of inspiration. Typically, I think of some gimmick I think is clever or funny and I build the presentation around that. That hasn’t happened yet and time is ticking.</p>
-<p>As a technique to search for inspiration, I present to you this blog post, a prototype of my conference talk.</p>
-<h2 id="what-is-stripe">What is Stripe?</h2>
-<p>Stripe is a company with a public API. The details of the API don’t matter too much for my purposes here, but here’s a word cloud I generated from the API definition to give you a general flavor.</p>
-<p><img src="../images/stripe-wordcloud.png" style="position: relative;width: 100%" alt="word cloud featuring big words like 'payment', 'customer', 'account', 'create', 'subscription', and 'invoice'; medium words like 'currency', 'refund', 'document', and 'bill'; and small words like 'checkout', 'report', 'identify', and 'schedule'" /></p>
-<h2 id="what-is-an-api-library">What is an API Library?</h2>
+<p>In preparation for this talk, I submit to you this blog post.</p>
+<!--
+## What is Stripe?
+
+Stripe is a company with a public API. I generated a word cloud from the API definition, to give you a flavor of the API's subject matter, but the details of the API won't matter much for this post.
+
+<img src="../images/stripe-wordcloud.png" style="position: relative;width: 100%" alt="word cloud featuring big words like 'payment', 'customer', 'account', 'create', 'subscription', and 'invoice'; medium words like 'currency', 'refund', 'document', and 'bill'; and small words like 'checkout', 'report', 'identify', and 'schedule'"/>
+-->
+<h2 id="whats-an-api-library">What’s an API Library?</h2>
 <p>Stripe has seven API libraries: stripe-ruby, stripe-python, stripe-php, stripe-node, stripe-java, stripe-dotnet, and stripe-go.</p>
-<p>I’m sure you’re wondering “Richard, which is your favorite library?”. That’s a ridiculous question: I love them all equally.</p>
-<p>What do these libraries do? Primarily, the aim is to make invoking an endpoint on Stripe API as simple as invoking a method in your programming language of choice.</p>
-<p>Here’s an example of invoking the <code>POST /v1/coupons</code> endpoint in stripe-php.</p>
+<p>Briefly put, these libraries aim to make invoking an (HTTP) endpoint of Stripe API as simple as invoking a method in your programming language of choice, and provide a few niceties on top of that.</p>
+<p>In this example, I use stripe-php to call the <code>POST /v1/customers</code> endpoint, and the <code>POST /v1/setup_intents</code> endpoint.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">$stripe</span> <span class="op">=</span> <span class="kw">new</span> \<span class="cn">S</span>tripe\<span class="cn">S</span>tripeClient(</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'sk_test_xyz'</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>)<span class="ot">;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="va">$stripe</span>-&gt;coupons-&gt;create([</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">'percent_off'</span> =&gt; <span class="kw">null</span><span class="ot">,</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">'duration'</span> =&gt; <span class="st">'repeating'</span><span class="ot">,</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">'duration_in_months'</span> =&gt; <span class="dv">3</span><span class="ot">,</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>])<span class="ot">;</span></span></code></pre></div>
-<p>It’s a simple purpose. But this is software; every simple purpose turns out to be more involved than you might expect.</p>
-<h2 id="what-are-the-three-aspects-of-an-api-library">What are the three aspects of an API library?</h2>
-<p>I like to divide the responsibilities of an API library into three categories: transport, vocabulary, and ergonomics.</p>
-<p>A message to the Stripe API looks like this:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>POST /v1/coupons HTTP/1.1</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Authorization: Bearer sk_test_xyz</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Accept: application/json</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>Content-Type: application/x-www-form-urlencoded</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>Content-Length: 70</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>User-Agent: Stripe/v1 NodeBindings/8.174.0</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>Host: localhost:4444</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>Connection: keep-alive</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>percent_off=0.1&amp;duration=repeating&amp;duration_in_months=3&amp;metadata[foo]=bar</span></code></pre></div>
-<p>A response from the Stripe API looks like this:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>HTTP/1.1 200 OK</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Server: nginx</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>Date: Sat, 11 Sep 2021 20:38:39 GMT</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>Content-Type: application/json</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>Content-Length: 334</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>Connection: keep-alive</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>stripe-version: 2019-02-19</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  &quot;id&quot;: &quot;hxPDwuVz&quot;,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  &quot;object&quot;: &quot;coupon&quot;,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  &quot;amount_off&quot;: null,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  ...</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="va">$customer</span> <span class="op">=</span> <span class="va">$stripe</span>-&gt;customers-&gt;create([</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;email&quot;</span> =&gt; <span class="st">&quot;jane.doe@example.com&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>])<span class="ot">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="va">$intent</span> <span class="op">=</span> <span class="va">$stripe</span>-&gt;setupIntents-&gt;create([</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;customer&quot;</span> =&gt; <span class="va">$customer</span>-&gt;id</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>])<span class="ot">;</span></span></code></pre></div>
+<h2 id="maintaining-api-libraries">Maintaining API Libraries</h2>
+<!--
+
+## Responsibilities of an API Library.
+
+I like to divide the responsibilities of an API library into three categories: transport, definitions, and ergonomics.
+
+**Transport** is how to talk to the API. It encompasses concerns such as:
+
+  * Making HTTP requests.
+  * Retrying HTTP requests.
+  * Providing an idempotency key (for preventing duplicates)
+  * Setting headers like 'user-agent' or 'stripe-version'.
+  * Parsing JSON
+  * Verifying webhooks
+
+**Definitions** is what to say to the API. In encompasses concerns as:
+
+  * What resources are there?
+  * What properties are on those resources?
+  * What methods are there?
+  * What parameters are on those resources.
+
+Finally, **ergonomics** makes it easier to talk to the API. It encompasses such concerns as:
+
+  * Auto-pagination helpers, so getting the next page from a list endpoint is as easy as using a for loop.
+  * Supporting promises and callbacks in Javascript, or providing sync and async versions of each method in C#.
+
+-->
+<h2 id="maintaining-an-api-library">Maintaining an API Library</h2>
     <h4><a href="../">← More Posts</a></h4>
     <h4><a href="https://twitter.com/twitchard">Twitter</a></h4>
     </section>

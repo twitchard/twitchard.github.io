@@ -7,7 +7,7 @@
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:site" content="@twitchard" />
         <meta name="twitter:title" content="Software culture as proof strategies" />
-        <meta name="twitter:description" content="Product-driven software" />
+        <meta name="twitter:description" content Product-driven" means backward-chaining, "Engineering-driven" means forward chaining." />
         <title>Software culture as proof strategies - Richard Marmorstein</title>
         <link rel="stylesheet" href="../css/default.css" />
 
@@ -53,81 +53,43 @@ gtag('config', 'UA-149922579-1');
 </ol>
 <p>This reminds me a little bit of “backward chaining” and “forward chaining”: the two basic “inference methods” that proof engines use when searching for proofs.</p>
 <p>“Backward chaining” is when you start from the proposition you hope to prove, your “goal”, and proceed by identifying “subgoals”, the proof of which would amount to proving your “goal”, and then identifying subgoals of those subgoals, and so forth, until you reach subgoals that can be proven directly.</p>
-<p>For example, suppose you want to prove the proposition “Prince Andrew and Prince William are related” given the following facts and rules:</p>
+<p>For example, suppose you want to prove the proposition “Socrates is mortal”; given the following facts and rules:</p>
 <ul>
-<li><strong>Fact 1.</strong> Queen Elizabeth is a parent of Prince Andrew.</li>
-<li><strong>Fact 2.</strong> Queen Elizabeth is a parent of Prince Charles.</li>
-<li><strong>Fact 3.</strong> Prince Charles is a parent of Prince William.</li>
-<li><strong>Rule 4.</strong> If X is a parent of Y, then X is an ancestor of Y</li>
-<li><strong>Rule 5.</strong> If X is an ancestor of Y, and Y is an ancestor of Z, then X is an ancestor of Z.</li>
-<li><strong>Rule 6.</strong> If X is an ancestor of Y, and X is an ancestor of Z, then Y and Z are related.</li>
+<li><strong>Rule 1.</strong> If X is a woman, then X is mortal.</li>
+<li><strong>Rule 2.</strong> If X is a man, then X is mortal.</li>
+<li><strong>Fact 1.</strong> Taylor Swift is a woman.</li>
+<li><strong>Fact 2.</strong> Socrates is a man.</li>
 </ul>
-<p>With backward chaining, you take your goal, look for a rule where the “consequent” (the part after the “then”) matches your goal, and then the antecedent (the part before the “then” and after “if”) becomes your “subgoal.” Then you add variable substitution with backtracking, and the ability to split conjunctions (“and”), according to some rules that I won’t lay out explicitly (and also am not that confident in, I am only very superficially acquainted with this subject matter). Still, I’ll run through an example. It’s lengthy and rather boring – skip ahead once you’ve get the gist.</p>
+<h3 id="backward-chaining">Backward Chaining</h3>
+<p>With backward chaining, you start with your goal and apply rules that match your goal to generate “subgoals”, i.e. goals that would prove your goal in coordination with the rule. For example</p>
 <ol type="1">
-<li>Start with the goal “Prince Andrew and Prince William are related”.</li>
-<li>Notice that this matches the consequent of rule 6 “Y and Z are related”, with Y=“Prince Andrew” and Z=“Prince William”.</li>
-<li>Substitute into the antecedent of rule 6: “X is an ancestor of Prince Andrew and X is an ancestor of Prince William”. This is our new subgoal. This makes sense – Princes Andrew and William are related if they share X, a common ancestor. Now who might that common ancestor be?</li>
-<li>Try X = Prince Charles. Of course, we know the common ancestor is not Charles. But we are pretending to be a proof engine, which isn’t smart enough to know and must try every possibility. Now our new subgoal is “Prince Charles is an ancestor of Prince Andrew, and Prince Charles is an ancestor of Prince William.”</li>
-<li>Break up the conjunction. See if we can satisfy “Prince Charles is an ancestor of Prince Andrew”.</li>
-<li>Notice that it matches the consequent of rule 4, “X is an ancestor of Y” with X = Prince Charles and Y = Prince Andrew.</li>
-<li>Substitute into the antecedent of rule 4 for “Prince Charles is a parent of Prince Andrew.”</li>
-<li>Uh oh, this cannot be satisfied and doesn’t match the consequence of any rule.</li>
-<li>Let’s backtrack to 5 when we were trying to prove “Prince Charles is an ancestor of Prince Andrew”. Rule 4 didn’t pan out, but maybe it can be proven another way.</li>
-<li>Notice that it matches the consequent of rule 5, “X is an ancestor of Z”, with X = Prince Charles and Z = Prince Andrew.</li>
-<li>Substitute into the antecedent of rule 5: “Prince Charles is an ancestor of Y and Y is an ancestor of Prince Andrew”</li>
-<li>Try Y = Prince Andrew. Now we are considering "Prince Charles is an ancestor of Prince Andrew, and Prince Andrew is an ancestor of Prince Andrew.</li>
-<li>Break up the conjunction. See if we can satisfy “Prince Charles is an ancestor of Prince Andrew”.</li>
-<li>Wait, we were already trying to prove this in #5. Therefore, this proof would be circular, and we must backtrack. Let’s backtrack to #11, when we are trying to prove “Prince Charles is an ancestor of Y and Y is an ancestor of Prince Andrew”.</li>
-<li>Try Y = Queen Elizabeth. Now we need to prove “Prince Charles is an ancestor of Queen Elizabeth and Queen Elizabeth is an ancestor of Prince Andrew”</li>
-<li>This will fail – I’ll omit the details (Prince Charles is not, in fact, an ancestor of Queen Elizabeth.) In fact, there is no Y such that “Prince Charles is an ancestor of Y and Y is an ancestor of Prince Andrew”. We could backtrack all the way to #6, when we were trying to prove “Prince Charles is an ancestor of Prince Andrew”, but applying rule 4 failed, and so did applying rule 5. There are no more rules to apply.</li>
-<li>Therefore we should backtrack further to #4, when we were trying to prove “X is an ancestor of Prince Andrew and X is an ancestor of Prince William”. This time, let’s try a different X, X = Queen Elizabeth. So our goal is “Queen Elizabeth is an ancestor of Prince Andrew, and Queen Elizabeth is an ancestor of Prince William”.</li>
-<li>Break up the conjuction, first let’s prove “Queen Elizabeth is an ancestor of Prince Andrew.”</li>
-<li>By rule 4, we need only to prove "Queen Elizabeth is a parent of Prince Andrew.</li>
-<li>That is satisfied directly in fact #1!</li>
-<li>Let’s try the other half of the conjunction from #17: “Queen Elizabeth is an ancestor of Prince William.”</li>
-<li>By rule 4, we can pick a subgoal “Queen Elizabeth is a parent of Prince William.”</li>
-<li>But this is a dead end and matches no rules. Let’s backtrack to 20, where we were trying to prove “Queen Elizabeth is an ancestor of Prince William” but try a rule other than than rule 4.</li>
-<li>Notice this matches the consequent of rule 5 - “X is an ancestor of Z” with X = Queen Elizabeth, Z = Prince William.</li>
-<li>Substitute into the antecedent of rule 5 for “Queen Elizabeth is an ancestor of Y, and Y is an ancestor of Prince William”</li>
-<li>Let’s try Y = Prince Andrew. Then we must prove “Queen Elizabeth is an ancestor of Prince Andrew, and Prince Andrew is an ancestor of Prince William”.</li>
-<li>Break up the conjuction. First let’s prove “Queen Elizabeth is an ancestor of Prince Andrew.”</li>
-<li>By rule 4, we need only prove that "Queen Elizabeth is a parent of Prince Andrew.</li>
-<li>This is satisfied by fact #1.</li>
-<li>Now let’s try the other half of the conjunction in #25. “Prince Andrew is an ancestor of Prince William”</li>
-<li>By rule 4, we need only prove that “Prince Andrew is a parent of Prince William”.</li>
-<li>But this is a dead end. Let’s backtrack to #29 and try and prove “Prince Andrew is an ancestor of Prince William” by means other than rule 4.</li>
-<li>How about rule 5, for “Prince Andrew is an ancestor of Y, and Y is an ancestor of Prince William”</li>
-<li>This will fail… I’ll omit the details. We need to backtrack further to 24, when we were trying to prove “Queen Elizabeth is an ancestor of Y, and Y is an ancestor of Prince William”.</li>
-<li>Before we tried Y = “Prince Andrew” and that failed. This time lets try Y = Prince Charles, so “Queen Elizabeth is an ancestor of Prince Charles, and Prince Charles is an ancestor of Prince William”.</li>
-<li>Break up the conjunction and aim for the first half: “Queen Elizabeth is an ancestor of Prince Charles”</li>
-<li>By rule 4, aim for “Queen Elizabeth is a parent of Prince Charles”</li>
-<li>This is satisfied by fact #2.</li>
-<li>Now aim for the second half of the conjunction in 34, “Prince Charles is an ancestor of Prince William”.</li>
-<li>By rule 4, aim for “Prince Charles is a parent of Prince William”</li>
-<li>This is satisfied by fact #3.</li>
-<li>We’re done! We’ve found a proof.</li>
+<li>Our goal is “Socrates is mortal”.</li>
+<li>Consider rule 1, “If X is a woman, then X is mortal”. This matches our goal if X = socraties.</li>
+<li>Now we have a new subgoal, “If Socrates is a woman, then Socrates is mortal.”</li>
+<li>Oops! Looks like we’re out of luck. “Socrates is a woman” doesn’t seem to match any rules or facts.</li>
+<li>Let’s “backtrack” and consider our original goal again: “Socrates is mortal.”</li>
+<li>This also matches rule 2, “If X is a man, then X is mortal” if we set X = socrates.</li>
+<li>We have a new subgoal, “If Socrates is a man, then Socrates is mortal”</li>
+<li>This matches Fact 2, Socrates is a man!</li>
+<li>Therefore, Socrates is mortal! Q.E.D!</li>
 </ol>
-<p>So the characteristic of “backward chaining” is that with this approach you explore a lot of subgoals that would be useful if you could prove them, but that may turn out to be impossible to prove.</p>
-<p>So what is forward chaining? Unlike backward chaining, with forward chaining you don’t start with a goal. You start with what you know. And then you use what you know to deduce new knowledge. And you use that new knowledge to deduce more new knowledge – until hopefully one of the things you deduce is the goal.</p>
+<p>The characteristic of “backward chaining” is you explore a lot of subgoals that would be useful if you could prove them, but that may turn out to be impossible to prove.</p>
+<h3 id="forward-chaining">Forward Chaining</h3>
+<p>So what is forward chaining? With forward chaining you don’t start with a goal. You start with what you know. And then you use what you know to deduce new knowledge. And you use that new knowledge to deduce more new knowledge – until hopefully one of the things you deduce is the goal.</p>
 <p>So, given the same example.</p>
 <ol type="1">
-<li>Pick a rule at random. Let’s say rule 6.</li>
-<li>Take the antecedent of the rule “if X is an ancestor of Y, and X is an ancestor of Z,” and try to apply it to a fact.</li>
-<li>Hmm, nope. We actually haven’t deduced that anybody is the ancestor of anybody else yet, so we struck out with rule 6. Let’s try a different one.</li>
-<li>What about the antecedent of rule 4? “If X is a parent of Y, then X is an ancestor of Y”.</li>
-<li>Well we know from fact #1 that Queen Elizabeth is a parent of Prince Andrew. Therefore we can deduce by rule 4 that Queen Elizabeth is an ancestor of Prince Andrew.</li>
-<li>Furthermore, we know from fact #2 that Queen Elizabeth is a parent of Prince Charles. Therefore we can deduce by rule 4 that Queen Elizabeth is an ancestor of Prince Charles.</li>
-<li>Furthermore, we know from fact #3 that Prince Charles is a parent of Prince William. Therefore we can deduce by rule 4 that Prince Charles is an ancestor of Prince William.</li>
-<li>That’s it for rule 4. Now let’s try applying rule 6, the antecedent of which is “If X is an ancestor of Y, and X is an ancestor of Z”.</li>
-<li>What if we let X = Queen Elizabeth, Y = Prince Andrew, and Z = Prince William? We deduced in #5 than Queen Elizabeth is an ancestor of Prince Andrew. But we’ve never deduced that Queen Elizabeth is an ancestor of Prince William, so this is a no go.</li>
-<li>What if we let X = Queen Elizabeth, Y = Prince Andrew, and Z = Prince Charles? We deduced in #6 than Queen Elizabeth is an ancestor of Prince Charles, and we deduced in #5 than Queen Elizabeth is an ancestor of Prince Andrew. Both conditions are satisfied. Therefore we can deduce by rule 6 that “Prince Andrew and Prince Charles are related.” Unfortunately, that’s not our goal.</li>
-<li>What about rule 5 now, with the antecedent “if X is an ancestor of Y, and Y is an ancestor of Z.”</li>
-<li>Let’s take X = Queen Elizabeth, Y = Prince Charles, and Z = Prince William. We deduced in #6 that Queen Elizabeth was ancestor to Charles, and in #7 that Charles was ancestor to William. Therefore by rule 5 we can deduce that Queen Elizabeth is ancestor to Prince William.</li>
-<li>Now let’s do again like we did in #8-9 – use rule 6 with antecedent “If X is an ancestor of Y, and X is an ancestor of Z”, and let X = Queen Elizabeth, Y = Prince Andrew, and Z = Prince William.</li>
-<li>We deduced in #5 that Queen Elizabeth is an ancestor of Prince Andrew. We deduced in #12 that Queen Elizabeth is an ancestor of Prince William. Therefore we can conclude that Prince Andrew and Prince William are related.</li>
-<li>That was our goal – yay!</li>
+<li>Let’s pick a rule. Rule 1: “If X is a woman, then X is mortal.” Can we use this?</li>
+<li>Yes! It appears to match Fact 1, “Taylor Swift is a woman.”</li>
+<li>Now we have a new fact. “Taylor Swift is Mortal.”</li>
+<li>Unfortunately that doesn’t match our goal.</li>
+<li>It doesn’t look like we can apply Rule 1 to any other facts.</li>
+<li>How about rule 2? “If X is a man, then X is mortal.”</li>
+<li>Yes! This matches Fact 2, “Socrates is a man”.</li>
+<li>Now we have a new fact: “Socrates is Mortal”!</li>
+<li>Woot! This is our goal! Q.E.D!</li>
 </ol>
-<p>So the characteristic of “forward chaining” is that with this approach you explore a lot of deductions that are completely valid but do not lead in any way to your goal.</p>
+<p>So the characteristic of “forward chaining” is that with this approach you explore a lot of deductions that are completely valid but do not necessarily lead in any way to your goal.</p>
+<hr />
 <p>As I mentioned, the “engineering-driven” approach to software kind of reminds me of forward chaining. When you’re being “engineering-driven” your ideas about what to do next are suggested by the code itself. You know what changes are easy, or natural, or interesting code-wise. Maybe you implemented some feature with a one-to-many relationship in the database, and it occurred to you “it would be interesting if it were many-to-many”. Maybe you refactored the stylings of your frontend into a common module, and you know it would just be a little bit more effort to add dark mode. Recently, as part of implementing a project, I reified the shape of a system which had been implicit into a concrete data type. And I thought, “now that I have a data structure that represent this system, I bet it wouldn’t be too hard to write a function that takes two of these data structures and produces a diff, and I can use that to generate a changelog”. Which is something some colleagues had spoken of and thought might be useful, but wasn’t made a priority because it didn’t seem worth the effort. But this sort of behavior – any thought like “now that I have X, I bet it wouldn’t be too hard to…” is forward chaining. It’s looking for opportunities to move forward based on the current state of the system, not based on a product goal.</p>
 <p>Now the “product-driven” approach, like backward chaining, is goal-directed. Leadership has an idea that will revolutionize the industry if we can pull it off. That’s a goal. Or maybe somebody put together a list of the most common feature requests from users. Those are goals. The implementation comes later. Heck, who even knows if the implementation is possible under reasonable time and quality constraints? The idea comes first, and then it’s up to the engineers or the software architects to come up with an implementation plan and decide whether or not it is feasible. And hopefully the implementation plan is incremental, and the project is broken up into parts – subgoals, if you will.</p>
 <p>Good product-driven people, of course, have a strong sense of what is feasible, and take that into account when they are choosing goals. And good engineering-driven people have a sense too of what sort of properties are valuable in a system from a product perspective, and don’t go off writing random code without considering how it might plausibly lead to a desirable goal. This is much as mature proof engines don’t naively backward-chain or forward-chain. They use heuristics, and are clever to pick subgoals that are more likely to be feasible when backward chaining, or to pick deductions that are more likely to lead to the goal when forward chaining.</p>
