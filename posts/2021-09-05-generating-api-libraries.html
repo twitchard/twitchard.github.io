@@ -37,20 +37,21 @@ gtag('config', 'UA-149922579-1');
       <h4><a href="../">← More Posts</a></h4>
     </section>
     <section class="prose">
-        <h2 id="my-upcoming-conference-talk">My upcoming conference talk</h2>
-<p><img src="../images/dropCapE.png" alt="E" class="dropCap" style="height: 50px; width: 50px;" />xciting news! I will be speaking <a href="https://thestrangeloop.com/2021/artisanal-machine-generated-api-libraries.html">at Strangeloop</a> in a few weeks about some of my work at Stripe. The abstract:</p>
-<blockquote>
-<p>Stripe recently began generating API libraries in seven different programming languages, after maintaining them by hand for eight years. We wanted the generated code to offer just as good a user experience and be no less readable than the handcrafted code, while keeping breaking changes to a minimum, so we built a tool for this ourselves: a compiler of sorts. This talk is a deep dive into how we built our tool and lessons we learned along the way.</p>
-</blockquote>
-<p>In preparation for this talk, I submit to you this blog post.</p>
-<!--
-## What is Stripe?
-
-Stripe is a company with a public API. I generated a word cloud from the API definition, to give you a flavor of the API's subject matter, but the details of the API won't matter much for this post.
-
-<img src="../images/stripe-wordcloud.png" style="position: relative;width: 100%" alt="word cloud featuring big words like 'payment', 'customer', 'account', 'create', 'subscription', and 'invoice'; medium words like 'currency', 'refund', 'document', and 'bill'; and small words like 'checkout', 'report', 'identify', and 'schedule'"/>
--->
+        <p>Stripe has seven server-side libraries. For about two years, I’ve been on the team that maintains them, and I’ve worked on the tool we wrote to generate the definitions inside them. In this post, I will tell you about my opinions and experiences relating to this.</p>
+<p>I gave a <a href="https://www.youtube.com/watch?v=mgRreyw-Nlg">conference talk</a> about this subject earlier this month at my favorite developer conference, <a href="https://thestrangeloop.com/">Strange Loop</a>, but a couple weeks later I’m left feeling that this wasn’t really enough to do justice to the material. I want to tackle the subject again in blog post form.</p>
 <h2 id="whats-an-api-library">What’s an API Library?</h2>
+<p>Stripe, like a lot of organizations, has an API. The premise of Stripe’s API is that you make HTTP requests to it, and then Stripe will give you a JSON response, and also do cool things for you.</p>
+<p>We also have seven official API libraries, in seven different programming languages. The job of an API library is make interacting with the HTTP API feel natural in the target programming language. For example, if you’re a Java user, and you want to create a customer record on the Stripe API, you shouldn’t feel like you are sending an HTTP POST request to the /v1/customers endpoint with a url-encoded “email=richard@example.com” in the body, keep alive enabled, retries enabled for 5xx level errors, over a tcp socket with a read timeout of 15 seconds. You should feel like you are the <code>.create</code> method of <code>stripe-java</code>’s <code>Customer</code> class, with an parameter called “email”.</p>
+<p>Each API library contains “core” code that handles the general logic of things like HTTP, form encoding, JSON deserialization, and even higher-level things such as pagination. Each API library also contains “definitional” code. For every HTTP endpoint on the Stripe API, there is a method in the API library. For every resource in the Stripe API, there is a class in the API library. For statically-typed libraries, for every property on a resource in the Stripe API is a property on the class for that resource in the API library. This “definitional” code is very boilerplatey.</p>
+<h2 id="generating-artisanal-api-libraries">Generating “artisanal” API libraries</h2>
+<p>At Stripe, we maintained the definitional code in our API libraries for ~8 years. This took a lot of effort, was somewhat error-prone, and it was hard to do in a consistent way. So about two years ago, we began working on a tool to generate this code.</p>
+<p>The goal wasn’t to generate <em>any</em> API library for Stripe. We didn’t want to hammer our users with a bunch of breaking changes. The goal was to generate more or less the libraries that already existed. We wanted the code to remain “artisanal.” We didn’t want to generate a library that looks like it was written by a machine. Source code is a form of documentation – if a user is having a problem with the library, it’s nice if they can go to the source code, find something readable there, and are able to do some investigation of their own before hopefully filing a useful bug report.</p>
+<p>Towards that end, we wanted to have our cake and eat it too. We wanted to generate our code with a script, but still maintain a lot of control over the generated output. We wanted to be able to selectively preserve historical inconsistencies in our library so that the generated version could be more backwards-compatible with what we had manually maintained for years.</p>
+<p>This is not a universal goal. If you’re just starting out writing a new library today without eight years of history to contend with, you probably don’t need the same level of control. You can likely get by with a much simpler tool than what I describe in this post, and you can probably find it off the shelf. Things will be great for you. Your library can be simple and consistent from day one.</p>
+<h2 id="two-approaches">Two approaches</h2>
+<p>Every good blog post needs a villain. In this blog post, the villain is what I will call “the template approach” to API library generation.</p>
+<p>The template approach is based on a central principle</p>
+<p>For Stripe, the essential purpose of our API libraries is to make calling an HTTP method of the Stripe API as easy as calling a method in your programming language of choice. (There’s also webhooks, but that’s safe to ignore for my purposes here.)</p>
 <p>Stripe has seven API libraries: stripe-ruby, stripe-python, stripe-php, stripe-node, stripe-java, stripe-dotnet, and stripe-go.</p>
 <p>Briefly put, these libraries aim to make invoking an (HTTP) endpoint of Stripe API as simple as invoking a method in your programming language of choice, and provide a few niceties on top of that.</p>
 <p>In this example, I use stripe-php to call the <code>POST /v1/customers</code> endpoint, and the <code>POST /v1/setup_intents</code> endpoint.</p>
