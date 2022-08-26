@@ -43,7 +43,14 @@ gtag('config', 'UA-149922579-1');
 <p>But the conventional wisdom is that, while Bash is great for one-offs and experiments, for sufficiently serious projects, you should probably use a general-purpose programming language instead, where it’s easier to write modular, testable, well-abstracted code.</p>
 <p>But which one? Does there exist a general-purpose programming language with similar advantages to Bash, but fewer gotchas? Let’s explore!</p>
 <h3 id="bashs-strengths">Bash’s strengths</h3>
-<p>Any viable Bash substitute will need to share Bash’s strengths. What are Bash’s strengths? I would list: - <strong>Execution ergonomics</strong>: it’s easy to run external programs in Bash. In particular, bash has: * Lightweight syntax for running programs. * Single-character pipes/redirects <code>|</code>, <code>&gt;</code>, etc. * Command substitution - <strong>Interactive Development</strong>: Bash has a great REPL that everybody already has open. - <strong>Familiarity</strong>: Again, everybody already has a Bash prompt open. - <strong>Flexible package management</strong>: AKA <code>$PATH</code></p>
+<p>Any viable Bash substitute will need to share Bash’s strengths. What are Bash’s strengths? I would list:
+- <strong>Execution ergonomics</strong>: it’s easy to run external programs in Bash. In particular, bash has:
+* Lightweight syntax for running programs.
+* Single-character pipes/redirects <code>|</code>, <code>&gt;</code>, etc.
+* Command substitution
+- <strong>Interactive Development</strong>: Bash has a great REPL that everybody already has open.
+- <strong>Familiarity</strong>: Again, everybody already has a Bash prompt open.
+- <strong>Flexible package management</strong>: AKA <code>$PATH</code></p>
 <h3 id="the-contenders">The contenders</h3>
 <p>I’m going to consider</p>
 <ul>
@@ -65,7 +72,8 @@ gtag('config', 'UA-149922579-1');
 <p>Occasionally, I need to write a program whose job is mainly to run other programs and combine their results. For me, this usually begins as a Bash script.</p>
 <p>Bash has two great advantages. One: ergonomics. Want to run a program? Just type its name! Want to send its output to another program? Just ‘|’. Want command substitution? Backticks or dollar-parens, take your pick!</p>
 <p>Advantage two: it’s everywhere!. Every time I open a terminal, there’s Bash! Most everyone with a terminal has some degree of fluency in Bash. Paste it to a colleague, and they will understand exactly how to run it. In fact, before you’re done thinking they’ve probably already pasted it into their already-open terminal.</p>
-<p>The bash prompt is a powerful development environment that many programmers are just kind of accidentally proficient in. Google “repl-driven development” and the results will tell you about a programming language called Clojure with a good REPL story, and how that makes for a delightful, interactive, and productive experience. But REPL-driven development is common with Bash, too! The experience of writing Bash is generally more interactive than writing the typical general-purpose language, I would say.</p>
+<p>The bash prompt is a powerful development environment that many programmers are just kind of accidentally proficient in. Google “repl-driven development” and the results will tell you about a programming language called Clojure
+with a good REPL story, and how that makes for a delightful, interactive, and productive experience. But REPL-driven development is common with Bash, too! The experience of writing Bash is generally more interactive than writing the typical general-purpose language, I would say.</p>
 <p>As a tool, Bash is marvelous. Unfortunately, as a programming language, Bash is not marvelous. It is quite limited. In particular there are lots of gotchas when it comes to whitespace, argument expansion, string escaping and so forth. And it’s also a bit disappointing in the data structure department. Arrays are weird, and it don’t really have anything like structs or objects. I’ll skip the details. Plenty had been written about this elsewhere, and the conventional wisdom seems to be that if you’re writing something sufficiently serious, you should probably avoid bash and use s general purpose programming language. But which language?</p>
     <h4><a href="../">← More Posts</a></h4>
     <h4><a href="https://twitter.com/twitchard">Twitter</a></h4>
