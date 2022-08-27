@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@twitchard" />
+        <meta name="twitter:title" content="Software teams aren't system dynamics problems" />
+        <meta name="twitter:description" content="Queuing theory and stocks-and-flows diagrams are mere analogies" />
+        <title>Software teams aren't system dynamics problems - Richard Marmorstein</title>
+        <link rel="stylesheet" href="../css/default.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <!-- Used for drop cap for the first character of blog posts-->
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet"> 
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149922579-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-149922579-1');
+        </script>
+    </head>
+    <body>
+        <main role="main">
+            <article>
+    <section class="header">
+      <h1>Software teams aren't system dynamics problems</h1>
+      <h3>by Richard Marmorstein - August 30, 2022</h3>
+      <h4><a href="../">← More Posts</a></h4>
+    </section>
+    <section class="prose">
+        <p>I have <a href="2020-03-28-against-process.html">ranted previously</a> against scrum-like practices, e.g. grooming the backlog, and ascribed them to a flawed, implicit mental model of “software teams are job schedulers”.</p>
+<p>The more sophisticated version of “software teams are job schedulers” is “software teams are system dynamics problems”. You actually see this stated explicitly quite a bit: software thought leaders attempting to use <a href="https://www.lostconsultants.com/2019/11/20/littles-law-applied-in-agile-software-development/">queueing theory</a>, <a href="https://lethain.com/systems-thinking/">diagrams</a>, and <a href="https://codahale.com/work-is-work/">equations</a>, <a href="https://lethain.com/limiting-wip/">even</a> <a href="https://twitter.com/michelgrootjans/status/1431653674024046593">simulations</a> to make arguments about software engineering organizations. I understand this: we’re engineers. We like to build things. A system dynamics model let’s you argue by building something.</p>
+<p>I like this style of argument. It’s explicit, engaging. It can be visual, or even interactive! Some of the best, most thoughtful writing about software teams comes from people arguing in this style.</p>
+<p>The trouble is when we give credence to an argument from a system dynamics model because its framing appeals to our aesthetic tastes, not because the story it tells about software engineering is actually plausible in light of our experience and knowledge.</p>
+<p>How about an example? Take <a href="https://lethain.com/systems-thinking/">this post</a> by Will Larson (author of “An Elegant Puzzle”, which I recommend). He draws a stocks and flows diagram,</p>
+<p><img src="dev-velocity-sys.png" /></p>
+<p>and then argues</p>
+<blockquote>
+<p>If your model is a good one, opportunities for improvement should be immediately obvious, which I believe is true in this case. However, to truly identify where to invest, you need to identify the true values of these stocks and flows! For example, if you don’t have a backlog of ready commits, then speeding up your deploy rate may not be valuable.</p>
+</blockquote>
+<p>The first time I read this post, I went all googly-eyed at the diagram and nodded along to this analysis. Now I have deliberately set out to criticize this sort of argument, something is clearly wrong here. Imagine you are a solo developer, and deploys take an hour. You won’t build up a backlog of commits. Does this mean speeding up deploys to 1 minute is valueless? That’s crazy talk! Speed up your deploys and you have gained a super power: the ability to interactively ask questions of your production environment, e.g. add a quick log statement to get a sample of the values a variable has under production traffic.</p>
+<p>The trouble is, even though almost anything can be modeled as a stock or a flow, modeling it as a stock or flow that interrelates with other stocks and flows won’t necessarily capture what’s <em>important</em> about it.</p>
+<ul>
+<li>Psychological safety -&gt;</li>
+<li>Knowledge of customer -&gt;</li>
+<li>Compelling narratives -&gt;</li>
+<li>Positive team sentiment -&gt;</li>
+<li>Belief in mission -&gt;</li>
+<li>Well-framed ideas -&gt;</li>
+<li>Tenure -&gt;</li>
+<li>Pride of workmanship -&gt;</li>
+</ul>
+<p>In <a href="TODO">building software is not a job scheduling optimization problem</a>, I argued that, tl;dr “prioritizing the backlog” doesn’t really do much good, and that people only believe it does because, perhaps unconsciously, they subscribe to a bad analogy between software teams and job scheduling engines.</p>
+<p>I think more generally, software people are much too willing to think about people in the same ways that they think about software. They give too much credence to analogies between human systems and systems we study in computing.</p>
+<p>Momentum.
+Cross-pollination of ideas.
+Pride of workmanship.
+Retention
+Gelled-ness of a team.
+Motivation.
+Psychological safety.</p>
+    <h4><a href="../">← More Posts</a></h4>
+    <h4><a href="https://twitter.com/twitchard">Twitter</a></h4>
+    </section>
+</article>
+
+        </main>
+
+        <footer>
+          <div class="leftfootleftfootleftfoot">
+            Nothing I write represents the opinion of those foolish enough to employ me.
+          </div>
+          <div class="rightfeetatthemorningfeetatnight">
+            Site shamefully generated by <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+          </div>
+        </footer>
+    </body>
+</html>
