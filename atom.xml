@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Richard's Software Blog</title>
+    <link href="https://twitchard.github.io/atom.xml" rel="self" />
+    <link href="https://twitchard.github.io" />
+    <id>https://twitchard.github.io/atom.xml</id>
+    <author>
+        <name>Richard Marmorstein</name>
+        <email>nobody@example.com</email>
+    </author>
+    <updated>2022-08-30T00:00:00Z</updated>
+    <entry>
+    <title>Software teams aren't system dynamics problems</title>
+    <link href="https://twitchard.github.io/posts/2022-08-30-system-dynamics-schmystem-dynamics.html" />
+    <id>https://twitchard.github.io/posts/2022-08-30-system-dynamics-schmystem-dynamics.html</id>
+    <published>2022-08-30T00:00:00Z</published>
+    <updated>2022-08-30T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Queuing theory and stocks-and-flows diagrams are mere analogies]]></summary>
+</entry>
+<entry>
+    <title>My opinion concerning opinions</title>
+    <link href="https://twitchard.github.io/posts/2022-08-29-my-opinion-concerning-opinions.html" />
+    <id>https://twitchard.github.io/posts/2022-08-29-my-opinion-concerning-opinions.html</id>
+    <published>2022-08-29T00:00:00Z</published>
+    <updated>2022-08-29T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Your tools and code have opinions. Rule them or be ruled!]]></summary>
+</entry>
+<entry>
+    <title>Frame your problem domain creatively</title>
+    <link href="https://twitchard.github.io/posts/2022-08-28-frame-your-problem-domain-creatively.html" />
+    <id>https://twitchard.github.io/posts/2022-08-28-frame-your-problem-domain-creatively.html</id>
+    <published>2022-08-28T00:00:00Z</published>
+    <updated>2022-08-28T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Promote yourself in your own mind]]></summary>
+</entry>
+<entry>
+    <title>Engineer SHORT feedback loops</title>
+    <link href="https://twitchard.github.io/posts/2022-08-27-short-feedback.html" />
+    <id>https://twitchard.github.io/posts/2022-08-27-short-feedback.html</id>
+    <published>2022-08-27T00:00:00Z</published>
+    <updated>2022-08-27T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Speedy, hands-off, opinionated, reliable, timely]]></summary>
+</entry>
+<entry>
+    <title>Be good-argument-driven, not data-driven</title>
+    <link href="https://twitchard.github.io/posts/2022-08-26-metrics-schmetrics.html" />
+    <id>https://twitchard.github.io/posts/2022-08-26-metrics-schmetrics.html</id>
+    <published>2022-08-26T00:00:00Z</published>
+    <updated>2022-08-26T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Software culture and the abuse of data]]></summary>
+</entry>
+<entry>
+    <title>I hate NY: a rant by Richard</title>
+    <link href="https://twitchard.github.io/posts/2021-11-07-i-hate-ny.html" />
+    <id>https://twitchard.github.io/posts/2021-11-07-i-hate-ny.html</id>
+    <published>2021-11-07T00:00:00Z</published>
+    <updated>2021-11-07T00:00:00Z</updated>
+    <summary type="html"><![CDATA[The horrible apartments and neighbors I've had in New York.]]></summary>
+</entry>
+<entry>
+    <title>Artisanal, Machine-Generated API Libraries</title>
+    <link href="https://twitchard.github.io/posts/2021-09-05-generating-api-libraries.html" />
+    <id>https://twitchard.github.io/posts/2021-09-05-generating-api-libraries.html</id>
+    <published>2021-09-05T00:00:00Z</published>
+    <updated>2021-09-05T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Generating Stripe's seven server-side sdks]]></summary>
+</entry>
+<entry>
+    <title>Discriminated Unions and Exhaustiveness Checking</title>
+    <link href="https://twitchard.github.io/posts/2021-07-26-discriminated-unions-with-flow.html" />
+    <id>https://twitchard.github.io/posts/2021-07-26-discriminated-unions-with-flow.html</id>
+    <published>2021-07-26T00:00:00Z</published>
+    <updated>2021-07-26T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Use discriminated unions and exhaustiveness checking to level up your Javascript]]></summary>
+</entry>
+<entry>
+    <title>Please, Systematically Enforce Your Constraints</title>
+    <link href="https://twitchard.github.io/posts/2021-04-24-behavior-constraining-features.html" />
+    <id>https://twitchard.github.io/posts/2021-04-24-behavior-constraining-features.html</id>
+    <published>2021-04-24T00:00:00Z</published>
+    <updated>2021-04-24T00:00:00Z</updated>
+    <summary type="html"><![CDATA[There are two types of features: behavior-adding features and behavior-constraining features.]]></summary>
+</entry>
+<entry>
+    <title>For serious projects, don't use Bash, use... what?</title>
+    <link href="https://twitchard.github.io/posts/2020-11-06-shell-scripting.html" />
+    <id>https://twitchard.github.io/posts/2020-11-06-shell-scripting.html</id>
+    <published>2020-11-06T00:00:00Z</published>
+    <updated>2020-11-06T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Analyzes several general-purpose languages' suitability for doing 'shelly' things]]></summary>
+</entry>
+
+</feed>
