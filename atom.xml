@@ -8,40 +8,8 @@
         <name>Richard Marmorstein</name>
         <email>nobody@example.com</email>
     </author>
-    <updated>2022-08-30T00:00:00Z</updated>
+    <updated>2022-08-26T00:00:00Z</updated>
     <entry>
-    <title>Software teams aren't system dynamics problems</title>
-    <link href="https://twitchard.github.io/posts/2022-08-30-system-dynamics-schmystem-dynamics.html" />
-    <id>https://twitchard.github.io/posts/2022-08-30-system-dynamics-schmystem-dynamics.html</id>
-    <published>2022-08-30T00:00:00Z</published>
-    <updated>2022-08-30T00:00:00Z</updated>
-    <summary type="html"><![CDATA[Queuing theory and stocks-and-flows diagrams are mere analogies]]></summary>
-</entry>
-<entry>
-    <title>My opinion concerning opinions</title>
-    <link href="https://twitchard.github.io/posts/2022-08-29-my-opinion-concerning-opinions.html" />
-    <id>https://twitchard.github.io/posts/2022-08-29-my-opinion-concerning-opinions.html</id>
-    <published>2022-08-29T00:00:00Z</published>
-    <updated>2022-08-29T00:00:00Z</updated>
-    <summary type="html"><![CDATA[Your tools and code have opinions. Rule them or be ruled!]]></summary>
-</entry>
-<entry>
-    <title>Frame your problem domain creatively</title>
-    <link href="https://twitchard.github.io/posts/2022-08-28-frame-your-problem-domain-creatively.html" />
-    <id>https://twitchard.github.io/posts/2022-08-28-frame-your-problem-domain-creatively.html</id>
-    <published>2022-08-28T00:00:00Z</published>
-    <updated>2022-08-28T00:00:00Z</updated>
-    <summary type="html"><![CDATA[Promote yourself in your own mind]]></summary>
-</entry>
-<entry>
-    <title>Engineer SHORT feedback loops</title>
-    <link href="https://twitchard.github.io/posts/2022-08-27-short-feedback.html" />
-    <id>https://twitchard.github.io/posts/2022-08-27-short-feedback.html</id>
-    <published>2022-08-27T00:00:00Z</published>
-    <updated>2022-08-27T00:00:00Z</updated>
-    <summary type="html"><![CDATA[Speedy, hands-off, opinionated, reliable, timely]]></summary>
-</entry>
-<entry>
     <title>Be good-argument-driven, not data-driven</title>
     <link href="https://twitchard.github.io/posts/2022-08-26-metrics-schmetrics.html" />
     <id>https://twitchard.github.io/posts/2022-08-26-metrics-schmetrics.html</id>
@@ -56,14 +24,6 @@
     <published>2021-11-07T00:00:00Z</published>
     <updated>2021-11-07T00:00:00Z</updated>
     <summary type="html"><![CDATA[The horrible apartments and neighbors I've had in New York.]]></summary>
-</entry>
-<entry>
-    <title>Artisanal, Machine-Generated API Libraries</title>
-    <link href="https://twitchard.github.io/posts/2021-09-05-generating-api-libraries.html" />
-    <id>https://twitchard.github.io/posts/2021-09-05-generating-api-libraries.html</id>
-    <published>2021-09-05T00:00:00Z</published>
-    <updated>2021-09-05T00:00:00Z</updated>
-    <summary type="html"><![CDATA[Generating Stripe's seven server-side sdks]]></summary>
 </entry>
 <entry>
     <title>Discriminated Unions and Exhaustiveness Checking</title>
@@ -82,12 +42,52 @@
     <summary type="html"><![CDATA[There are two types of features: behavior-adding features and behavior-constraining features.]]></summary>
 </entry>
 <entry>
-    <title>For serious projects, don't use Bash, use... what?</title>
-    <link href="https://twitchard.github.io/posts/2020-11-06-shell-scripting.html" />
-    <id>https://twitchard.github.io/posts/2020-11-06-shell-scripting.html</id>
-    <published>2020-11-06T00:00:00Z</published>
-    <updated>2020-11-06T00:00:00Z</updated>
-    <summary type="html"><![CDATA[Analyzes several general-purpose languages' suitability for doing 'shelly' things]]></summary>
+    <title>Monads and Mom</title>
+    <link href="https://twitchard.github.io/posts/2020-07-26-monads.html" />
+    <id>https://twitchard.github.io/posts/2020-07-26-monads.html</id>
+    <published>2020-07-26T00:00:00Z</published>
+    <updated>2020-07-26T00:00:00Z</updated>
+    <summary type="html"><![CDATA[The Oedipus Rex of Monad Tutorials]]></summary>
+</entry>
+<entry>
+    <title>Software culture as proof strategies</title>
+    <link href="https://twitchard.github.io/posts/2020-07-03-proof-engines.html" />
+    <id>https://twitchard.github.io/posts/2020-07-03-proof-engines.html</id>
+    <published>2020-07-03T00:00:00Z</published>
+    <updated>2020-07-03T00:00:00Z</updated>
+    <summary type="html"><![CDATA["Product-driven" means backward-chaining, "Engineering-driven" means forward chaining.]]></summary>
+</entry>
+<entry>
+    <title>Building software is not a job scheduling optimization problem</title>
+    <link href="https://twitchard.github.io/posts/2020-03-28-against-process.html" />
+    <id>https://twitchard.github.io/posts/2020-03-28-against-process.html</id>
+    <published>2020-03-28T00:00:00Z</published>
+    <updated>2020-03-28T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Richard's Software Blog]]></summary>
+</entry>
+<entry>
+    <title>Beware Middleware</title>
+    <link href="https://twitchard.github.io/posts/2019-11-01-beware-middleware.html" />
+    <id>https://twitchard.github.io/posts/2019-11-01-beware-middleware.html</id>
+    <published>2019-11-01T00:00:00Z</published>
+    <updated>2019-11-01T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Richard's Software Blog]]></summary>
+</entry>
+<entry>
+    <title>Software Development and the False Promise of Science</title>
+    <link href="https://twitchard.github.io/posts/2019-10-13-software-development-and-the-false-promise-of-science.html" />
+    <id>https://twitchard.github.io/posts/2019-10-13-software-development-and-the-false-promise-of-science.html</id>
+    <published>2019-10-13T00:00:00Z</published>
+    <updated>2019-10-13T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Richard's Software Blog]]></summary>
+</entry>
+<entry>
+    <title>Richard's Guide to Irish Traditional Music</title>
+    <link href="https://twitchard.github.io/posts/2019-09-18-richards-guide-to-irish-music.html" />
+    <id>https://twitchard.github.io/posts/2019-09-18-richards-guide-to-irish-music.html</id>
+    <published>2019-09-18T00:00:00Z</published>
+    <updated>2019-09-18T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Richard's Software Blog]]></summary>
 </entry>
 
 </feed>
