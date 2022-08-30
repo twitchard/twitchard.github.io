@@ -8,8 +8,16 @@
         <name>Richard Marmorstein</name>
         <email>nobody@example.com</email>
     </author>
-    <updated>2022-08-26T00:00:00Z</updated>
+    <updated>2022-08-27T00:00:00Z</updated>
     <entry>
+    <title>Engineer SHORT feedback loops</title>
+    <link href="https://twitchard.github.io/posts/2022-08-27-short-feedback.html" />
+    <id>https://twitchard.github.io/posts/2022-08-27-short-feedback.html</id>
+    <published>2022-08-27T00:00:00Z</published>
+    <updated>2022-08-27T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Speedy, hands-off, opinionated, reliable, timely]]></summary>
+</entry>
+<entry>
     <title>Be good-argument-driven, not data-driven</title>
     <link href="https://twitchard.github.io/posts/2022-08-26-metrics-schmetrics.html" />
     <id>https://twitchard.github.io/posts/2022-08-26-metrics-schmetrics.html</id>
@@ -79,14 +87,6 @@
     <id>https://twitchard.github.io/posts/2019-10-13-software-development-and-the-false-promise-of-science.html</id>
     <published>2019-10-13T00:00:00Z</published>
     <updated>2019-10-13T00:00:00Z</updated>
-    <summary type="html"><![CDATA[Richard's Software Blog]]></summary>
-</entry>
-<entry>
-    <title>Richard's Guide to Irish Traditional Music</title>
-    <link href="https://twitchard.github.io/posts/2019-09-18-richards-guide-to-irish-music.html" />
-    <id>https://twitchard.github.io/posts/2019-09-18-richards-guide-to-irish-music.html</id>
-    <published>2019-09-18T00:00:00Z</published>
-    <updated>2019-09-18T00:00:00Z</updated>
     <summary type="html"><![CDATA[Richard's Software Blog]]></summary>
 </entry>
 
