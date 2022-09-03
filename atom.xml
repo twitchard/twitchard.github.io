@@ -8,8 +8,16 @@
         <name>Richard Marmorstein</name>
         <email>nobody@example.com</email>
     </author>
-    <updated>2022-08-30T00:00:00Z</updated>
+    <updated>2022-09-02T00:00:00Z</updated>
     <entry>
+    <title>Glamorize your problem domain</title>
+    <link href="https://twitchard.github.io/posts/2022-09-02-glamorize-your-problem-domain.html" />
+    <id>https://twitchard.github.io/posts/2022-09-02-glamorize-your-problem-domain.html</id>
+    <published>2022-09-02T00:00:00Z</published>
+    <updated>2022-09-02T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Is this a compiler? Always answer yes.]]></summary>
+</entry>
+<entry>
     <title>Engineer SHORT feedback loops</title>
     <link href="https://twitchard.github.io/posts/2022-08-30-short-feedback.html" />
     <id>https://twitchard.github.io/posts/2022-08-30-short-feedback.html</id>
@@ -79,14 +87,6 @@
     <id>https://twitchard.github.io/posts/2019-11-01-beware-middleware.html</id>
     <published>2019-11-01T00:00:00Z</published>
     <updated>2019-11-01T00:00:00Z</updated>
-    <summary type="html"><![CDATA[Richard's Software Blog]]></summary>
-</entry>
-<entry>
-    <title>Software Development and the False Promise of Science</title>
-    <link href="https://twitchard.github.io/posts/2019-10-13-software-development-and-the-false-promise-of-science.html" />
-    <id>https://twitchard.github.io/posts/2019-10-13-software-development-and-the-false-promise-of-science.html</id>
-    <published>2019-10-13T00:00:00Z</published>
-    <updated>2019-10-13T00:00:00Z</updated>
     <summary type="html"><![CDATA[Richard's Software Blog]]></summary>
 </entry>
 
