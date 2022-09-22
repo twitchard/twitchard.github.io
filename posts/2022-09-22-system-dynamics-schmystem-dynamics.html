@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@twitchard" />
+        <meta name="twitter:title" content="System Dynamics is not The Answer" />
+        <meta name="twitter:description" content="Queuing theory and stock and flow diagrams are mere analogies" />
+        <title>System Dynamics is not The Answer - Richard Marmorstein</title>
+        <link rel="alternate" type="application/atom+xml" href="../atom.xml">
+        <link rel="stylesheet" href="../css/default.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <!-- Used for drop cap for the first character of blog posts-->
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet"> 
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149922579-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-149922579-1');
+        </script>
+    </head>
+    <body>
+        <main role="main">
+            <article>
+    <section class="header">
+      <h1>System Dynamics is not The Answer</h1>
+      <h3>by Richard Marmorstein - September 22, 2022</h3>
+      <h4><a href="../">← More Posts</a></h4>
+    </section>
+    <section class="prose">
+        <p><img src="../images/dropCapO.jpg" class="dropCap" alt="O" />ccasionally, my Twitter feed sends to me a writer arguing via <a href="https://www.lostconsultants.com/2019/11/20/littles-law-applied-in-agile-software-development/">queueing theory</a>, <a href="https://lethain.com/systems-thinking/">stock and flow diagrams</a>, <a href="https://codahale.com/work-is-work/">equations</a>, or <a href="https://lethain.com/limiting-wip/">even</a> <a href="https://twitter.com/michelgrootjans/status/1431653674024046593">simulations</a> to advance their ideas of how software teams should operate. These are the tools of <a href="https://en.wikipedia.org/wiki/System_dynamics">system dynamics</a>.</p>
+<p>I think this style of argument appeals to engineers because we like to build things. System dynamics lets you argue by <em>building</em> a model. Some very thoughtful writing happens in this style. It’s explicit and engaging. It can even be visual or interactive.</p>
+<p>But I have two objections: first, I think system dynamics models are given more authority than they deserve. A system dynamics model is just an analogy dressed up in a bit of formalism. Like any analogy, you should only give it force if the stories it tells are plausible in light of your experience and knowledge.</p>
+<p>Second, I think system dynamics <em>mechanizes</em> software teams too much: they model software teams as mechanical phenomena that obey equations and universal laws – not collections of humans, unpredictable and unique. This suggests a vision of <em>software leader as maximizer</em>: leadership is a type of engineering, it is ultimately about designing systems and organizing processes to maximize throughput.</p>
+<p>In this post, I’ll rave against three examples of “system dynamics gone wrong” I’ve encountered in blogs or books I’ve read. Mind, I’m not concerned with the examples’ <em>conclusions</em>. I agree with those, mostly. I’m after the <em>framing</em>.</p>
+<h2 id="example-stock-and-flow-diagrams">Example: Stock and Flow Diagrams</h2>
+<p>Let’s start with <a href="https://lethain.com/systems-thinking/">this post</a> by Will Larson. Will Larson is the author of <a href="https://lethain.com/elegant-puzzle/">An Elegant Puzzle</a>, a treasury of thoughtful advice for software leaders. I recommend it. Larson writes sometimes about “systems thinking”, and is particularly fond of <a href="https://en.wikipedia.org/wiki/Stock_and_flow">stock and flow diagrams</a>. In <a href="https://lethain.com/systems-thinking/">this particular post</a>, he draws this diagram</p>
+<p><img src="../images/dev-velocity-sys.png" style="width: 100%" /></p>
+<p>and then argues</p>
+<blockquote>
+<p>If your model is a good one, opportunities for improvement should be immediately obvious, which I believe is true in this case. However, to truly identify where to invest, you need to identify the true values of these stocks and flows! For example, if you don’t have a backlog of ready commits, then speeding up your deploy rate may not be valuable.</p>
+</blockquote>
+<p>The first time I read this post, I went googly-eyed at the diagram and nodded along to the analysis. But something is clearly wrong. Imagine you are a solo developer, and deploys take an hour. You won’t build up a backlog of commits. Does this mean speeding up deploys to 1 minute is valueless? That’s crazy talk! <a href="2022-08-30-short-feedback.html">Speed</a> up your deploys and you have gained a super power: the ability to interactively ask questions of your production environment, e.g. add a quick log statement to get a sample of the values a variable has under production traffic.</p>
+<p>The stock and flow diagram says nothing about this superpower. To the diagram, the only value of deploys is that they convert the stock of ready commits to the stock of deployed commits. It has nothing to say about developer workflows, time-sensitive information, or the concept of interactivity.</p>
+<p>Stock and flow models have this deceptive veneer of flexibility: you can model virtually everything with them, it seems: you need only think of it as something that <em>accumulates</em>. But this is the limitation – the only aspect of your system a stocks and flows model can capture is the <em>accumulation</em> aspect. This is why you can’t really use a stocks and flows diagram to tell the story about fast deploys making production logs more interactive. This is a story about time-sensitive information and temporary developer mental states - these things don’t really accumulate into a stockpile. You could press on, perhaps, and attempt to model stocks of “unanswered questions” flowing into “answered questions”, but this is still unsatisfactory. Unanswered questions don’t stockpile across individuals, and you would only hold one or two unanswered questions in your head at a time; you would abandon it or find another way to answer it, rather than let it stockpile.</p>
+<p>Models don’t need to completely realistic. They don’t need to capture every aspect of a system to be useful. But you’re supposed to be explicit about their limitations and have their shortcomings at the front of your mind when you apply a model. My experience: I’ve read almost nothing critical of stock and flow models. Their shortcomings are never discussed. They are praised universally as a useful tool for leaders no reason about complicated systems. I attribute this to that deceptive veneer of flexibility I mentioned. They <em>seem</em> much more flexible than they are. You can pick virtually <em>any</em> object and tell <em>a</em> story about it with a stock and flow diagram. But you can’t pick <em>an</em> object and tell <em>any</em> story about it, you are actually very limited about the types of stories that you can tell. And these won’t always be the stories that best describe the important behavior of the system.</p>
+<p>I also worry that, an eagerness to apply stock and flow modelling can bias your perception of which questions are important in favor of those that are more amenable to the approach. This isn’t quite <em>the law of the hammer</em> i.e. “if you’ve got a hammer, everything looks like a nail”. Perhaps it is <em>the hammer’s second law</em>: “if you’ve got a hammer, you’ll overlook screws in your quest to find nails.”</p>
+<p>The questions most suited to analysis via stock and flow diagrams are questions of project management and organizational design. These problems do come up, and they are important: it’s nice to work in an organization with thoughtful and smooth bureaucracy. But at least in my philosophy of engineering leadership<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, these concerns are very secondary. I don’t want my manager’s manager and their manager to spend all their energy fiddling with the details of the reporting structure, review processes, or making sure all the teams use Jira in exactly the right way. I would rather they focus on developing culture, i.e. here is a list of things I think matter much more in a software team than smooth bureaucracy:</p>
+<ul>
+<li>psychological safety</li>
+<li>deep understanding of the customer</li>
+<li>compelling product narratives</li>
+<li>positive team sentiment</li>
+<li>belief in the organization’s mission</li>
+<li><a href="2022-09-02-glamorize-your-problem-domain.html">well-framed ideas</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Pride_of_workmanship">pride of workmanship</a></li>
+<li><a href="2022-08-30-short-feedback.html">interactive tools</a></li>
+</ul>
+<p>These things, I believe, are not really subject to stock and flow analysis. So I fear that the claim “stock and flow diagrams are an important tool for software leaders” can implicitly act as a claim that tweaking systems and improving bureaucracy is more important than focusing directly on human interaction and improving culture.</p>
+<h2 id="the-theory-of-constraints">The Theory of Constraints</h2>
+<p>I occasionally see software writers mention <a href="https://en.wikipedia.org/wiki/Theory_of_constraints">“The Theory of Constraints”</a>. This comes from a book “The Goal”, a work of fiction about a manufacturing plant, which I haven’t read, but I have read <a href="https://www.goodreads.com/book/show/17255186-the-phoenix-project">“The Phoenix Project”</a>, which I understand is a knock-off of “The Goal” but in a software setting. It’s a novel, where the authors invent a fictional dysfunctional company that is only able to fix its problems by applying the particular techniques the author wishes to advance.</p>
+<p>I recommend it. Criticism aside, it’s entertaining and fairly thought-provoking.</p>
+<p>The central idea of “The Theory of Constraints” is that the output of your system is limited by a single constraint. In a manufacturing plant, this might be a critical piece of machinery. In “The Pheonix Project” it is a hero engineer named “Brent” who is involved in way too many projects and has amassed way too much institutional knowledge. To improve the system, leaders must singularly focus on the constraint. Improving something that doesn’t affect the constraint won’t actually increase output, because the constraint is the limit.</p>
+<p>In “The Pheonix Project”, the theory of constraints feels very mystical. It is among “The Three Ways” laconically revealed by this wise guru character. A mystical attitude towards system dynamics ideas is exactly what I’m out to attack in this post, so let’s dive in.</p>
+<p>I do believe that <em>some</em> systems are limited by a single constraint. I’ve never worked in manufacturing, but I can see how, in an assembly line, the performance of one specialized machine could be the bottleneck for the whole system. I can also believe that the incredibly contrived IT organization in “The Pheonix Project” could have this property - it was specifically written to be that way.</p>
+<p>But some systems are clearly <em>not</em> like this. For example: markets. If you want to increase the output of a market economy, you don’t need to “identify the constraint” and make improvements only there. You can improve output anywhere. Find a huge deposit of iron ore. Have a bumper crop of bananas. It doesn’t matter whether or not bananas or iron are the economy’s “constraint” or not. There is no single constraint. Sell your iron, sell your bananas. Supply increases. Prices go down. Firms adjust their production plans to take into account the lower price and increased abundance of iron or bananas, and output goes up.</p>
+<p>Markets don’t have a single constraint because goods can substitute for each other, and consumers and firms can coordinate through the price mechanism. I can have chicken for dinner if beef is too expensive. I can design my building around concrete beams if steel beams are too expensive.</p>
+<p>Manufacturing plants (as far as I imagine) don’t feature this level of substitutability. If the laser cutter is too busy, you can’t just use the molding machine instead. The equipment is highly specialized.</p>
+<p>So the question is, are software teams more like manufacturing plants or more like markets? I think it really depends on culture. You can have highly specialized teams, “the database team”, “the cloud team”, etc. and a bottleneck can build up in front of “the database team” just like a bottleneck could build up in front of the laser cutter.</p>
+<p>Or, you can have a culture where you have “product” teams, who own and are responsible for driving all aspects of their projects end-to-end, and “platform teams” whose mandate is not to undertake the database work, the cloud work, etc. of particular projects, but is to provide and support a set of tools so that it is easy for product teams to undertake this work themselves. This sort of environment is very unlikely to be subject to a single constraint.</p>
+<p>Or you can be an early-stage start-up where everybody just does everything.</p>
+<p>Maybe I’m obtuse, and this was the point all along of “The Pheonix Project”. You apply the theory of constraints to a dysfunctional organization until the theory doesn’t apply anymore and the end result is a well-platformed engineering organization with autonomous teams. But as I read them, advocates of The Theory of Constraints seem to think it always applies. The business of leaders is always to optimize the system dynamics problem and single-mindedly focus on clearing bottlenecks at “the constraint”.</p>
+<p>I don’t like this. Engineering leaders, in my view, are gardeners, not bottleneck-clearers. As I wrote above, the priority of leaders should be <em>culture</em> - psychological safety, pride of workmanship, compelling narratives, and such. The Theory of Constraints is an attempt to turn leadership back into an engineering problem. I see the appeal, so many of our managers in this industry were originally engineers. But it’s wrong.</p>
+<h2 id="queuing-theory">Queuing Theory</h2>
+<p>The last example I’ll discuss is the popular blog post <a href="https://codahale.com/work-is-work/">“Work is Work”</a> by Coda Hale.</p>
+<p>Why do features take longer to ship as an organization grows, asks Hale. His story:</p>
+<ul>
+<li>“Work capacity” only grows linearly as you hire more engineers, but</li>
+<li>“Contention costs grow superlinearly” (for shared resources); and</li>
+<li>“Coherence costs grow quadratically” (i.e. communication costs<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>).</li>
+</ul>
+<p>Furthermore, we know that this is the True Story of the slower pace at larger organizations. Stories about tech stack, talent level, or project management are “emic” and therefore “crap”, whereas a queueing theory explanation is “etic” and therefore “a priori truth”. Hale is very explicit about expecting you to grant special authority to the system dynamics analogy.</p>
+<p>Let’s not be hypnotized by fancy equations, and check our experience and intuitions. Is this story actually plausible? Over the last decade or so, the company I work for<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> grew from dozens to thousands of engineers. If tomorrow they decided to fire all the engineers except for me, this would eliminate contention costs and coherence costs. I wouldn’t have to contend with anybody for the QA environment. I wouldn’t need to communicate with anybody, either. Would I suddenly be able to ship my assigned feature as fast as I could have back in 2012?</p>
+<p>It would be nice to clear my calendar a bit. And it would be nice not to risk merge conflicts or code review disputes. But will this change the game? No.</p>
+<p>Hale’s story misses that the slower pace at large organizations is less about the growing size of <em>the team</em> and more about the growing size and complexity of <em>the codebase</em> and <em>the product</em>. CI takes 30 minutes to run when it used to take 3? Fire everybody, and it’ll still take 30 minutes to run. Database migration takes days when it used to take minutes? Fire everybody, it’ll still take days.</p>
+<p>Features are also simply <em>more complicated</em> for a mature software product. I’ve <a href="http://twitchard.github.io/posts/2021-04-24-behavior-constraining-features.html">written before</a> about two types of features: some features involve adding new behavior, but many features add <em>new constraints</em> on existing <strong>and future</strong> behavior. That is, in the early days of your product, if you want to add a “star ratings” feature, you just add the star ratings feature. In the later days of your product, you add the star ratings feature, you make sure it logs its activity properly for the “activity history” feature, you make sure it writes the data in such a way that the GDPR purger can clear it, you make sure that all text it displays goes through the internationalization system, you make sure that you’ve described the UI stylings for both light mode and dark mode, you make sure you are emitting events for monitoring and analytics. This has nothing to do with the size of the team. Fire everybody, and you still have to do all this work in order to have a correctly-implemented feature that preserves the invariants that users expect of your system.</p>
+<p>Hale’s advice is
+* “building high-performing organizations requires a careful and continuous search for shared resources, and developing explicit strategies for mitigating their impact on performance”
+* “limit the number of people an individual needs to talk to in order to do their job to a constant factor”</p>
+<p>This isn’t bad advice. I agree with it. I hate contending for shared resources and bureaucratic processes that require me to talk to a bunch of people. Managing these as an organization grows is <em>necessary</em> to remain productive, but far from sufficient. Resource contention and coherence costs are merely side characters: the arch-villain is complexity. This is obscured if you suspend disbelief, get hypnotized by fancy equations into believing a poor analogy between software teams and parallel processes. But it is immediately clear if you are an engineer at a large organization and take a simple moment to reflect on how your time is actually distributed.</p>
+<p>Despite vastly overstating the persuasive power of system dynamics, Hale does an admirable job combatting its tendency to mechanize the practice of software leadership. He writes</p>
+<blockquote>
+<p>That we know some of the boundaries of organizational performance and their dynamics doesn’t excuse us from using our empathy to build humane organizations. Companies are groups of people being compensated for having to spend some of their finite lifetimes not being with their partners, children, pets, or super weird hobbies. They deserve to be members of organizations which honor that time by ensuring that their work has value and meaning. There is no mathematical model to guide us to that goal.</p>
+</blockquote>
+<p>A beautiful sentiment, and a fine way to end the post. Go in peace!</p>
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>Disclaimer: I have a lot of opinions about how software organizations should be led, but I am not a manager, so add some grains of salt, to taste. I am a line engineer. I did have a small team of reports, once. The way I see it, though, is that these management types have all sorts of opinions about the right way for me to do my job. I’m entitled to my share of opinions about how they should do theirs. After all, we line engineers are the ones who feel the impact.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>This is similar to the famous argument from “The Mythical Man Month” by Fred Brooks, as <a href="https://en.wikipedia.org/wiki/The_Mythical_Man-Month#The_mythical_man-month">Wikipedia</a> summarizes</p>
+<blockquote>
+<p>Assigning more programmers to a project running behind schedule will make it even later. This is because the time required for the new programmers to learn about the project and the increased communication overhead will consume an ever-increasing quantity of the calendar time available. When n people have to communicate among themselves, as n increases, their output decreases and when it becomes negative the project is delayed further with every person added.</p>
+</blockquote>
+<p>The difference is that Brooks is writing about adding engineers to a <em>project</em> whereas Hale is describing adding engineers to an <em>organization</em>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>Fun fact: Hale worked for the same company half a decade before me.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+    <h4><a href="../">← More Posts</a></h4>
+    <h4><a href="https://twitter.com/twitchard">Twitter</a></h4>
+    </section>
+</article>
+
+        </main>
+
+        <footer>
+          <div class="leftfootleftfootleftfoot">
+            Nothing I write represents the opinion of those foolish enough to employ me.
+          </div>
+          <div class="rightfeetatthemorningfeetatnight">
+            Site shamefully generated by <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+          </div>
+        </footer>
+    </body>
+</html>

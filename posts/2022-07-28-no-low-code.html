@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@twitchard" />
+        <meta name="twitter:title" content="No code and higher-level programming" />
+        <meta name="twitter:description" content="Is no code higher level programming?" />
+        <title>No code and higher-level programming - Richard Marmorstein</title>
+        <link rel="alternate" type="application/atom+xml" href="../atom.xml">
+        <link rel="stylesheet" href="../css/default.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <!-- Used for drop cap for the first character of blog posts-->
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet"> 
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149922579-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-149922579-1');
+        </script>
+    </head>
+    <body>
+        <main role="main">
+            <article>
+    <section class="header">
+      <h1>No code and higher-level programming</h1>
+      <h3>by Richard Marmorstein - July 28, 2022</h3>
+      <h4><a href="../">← More Posts</a></h4>
+    </section>
+    <section class="prose">
+        <p>Alan Perlis said
+&gt; A programming language is low level when its programs require attention to the irrelevant.</p>
+<p>Web programming today feels too low level to me. When I build a web application, it feels like <em>building a machine that happens to support the interactions I desire</em>, when I would rather <em>describe the user interactions I desire</em> directly and then, in a separate step, translate that description into a working app.</p>
+<p>Suppose I was building a Twitter clone. I would like to say:</p>
+<ul>
+<li>logged-out users can specify a username/password to register or sign in</li>
+<li>logged-in users can specify text to create a tweet</li>
+<li>logged-in users can follow other users</li>
+<li>logged-in users can browse a chronological feed of tweets from users they follow</li>
+<li>users can browse registered users lexically by username</li>
+<li>users can browse a particular user’s tweets</li>
+</ul>
+<p>Instead, what I say is
+* On page <code>/</code>, if you are logged-out, there is a button labeled <code>register</code> that links to <code>/register</code>
+* On page <code>/</code>, if you are logged-out, there is a button labeled <code>log in</code> that links to <code>/login</code>
+* On page <code>/</code>, if you are logged-in, there is a button labeled “tweet” that opens a modal with a form including a textarea that will <code>POST /tweet {"text": ...}</code>
+* On page <code>/</code>, if you are logged-in, there is a <code>&lt;Tweets&gt;</code> component with data from <code>GET /feed</code> that, for each row, renders a <code>&lt;Tweet&gt;</code> component, and will paginate and display more if you scroll to the bottom.
+* The <code>&lt;Tweet&gt;</code> renders as a card with <code>username</code> in the top left that links to <code>/users/{username}</code>, a (human-readable, relative) <code>created_at</code> in the top right, and <code>text</code> below.
+* On page <code>/</code>, there is a link to <code>/users</code>
+* Page <code>/users</code> has a <code>&lt;Users&gt;</code> component with data from <code>GET /users</code> that, for each row, renders a <code>&lt;User&gt;</code> component.
+* The <code>&lt;User&gt;</code> component renders <code>username</code> on the left and a “see tweets” link that links to <code>/users/{username}</code>
+* There’s a <code>Tweet</code> model with <code>create</code>, <code>retrieve</code> and <code>list</code> operations, associated with a <code>tweets</code> collection in the database, with columns <code>id</code>, <code>created_at</code>, <code>author</code>, and <code>text</code>.
+* The <code>POST /tweets</code> endpoint accepts <code>text</code>, authorizes the user, and then calls <code>Tweet.create</code> with the user’s id and text.
+And so on and so forth…</p>
+<p>In other words, I have to
+* Select widgets for collecting data from and displaying data to the user.
+* Organize these widgets into components.
+* Organize these components into pages.
+* Give each page a URL.</p>
+<ul>
+<li><p>Organize the data into database tables, models, and controllers.</p></li>
+<li><p>Define routes</p></li>
+<li><p>Define a controller.</p></li>
+<li><p>Define components like <code>&lt;Users&gt;</code>, figure out what data (“props”) each component accepts.</p></li>
+<li><p>Decide how to map the data in each component to HTML elements and widgets that can display it.</p></li>
+<li><p>Select widgets for collecting data from the user.</p></li>
+<li><p>Define endpoints for data to be transmitted to the server. Name the URL and the fields.</p></li>
+<li><p>Define “models” on the backend.</p></li>
+<li><p>Define a database schema.</p></li>
+</ul>
+<p>A major problem with web development today, I think, it that it forces developers to specify details <em>before they become relevant</em>.</p>
+<p>If you’re spinning up a new web app, on the backend, you have to:
+* build an ontology of “models” to describe your data
+* decide which fields and which logic go on which model,
+* pick a database
+* design a database schema for your models
+* pick REST or GraphQL
+* design a bunch of endpoints so the frontend can talk to the backend
+* decide what fields go on which endpoints and name them</p>
+<p>On the frontend, you have to:
+* Pick a framework
+* Decide how the app is going to fetch data and communicate with the back end.
+* Invent an ontology of “components”
+* Inside your components, create buttons and labels and text fields and such, attach these to event handlers
+* Arrange your components into a hierarchy for rendering
+* Decide which components need to access which data
+* Figure out some scheme of how data will be queried from or otherwise “passed down” to each component.
+* Figure out how errors will be bubbled up to the user.
+* Decide on a paradigm for how you’re going to express styles. CSS-in-js? BEM? Tailwind?
+* Go through your component hierarchy and add CSS grid or flexbox annotations to get things to match the layout you have in mind.
+* If you care about responsive design, you need to test and tweak everything for different window sizes.</p>
+<p>This is just too much!</p>
+<p>The essence of a web application, I believe, is the user interactions it enables. I daydream about a future in which I can get started by describing that, only.
+I daydream about a future where I can start by specifying the “core essence” of the app, only. I want to ignore the particulars of the database schema, and frontend/backend hierarchy, and widget choice and layout and component hierarchy. I’ll come to that stuff later. Suppose I want to build a Twitter clone, I want to say</p>
+<ul>
+<li>let there be users</li>
+<li>let there be tweets</li>
+<li>tweets have body text</li>
+<li>users can specify text to create a tweet</li>
+<li>users can follow users</li>
+<li>let there be retweets</li>
+<li>users can generate a retweet from a tweet</li>
+<li>users can browse a chronological feed of tweets and retweets from users they follow</li>
+</ul>
+<p>and this should be enough to get me an unstylized, but functional, twitter clone. This took me eight lines of English to describe. It should require eight lines of code to specify,</p>
+<p>Then I should be able to progressively, naturally, build on this foundation and specify more details as I choose to care about them, in an order that is natural to me. I want to say</p>
+<ul>
+<li>User’s cant follow themselves</li>
+<li>Records persist in MySQL</li>
+<li>The creation timestamp only displays on hover</li>
+<li>Everything is themed in green and pink pastels</li>
+</ul>
+<p>And I want to be able to say these things without interfering</p>
+<p>I also shouldn’t have to start from scratch when I take my web app and “port” it to a new platform. My web app, my iOS app, my Android app, my Alexa “skill”, my Google Assistant Integration, my CLI, my smart TV app - although they might have substantial differences in terms of presentation and organization - should be able to share a “core” definition of user interactions. I shouldn’t have to define 6 separate, standalone apps that happen to implement the same set of interactions. “React Native” has the right idea in this regard, but doesn’t go nearly far enough.</p>
+<p>And while I’m wishing, I’d like a pony too. And a lollipop!</p>
+<p>As Alan Perlis said:</p>
+<blockquote>
+<p>When someone says ‘I want a programming language in which I only say what I wish done,’ give him a lollipop”</p>
+</blockquote>
+<h2 id="what-exists">What exists?</h2>
+<p>So is “let there be users”</p>
+<h1 id="a-higher-level-programming-language-for-the-web">A higher-level programming language for the web</h1>
+<blockquote>
+<p>A programming language is low level when its programs require attention to the irrelevant.</p>
+</blockquote>
+<p>I want a higher-level programming language for the web. I want a programming language in which I only say what I wish done.</p>
+<p>Alan Perlis of ALGOL fame, the first Turing Award laureate, wrote[0]</p>
+<p>I want that programming language. And the joke’s on Alan Perlis, because I want a lollipop too.</p>
+<p>The man also wrote[1]</p>
+<p>Web development today, I claim, is not high level. We have tools – frontend frameworks like React, backend frameworks like Ruby on Rails.</p>
+<p>IAM
+Management interface
+Expiration
+Interactive querying &amp; exploration</p>
+<p>Rails</p>
+<p>I think the software world is ripe for a higher-level programming language for web development, and I suspect it will emerge from ”</p>
+<p>Programming a web application today, I claim, feels like it requires a lot of attention to the irrelevant. We need a “higher-level” programming language.</p>
+<p>What details are “irrelevant” changes according to the lifecycle</p>
+<p>When I’m prototyping an app, I really care how data is stored</p>
+<p>I want to specify the look and feel of the app in general terms.
+I want to specify</p>
+<p>Writing web apps today feels, to me, like it requires specifying a lot of irrelevant detail.</p>
+<p>[0] epigrams
+[1] automatic programming</p>
+<p>and elsewhere he wrote[2]</p>
+<blockquote>
+<p>In a sense, progress in programming language design can be measured by the ratio of program text we must write which says <em>what</em> is to be done to that which says <em>how</em> it is to be done.</p>
+<p>Of course, we all know that this is a layered issue: “what” at one level must be “how” at another, presumably lower, level in the language processing hierarchy</p>
+</blockquote>
+    <h4><a href="../">← More Posts</a></h4>
+    <h4><a href="https://twitter.com/twitchard">Twitter</a></h4>
+    </section>
+</article>
+
+        </main>
+
+        <footer>
+          <div class="leftfootleftfootleftfoot">
+            Nothing I write represents the opinion of those foolish enough to employ me.
+          </div>
+          <div class="rightfeetatthemorningfeetatnight">
+            Site shamefully generated by <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+          </div>
+        </footer>
+    </body>
+</html>
