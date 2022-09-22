@@ -8,8 +8,16 @@
         <name>Richard Marmorstein</name>
         <email>nobody@example.com</email>
     </author>
-    <updated>2022-09-02T00:00:00Z</updated>
+    <updated>2022-09-23T00:00:00Z</updated>
     <entry>
+    <title>Fools! Stop Mysticizing System Dynamics</title>
+    <link href="https://twitchard.github.io/posts/2022-09-23-system-dynamics-schmystem-dynamics.html" />
+    <id>https://twitchard.github.io/posts/2022-09-23-system-dynamics-schmystem-dynamics.html</id>
+    <published>2022-09-23T00:00:00Z</published>
+    <updated>2022-09-23T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Queuing theory and stock and flow diagrams are mere analogies]]></summary>
+</entry>
+<entry>
     <title>Glamorize your problem domain</title>
     <link href="https://twitchard.github.io/posts/2022-09-02-glamorize-your-problem-domain.html" />
     <id>https://twitchard.github.io/posts/2022-09-02-glamorize-your-problem-domain.html</id>
@@ -79,14 +87,6 @@
     <id>https://twitchard.github.io/posts/2020-03-28-against-process.html</id>
     <published>2020-03-28T00:00:00Z</published>
     <updated>2020-03-28T00:00:00Z</updated>
-    <summary type="html"><![CDATA[Richard's Software Blog]]></summary>
-</entry>
-<entry>
-    <title>Beware Middleware</title>
-    <link href="https://twitchard.github.io/posts/2019-11-01-beware-middleware.html" />
-    <id>https://twitchard.github.io/posts/2019-11-01-beware-middleware.html</id>
-    <published>2019-11-01T00:00:00Z</published>
-    <updated>2019-11-01T00:00:00Z</updated>
     <summary type="html"><![CDATA[Richard's Software Blog]]></summary>
 </entry>
 
