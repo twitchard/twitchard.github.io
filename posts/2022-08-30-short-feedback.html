@@ -15,6 +15,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+        <link href="https://fonts.googleapis.com/css?family=Finger Paint" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
         <!-- Used for drop cap for the first character of blog posts-->
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
@@ -35,7 +36,7 @@ gtag('config', 'UA-149922579-1');
     <section class="header">
       <h1>Engineer SHORT feedback loops</h1>
       <h3>by Richard Marmorstein - August 30, 2022</h3>
-      <h4><a href="../">← More Posts</a></h4>
+      <h4><a href="../">← Home</a></h4>
     </section>
     <section class="prose">
         <p><img src="../images/dropCapI4.jpg" alt="I" class="dropCap" /> used to work on a developer productivity team. This kind of team is responsible for the maintenance and configuration of tools that developers on other teams use to do their jobs: test suites, type checkers, ci systems, linters, error trackers, bug reports, code review, code search, debuggers, logs, code coverage tools, reliability metrics, observability tools, repls, profiling tools, and so on.</p>
@@ -54,8 +55,33 @@ gtag('config', 'UA-149922579-1');
 <p>Here’s an example of what not to do: recently, I wanted to speed up a script. I found a magic command from the internet to generate a flame graph, I squinted at the graph, ignoring a bunch of frames from the runtime and other things out of my control, until I identified a likely candidate for speeding up. I made a change, timed the before and after, shipped it, and celebrated victory. What I did not do: I didn’t check in the script for generating the flame graph. I made no attempt to automate the process of filtering out the irrelevant information, or identifying promising bottlenecks. I didn’t add the ability to generate a flame graph to the CI system, nor did I set up anything to track the runtime of the script I sped up, or notify the team if it ever regressed. I didn’t automate celebrating victory either. Boo me.</p>
 <p>Here’s another example: I’ve experienced teams at three different organizations that used <a href="sentry.io">Sentry</a>, an error tracking tool. Sentry can be useful even if you don’t put much effort into setting it up. As long as you’re sending the error data, it’s there and it’s queryable, so if a user reports an error, you can find it in Sentry and get an idea of how frequent it is and when it started or stopped. But Sentry can be much more useful with a little elbow grease. If you upload source maps, you can get a stack trace that isn’t nonsense. If you add some tags, you can organize errors into projects so that each team only sees the errors that are relevant to them. And if you take the time to sort through the errors, have your app stop emitting false positives, or mark them appropriately in Sentry, then you can begin responding to errors proactively, and have the tool notify you as soon as a new class of error arises and is deployed. Well, well worth it, in my view, but I’ve been places where months and months went by before anybody mustered up the willpower to get this in order (mea culpa too, obviously).</p>
 <p>There are tradeoffs. You can’t spend all day configuring your tools - you would never get anything shipped! If you’re a small team working on an experimental project, you should probably invest far less in your tools than a large team working on a long-lived project. The <em>mindset</em> is much more important than the actual state of things. Do engineers even consider improving their own feedback loops? Or do they take the state of their tooling as immutable, out of scope, somebody else’s problem? Do they celebrate teammates who improve feedback processes, or do they make them feel guilty for “stealing” time away from the project roadmap?</p>
-    <h4><a href="../">← More Posts</a></h4>
-    <h4><a href="https://twitter.com/twitchard">Twitter</a></h4>
+    <hr />
+
+    <div class="callToAction">
+    <p>
+    
+      Thanks for reading!
+    
+    To read more by me, you can subscribe to the <a href="../atom.xml">Atom feed</a> or follow my <a href="https://twitter.com/twitchard">Twitter</a>.</p>
+    
+    
+    <p>You might be interested in my next post, <a href="../posts/2022-09-02-glamorize-your-problem-domain.html">"glamorize your problem domain"</a>.</p>
+    
+      <blockquote>You can hardly spit without hitting a configuration language that, frankly, deserves it.</blockquote>
+    
+    
+    
+    
+    
+    <p>Check out the previous post, <a href="../posts/2022-08-26-metrics-schmetrics.html">"be good-argument-driven, not data-driven"</a>.</p>
+    
+      <blockquote>"Is data-drivenness a psyop from Google?"</blockquote>
+    
+    
+    </p>
+    
+    <h4><a href="../">Home</a></h4>
+    </div>
     </section>
 </article>
 

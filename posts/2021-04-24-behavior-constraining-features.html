@@ -15,6 +15,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+        <link href="https://fonts.googleapis.com/css?family=Finger Paint" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
         <!-- Used for drop cap for the first character of blog posts-->
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
@@ -35,7 +36,7 @@ gtag('config', 'UA-149922579-1');
     <section class="header">
       <h1>Please, Systematically Enforce Your Constraints</h1>
       <h3>by Richard Marmorstein - April 24, 2021</h3>
-      <h4><a href="../">← More Posts</a></h4>
+      <h4><a href="../">← Home</a></h4>
     </section>
     <section class="prose">
         <h2 id="the-two-types-of-features">The Two Types of Features</h2>
@@ -92,8 +93,33 @@ Voila! Everybody who adds new types of data now will be prompted to reason about
 <p>As I suggested above, I’m vaguely concerned about trends like microservices. Microservices do drive you to decouple your app into independent parts, but this isn’t quite as desirable for behavior-constraining features as it is for behavior-adding features. Putting the logic for “social media sharing”, “star ratings” and “submit feedback” into independent services makes sense to me. But an “activity history service” I question. How do you automate confronting the authors of the “star rating” or “social media” service with the necessity of sending a request to the “activity history” service? I would argue “activity history” belongs not as a service of its own, but as a component of the infrastructure that all microservices have in common. In the same place where the “star rating” defines what sort of user requests/events it consumes – be that inside some sort of “service manifest” or inside the “API Gateway” – it should also be required to define what “user activities” might result and how those should be logged. I don’t really see any other way to enforce that “activity history” isn’t neglected. But that runs against the grain of microservices. If you have a hammer, everything looks like a nail. If you’re adopting microservices, every concern looks like it should be its own service. And my fear is that this trend will lead software systems to sacrifice more constrainability than they should. So be careful!</p>
 <h2 id="a-final-word">A final word</h2>
 <p>I’ll say it again: I’m not a software thought leader. I have no authority to tell you how to write software. And nothing in this post is a particularly novel insight. Still, I’m glad you’ve read it. And I hope me putting it in these terms will prompt you to think in a different way about whatever feature you work on next. Is it behavior-adding, or behavior-constraining? If it’s behavior-constraining, is there anything you can do to be more explicit about the constraint, or more systematically enforce it? Believe me, your successors will thank you.</p>
-    <h4><a href="../">← More Posts</a></h4>
-    <h4><a href="https://twitter.com/twitchard">Twitter</a></h4>
+    <hr />
+
+    <div class="callToAction">
+    <p>
+    
+      Thanks for reading!
+    
+    To read more by me, you can subscribe to the <a href="../atom.xml">Atom feed</a> or follow my <a href="https://twitter.com/twitchard">Twitter</a>.</p>
+    
+    
+    <p>You might be interested in my next post, <a href="../posts/2021-07-26-discriminated-unions-with-flow.html">"discriminated unions and exhaustiveness checking"</a>.</p>
+    
+      <blockquote>Discriminated unions are, in a way, the *transpose* of interfaces.</blockquote>
+    
+    
+    
+    
+    
+    <p>Check out the previous post, <a href="../posts/2020-07-26-monads.html">"monads and mom"</a>.</p>
+    
+      <blockquote>"Do you kiss your mother with that Javascript?"</blockquote>
+    
+    
+    </p>
+    
+    <h4><a href="../">Home</a></h4>
+    </div>
     </section>
 </article>
 

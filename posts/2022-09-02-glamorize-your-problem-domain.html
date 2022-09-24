@@ -15,6 +15,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+        <link href="https://fonts.googleapis.com/css?family=Finger Paint" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
         <!-- Used for drop cap for the first character of blog posts-->
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
@@ -35,7 +36,7 @@ gtag('config', 'UA-149922579-1');
     <section class="header">
       <h1>Glamorize your problem domain</h1>
       <h3>by Richard Marmorstein - September  2, 2022</h3>
-      <h4><a href="../">← More Posts</a></h4>
+      <h4><a href="../">← Home</a></h4>
     </section>
     <section class="prose">
         <p><img src="../images/dropCapI2.jpg" alt="I" class="dropCap" /> gave a <a href="https://thestrangeloop.com/2021/artisanal-machine-generated-api-libraries.html">conference talk</a> last year, tldr: “we generate SDKs. Here are all the lessons we’ve learned from framing this as a compilers problem.”</p>
@@ -60,15 +61,39 @@ gtag('config', 'UA-149922579-1');
 <p>Doing this correctly without reinventing the wheel (please don’t reinvent the wheel) almost always involves embedding your little language in a larger, general-purpose language. I find the <a href="https://shakebuild.com/">“shake” build system</a> by Neil Mitchell to be an excellent example of what I think is a great developer experience for a configuration language. A shake build configuration is just a Haskell program, and so you can use all the interactive tools that the Haskell ecosystem provides without any fuss. The bazel build system by Google is a less stellar example. It is embedded in the “starlark” general-purpose language, and so gains the expressive power of that language – however it obscures the entry point and execution path from the user, and so has a poor debuggability/interactive development story. (It’s a similar story for Jenkins, Puppet, Chef etc.) Of course, still miles better than Make or yaml.</p>
 <p>Even if you don’t work on a developer-facing product, the internal tools and systems of a large-ish organization probably have a “little language” or two that would benefit from being recognized as such. I often think about <a href="https://thestrangeloop.com/2018/leverage-vs-autonomy-in-a-large-software-system.html">a talk I saw</a> that describes Twitter’s approach to microservices and “StratoQL”, a language Twitter invented for describing service schemas and cross-service requests. I can’t speak personally to how effective their tool is, but I’m comfortable predicting that it is better than the counterfactual where developers just do everything in yaml.</p>
 <p>Go forth, the blog post is ended.</p>
-<hr />
 <section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1" role="doc-endnote"><p>Not actually that easy, today’s job climate is especially rough for entry-level programmers.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-    <h4><a href="../">← More Posts</a></h4>
-    <h4><a href="https://twitter.com/twitchard">Twitter</a></h4>
+    <hr />
+
+    <div class="callToAction">
+    <p>
+    
+      Thanks for reading!
+    
+    To read more by me, you can subscribe to the <a href="../atom.xml">Atom feed</a> or follow my <a href="https://twitter.com/twitchard">Twitter</a>.</p>
+    
+    
+    <p>You might be interested in my next post, <a href="../posts/2022-09-23-system-dynamics-schmystem-dynamics.html">"fools! stop mysticizing system dynamics"</a>.</p>
+    
+      <blockquote>A system dynamics model, properly considered, is just an analogy dressed up in a bit of formalism.</blockquote>
+    
+    
+    
+    
+    
+    <p>Check out the previous post, <a href="../posts/2022-08-30-short-feedback.html">"engineer short feedback loops"</a>.</p>
+    
+      <blockquote>"speedy, hands-off, opinionated, reliable, and timely."</blockquote>
+    
+    
+    </p>
+    
+    <h4><a href="../">Home</a></h4>
+    </div>
     </section>
 </article>
 
