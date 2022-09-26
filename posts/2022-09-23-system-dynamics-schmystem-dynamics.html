@@ -45,7 +45,7 @@ gtag('config', 'UA-149922579-1');
 <p>Second, <strong>system dynamics <em>mechanizes</em> software teams too much</strong>: it models software teams as ruly phenomena that obey equations and universal laws – not collections of humans, unpredictable and unique. It suggests a vision of <em>software leader as maximizer</em>: leadership is cast as a form of engineering, it is ultimately about designing systems and organizing processes to maximize throughput. I’m not sure whether the wielders of system dynamics <em>intend</em> to advance the <em>leadership is engineering</em> metaphor, but that is the undercurrent.</p>
 <p>To illustrate, I’ll proceed through three examples of “system dynamics gone wrong” from blogs or books I’ve read.</p>
 <h2 id="example-1-stock-and-flow-diagrams">Example 1: Stock and Flow Diagrams</h2>
-<p>Let’s start with <a href="https://lethain.com/systems-thinking/">a post</a> by Will Larson. I have a small criticism of a single blog post, but I heartily recommend all of Larson’s writing, particularly his book <a href="https://lethain.com/elegant-puzzle/">An Elegant Puzzle</a>, a treasury of thoughtful, practical advice for engineering leaders. Larson writes occasionally about “systems thinking”, and is particularly fond of <a href="https://en.wikipedia.org/wiki/Stock_and_flow">stock and flow diagrams</a>, from the system dynamics toolbox. In <a href="https://lethain.com/systems-thinking/">this particular post</a>, he draws this diagram</p>
+<p>Let’s start with <a href="https://lethain.com/systems-thinking/">a post</a> by Will Larson. I have a small criticism<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> of a single blog post, but I heartily recommend all of Larson’s writing, particularly his book <a href="https://lethain.com/elegant-puzzle/">An Elegant Puzzle</a>, a treasury of thoughtful, practical advice for engineering leaders. Larson writes occasionally about “systems thinking”, and is particularly fond of <a href="https://en.wikipedia.org/wiki/Stock_and_flow">stock and flow diagrams</a>, from the system dynamics toolbox. In <a href="https://lethain.com/systems-thinking/">this particular post</a>, he draws this diagram</p>
 <p><img src="../images/dev-velocity-sys.png" style="width: 100%" /></p>
 <p>and then argues</p>
 <blockquote>
@@ -58,7 +58,7 @@ gtag('config', 'UA-149922579-1');
 <p>Put another way, stock and flow models <em>seem</em> much more flexible than they actually <em>are</em>. You can pick virtually <em>any</em> object and tell <em>a</em> story about it with a stock and flow diagram. But you can’t pick <em>an</em> object and tell <em>any</em> story about it, you are actually very limited about the types of stories that you can tell. And these won’t always be the stories that best describe the important behavior of the system.</p>
 <h3 id="leadership-is-not-modeling">Leadership is not modeling</h3>
 <p>I think stock and flow analysis can be a fun, occasionally useful exercise for brainstorming and ideation. I do not think it is a fundamentally important skill for leaders.</p>
-<p>Leaders<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> should worry foremost about being effective, inspiring communicators, spending time listening to the people they are responsible for and understanding the organization’s problems from their perspective. They should learn to tell stories that resonate about the organization’s direction and the product vision. Their job is not to lock themselves in a room, build models of the organization, draw diagrams, measure things, diagnose issues, and implement solutions. That’s <em>leadership as engineering</em>.</p>
+<p>Leaders<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> should worry foremost about being effective, inspiring communicators, spending time listening to the people they are responsible for and understanding the organization’s problems from their perspective. They should learn to tell stories that resonate about the organization’s direction and the product vision. Their job is not to lock themselves in a room, build models of the organization, draw diagrams, measure things, diagnose issues, and implement solutions. That’s <em>leadership as engineering</em>.</p>
 <p>Leaders do need to manage the bureaucracy. Somebody needs to manage the reporting structure, the hiring process, review processes, and so forth. It’s nice to work in an organization with thoughtful and smooth bureaucracy. Bureaucracy can be engineered, to an extent. Stock and flow analysis has a place here. In my philosophy of engineering leadership, though, smooth bureaucracy is very secondary. Culture is king. I don’t want my manager’s manager and their manager to spend all their energy fiddling with the details of the org chart all the time. They should fix these things if they are severely broken – i.e. in a way that does not require detailed analysis of subtle interactions-at-a-distance between interrelated elements of a system to uncover – but I would rather they focus on developing culture. Here is a list of things I think matter much more in a software team than smooth bureaucracy:</p>
 <ul>
 <li>psychological safety</li>
@@ -92,7 +92,7 @@ gtag('config', 'UA-149922579-1');
 <ul>
 <li>“Work capacity” only grows linearly as you hire more engineers, but</li>
 <li>“Contention costs grow superlinearly” (for shared resources); and</li>
-<li>“Coherence costs grow quadratically” (i.e. communication costs<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>).</li>
+<li>“Coherence costs grow quadratically” (i.e. communication costs<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>).</li>
 </ul>
 <p>Furthermore, we know that this is the True Story of the slower pace at larger organizations. Stories about tech stack, talent level, or project management are “emic” and therefore “crap”, whereas a queueing theory explanation is “etic” and therefore “a priori truth”. Hale is very explicit about expecting you to grant special authority to the system dynamics analogy.</p>
 <h3 id="sanity-check-1">Sanity check</h3>
@@ -117,13 +117,14 @@ gtag('config', 'UA-149922579-1');
 <section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>Disclaimer: I have a lot of opinions about how software organizations should be led. I am not myself any sort of manager. So judge my argument on its merits, not on my credentials!</p>
-<p>Of course, my managers seem always to be full of opinions about what their engineers should be doing. Why shouldn’t an engineer have opinions the opposite way?<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>This is similar to the famous argument from “The Mythical Man Month” by Fred Brooks, as <a href="https://en.wikipedia.org/wiki/The_Mythical_Man-Month#The_mythical_man-month">Wikipedia</a> summarizes</p>
+<li id="fn1" role="doc-endnote"><p>Larson has expressed nuanced views on system dynamics. We has <a href="https://lethain.com/how-to-safely-think-in-systems/">a post warning against</a> taking your models too literally, and elsewhere he <a href="https://lethain.com/limiting-wip/">has written</a> “Models are just models, and they tell us what we ask them to”. So he views it somewhat critically, although still presumably granting it a special authority beyond other types of storytelling; i.e. he states that it enables “testing hypothesis about how things work”.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Disclaimer: I have a lot of opinions about how software organizations should be led. I am not myself any sort of manager. So judge my argument on its merits, not on my credentials!</p>
+<p>Of course, my managers seem always to be full of opinions about what their engineers should be doing. Why shouldn’t an engineer have opinions the opposite way?<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>This is similar to the famous argument from “The Mythical Man Month” by Fred Brooks, as <a href="https://en.wikipedia.org/wiki/The_Mythical_Man-Month#The_mythical_man-month">Wikipedia</a> summarizes</p>
 <blockquote>
 <p>Assigning more programmers to a project running behind schedule will make it even later. This is because the time required for the new programmers to learn about the project and the increased communication overhead will consume an ever-increasing quantity of the calendar time available. When n people have to communicate among themselves, as n increases, their output decreases and when it becomes negative the project is delayed further with every person added.</p>
 </blockquote>
-<p>The difference is that Brooks is writing about adding engineers to a <em>project</em> whereas Hale is describing adding engineers to an <em>organization</em>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<p>The difference is that Brooks is writing about adding engineers to a <em>project</em> whereas Hale is describing adding engineers to an <em>organization</em>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
     <hr />
@@ -131,7 +132,7 @@ gtag('config', 'UA-149922579-1');
     <div class="callToAction">
     <p>
     
-      Thanks for reading! Consider <a href="https://twitter.com/twitchard/status/1573756536496656384?s=20&t=ewxW-11tc9Q0FX7hd0itRg">retweeting</a> the post or commenting <a href="https://www.reddit.com/r/programming/comments/xn1qil/fools_stop_mysticizing_system_dynamics/?utm_source=share&utm_medium=web2x&context=3">on reddit</a>.
+      Thanks for reading! Consider <a href="https://twitter.com/twitchard/status/1573756536496656384?s=20&t=ewxW-11tc9Q0FX7hd0itRg">retweeting</a> the post, discussing <a href="https://news.ycombinator.com/item?id=32970265">on the orange website</a>, or commenting <a href="https://www.reddit.com/r/programming/comments/xn1qil/fools_stop_mysticizing_system_dynamics/?utm_source=share&utm_medium=web2x&context=3">on reddit</a>.
     
     To read more by me, you can subscribe to the <a href="../atom.xml">Atom feed</a> or follow my <a href="https://twitter.com/twitchard">Twitter</a>.</p>
     
