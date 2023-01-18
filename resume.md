@@ -11,7 +11,7 @@ I have deep expertise in developer tools and APIs, but I've been all around the 
 
 * I gave a [talk](https://thestrangeloop.com/2021/artisanal-machine-generated-api-libraries.html) at Strange Loop about SDK generation. Watch it!
 * Read my [writing](https://twitchard.github.io). Hacker News [best liked](https://news.ycombinator.com/item?id=32651763) my essay ["Be good-argument-driven, not data-driven"](http://twitchard.github.io/posts/2022-08-26-metrics-schmetrics.html)
-* I run [tapl.dev](https://tapl.dev), a small reading group of practitioners working through "Types and Programming Languages", a graduate-level textbook about programming language theory.
+* I organized [tapl.dev](https://tapl.dev), a small reading group of practitioners working through "Types and Programming Languages", a graduate-level textbook about programming language theory.
 
 ## My History
 
