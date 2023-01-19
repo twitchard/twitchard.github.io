@@ -8,8 +8,16 @@
         <name>Richard Marmorstein</name>
         <email>nobody@example.com</email>
     </author>
-    <updated>2022-09-23T00:00:00Z</updated>
+    <updated>2023-01-18T00:00:00Z</updated>
     <entry>
+    <title>Take your pragmatism for a unicycle ride</title>
+    <link href="https://twitchard.github.io/posts/2023-01-18-unicycles.html" />
+    <id>https://twitchard.github.io/posts/2023-01-18-unicycles.html</id>
+    <published>2023-01-18T00:00:00Z</published>
+    <updated>2023-01-18T00:00:00Z</updated>
+    <summary type="html"><![CDATA[The critical resource is not *developer time*, it's *developer energy*]]></summary>
+</entry>
+<entry>
     <title>Fools! Stop Mysticizing System Dynamics</title>
     <link href="https://twitchard.github.io/posts/2022-09-23-system-dynamics-schmystem-dynamics.html" />
     <id>https://twitchard.github.io/posts/2022-09-23-system-dynamics-schmystem-dynamics.html</id>
@@ -80,14 +88,6 @@
     <published>2020-07-03T00:00:00Z</published>
     <updated>2020-07-03T00:00:00Z</updated>
     <summary type="html"><![CDATA["Product-driven" means backward-chaining, "Engineering-driven" means forward chaining.]]></summary>
-</entry>
-<entry>
-    <title>Building software is not a job scheduling optimization problem</title>
-    <link href="https://twitchard.github.io/posts/2020-03-28-against-process.html" />
-    <id>https://twitchard.github.io/posts/2020-03-28-against-process.html</id>
-    <published>2020-03-28T00:00:00Z</published>
-    <updated>2020-03-28T00:00:00Z</updated>
-    <summary type="html"><![CDATA[Richard's Software Blog]]></summary>
 </entry>
 
 </feed>
