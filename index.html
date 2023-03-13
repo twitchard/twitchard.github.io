@@ -164,6 +164,26 @@
     <marquee>Surrender to madness (:</marquee>
 </madness>
 
+    <script>
+        for (const item of ['img', 'li', 'h2'].map(tagName => document.getElementsByTagName(tagName)).reduce((acc, cur) => [...acc, ...cur])) {
+            console.log(item)
+            const tagName = item.tagName.toLowerCase();
+            let multiplier;
+            switch (tagName) {
+                case 'img':
+                  multiplier = 15;
+                break;
+                case 'li':
+                  multiplier = 1.5;
+                break;
+                case 'h2':
+                  multiplier = 2.5;
+                break;
+            }
+            const rdm = ((Math.random() - 0.5) * multiplier)
+            item.style.transform = `rotate(${rdm}deg)`
+        };
+    </script>
 </home>
 
         </main>
