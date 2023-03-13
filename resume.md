@@ -3,10 +3,6 @@
 > richard.marmorstein@gmail.com -
 > Las Vegas, NV 89128
 
-## Summary
-
-I have deep expertise in developer tools and APIs, but I've been all around the stack and dabbled in management. I am a programming language nerd, and I love to write and present.
-
 ## Get to know me
 
 * I gave a [talk](https://thestrangeloop.com/2021/artisanal-machine-generated-api-libraries.html) at Strange Loop about SDK generation. Watch it!
@@ -17,9 +13,9 @@ I have deep expertise in developer tools and APIs, but I've been all around the 
 
 ### Software Engineer - Developer Experience <right>Stripe (July 2019 - Present)</right>
   - **SDKs** - Responsible for Stripe's open-source server-side SDKs for Ruby, Python, PHP, Node, Java, Dotnet, and Go
-  - **SDK generator** - Responsible for api-codegen, Stripe's project for generating SDKs and SDK-aware surfaces
+  - **SDK generator** - Responsible for api-codegen, Stripe's project for generating SDKs and SDK-aware surfaces (Typescript)
   - **API Review** - Consulted on RESTful API design across the Stripe API
-  - **Developer Tools** - Contributed to Stripe's Developer Dashboard and the Stripe CLI
+  - **Developer Tools** - Contributed to Stripe's Developer Dashboard (React, Ruby) and the Stripe CLI (Go)
 
 ### Lead Engineer - Developer Experience <right>Vimeo (Oct 2018 - July 2019)</right>
   - Managed a team of 3 reports to improve Vimeo's internal

@@ -165,24 +165,43 @@
 </madness>
 
     <script>
-        for (const item of ['img', 'li', 'h2'].map(tagName => document.getElementsByTagName(tagName)).reduce((acc, cur) => [...acc, ...cur])) {
-            console.log(item)
-            const tagName = item.tagName.toLowerCase();
-            let multiplier;
-            switch (tagName) {
-                case 'img':
-                  multiplier = 15;
-                break;
-                case 'li':
-                  multiplier = 1.5;
-                break;
-                case 'h2':
-                  multiplier = 2.5;
-                break;
-            }
-            const rdm = ((Math.random() - 0.5) * multiplier)
-            item.style.transform = `rotate(${rdm}deg)`
+        const start = Date.now()
+        const end = Date.now() + 1000 * 60 * 10
+        
+        const elements = ['img', 'li', 'h2'].map(tagName => document.getElementsByTagName(tagName)).reduce((acc, cur) => [...acc, ...cur]);
+
+        const wobbles = elements.map(_ => Math.random() - 0.5);
+
+        const applyWobble = () => {
+          const now = Date.now();
+          const progress = Math.min(1, (now - start)/(end - start));
+          console.log('applying wobble', progress)
+          for (let i = 0; i < elements.length; i++) {
+              const item = elements[i]
+              const wobble = wobbles[i]
+              const tagName = item.tagName.toLowerCase();
+              let multiplier;
+              let multiplierEnd;
+              switch (tagName) {
+                  case 'img':
+                    multiplier = 5;
+                    multiplierEnd = 150;
+                  break;
+                  case 'li':
+                    multiplier = 0.5;
+                    multiplierEnd = 3.5;
+                  break;
+                  case 'h2':
+                    multiplier = 0.5;
+                    multiplierEnd = 8.5;
+                  break;
+              }
+              const rdm = (wobble * progress * multiplierEnd) + wobble * (1 - progress) * multiplier
+              item.style.transform = `rotate(${rdm}deg)`
+          };
         };
+        applyWobble();
+        setInterval(applyWobble, 2000)
     </script>
 </home>
 
