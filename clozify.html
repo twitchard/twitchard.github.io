@@ -1,0 +1,20 @@
+<script>
+  function clozify(input) {
+    const lines = input.split('\n');
+    return lines.map((line, i) => {
+      if (line.trim() === '') return line
+      if (line.startsWith('Chorus')) return line
+      if (line.startsWith('Verse')) return line
+      return '{{' + i + line + '}}'
+    }).join('\n')
+  }
+  function run() {
+    const input = document.getElementById("input").value;
+    const output = clozify(input);
+    document.getElementById("result").innerHTML = output;
+  }
+</script>
+<textarea id="input"></textarea>
+<div id="result"></div>
+<button onclick="run()">
+
