@@ -5,7 +5,7 @@
       if (line.trim() === '') return line
       if (line.startsWith('Chorus')) return line
       if (line.startsWith('Verse')) return line
-      return '{{' + i + line + '}}'
+      return '{{' + i + '::' + line + '}}'
     }).join('\n')
   }
   function run() {
@@ -14,7 +14,7 @@
     document.getElementById("result").innerHTML = output;
   }
 </script>
-<textarea id="input"></textarea>
-<div id="result"></div>
-<button onclick="run()">
+<textarea id="input" cols=80 rows=30></textarea>
+<button onclick="run()">Clozify</button>
+<pre id="result"></pre>
 
