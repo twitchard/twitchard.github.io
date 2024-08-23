@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@twitchard" />
+        <meta name="twitter:title" content="Breaking changes: a tooling problem" />
+        <meta name="twitter:description" content="How could our tools change to reduce the cost of breaking changes?" />
+        <meta name="description" property="og:description" content="How could our tools change to reduce the cost of breaking changes?" />
+        <meta name="author" property="og:author" content="Richard Marmorstein" />
+        
+          <meta name="image" property="og:image" content="https://twitchard.github.io/images/breaking_changes_meme.png" />
+        
+        <title>Breaking changes: a tooling problem - Richard Marmorstein</title>
+        <link rel="alternate" type="application/atom+xml" href="../atom.xml">
+        <link rel="stylesheet" href="../css/default.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css?family=Finger Paint" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <!-- Used for drop cap for the first character of blog posts-->
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet"> 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DPC615L5M6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-DPC615L5M6');
+    </script>
+    </head>
+    <body>
+        <main role="main">
+            <article>
+    <section class="header">
+      <h1>Breaking changes: a tooling problem</h1>
+      <h3>by Richard Marmorstein - August 23, 2024</h3>
+      <h4><a href="../">← Home</a></h4>
+    </section>
+    <section class="prose">
+        <p><img src="../images/dropCapP.png" class="dropCap" alt="P" />aul Graham
+<a href="https://x.com/paulg/status/1373926244673323008">said</a></p>
+<blockquote>
+<p>The base state of programming is gluing together library calls. Since glue code can be written in any language, most programmers’ language preferences are really library preferences.</p>
+</blockquote>
+<p>This is provocative in my favorite way. There is a truth here: libraries are supremely important, and will only become more important as the software world expands. Libraries are the software world’s tool for the division of labor. <a href="https://en.wikisource.org/wiki/The_Wealth_of_Nations/Book_I/Chapter_1">Ask Adam Smith</a>: the larger the industry, the higher the degree of the division of labor. As software eats the world, libraries will eat software.</p>
+<p>But from a different perspective <strong>most programmers’ library preferences are really language preferences</strong>. Libraries don’t manifest out of thin air. They are written in a programming language, and the nature of the programming language influences the nature of its libraries, in two ways.</p>
+<ol type="1">
+<li><p>There’s a <em>first-order effect</em>: the features of a programming language can enable libraries that provide more help for users. For example:</p>
+<ul>
+<li><strong>Metaprogramming:</strong> Ruby and Python, for example, have metaprogramming features that allow libraries like Rails and Django to exist, where you just define a class, define some properties and relations on it, and then you get a bunch of definitions for free: methods to do database lookups and property edits and whatnot – pretty cool if you’re into that sort of thing.</li>
+<li><strong>Fancy types:</strong> Rust and Haskell have linear types, which give library authors the ability to provide compile-time detection for certain types of user errors like resource leaks.</li>
+</ul>
+<p>This isn’t really specific to <em>libraries</em> per se, languages that permit you to write more expressive code also permit you to use more expressive<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> (and therefore more helpful) libraries. Go to your nearest Hacker News comments section and I’m sure you can find plenty of discussion about the sorts of things that make a programming language expressive.</p></li>
+<li><p>The <em>second-order effect</em> is what I’m more interested in discussing here. A programming language that makes it easier to <em>improve</em> libraries – and makes it easier for users to receive those improvements – will tend to have better libraries.</p></li>
+</ol>
+<h2 id="the-cost-of-breaking-changes">The cost of breaking changes</h2>
+<p>I am a library maintainer. It’s been most of my day job for five years. I work on libraries (for wrapping a large REST API) in 7 different programming languages.</p>
+<p>In this work, I spend an inordinate amount of time and energy thinking about breaking changes. <em>Wait – was that helper function I changed properly marked as internal-only? Wait – better add this new keyword argument to the end of this Python method, just in case some user is passing things positionally. Wait – this class wasn’t marked as final so that means technically a user could be extending it and using their own constructor, I can’t assume that this is the only possible constructor for this object.</em></p>
+<p>Breaking changes are a particular challenge in library work, I think</p>
+<ul>
+<li><strong>You can’t really see how your code is being used.</strong> Library code runs on your user’s server, not your own. You have to imagine<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. And there are so many things to imagine:</li>
+<li><strong>There are many different ways for users to depend on your code</strong>. Contrast this to e.g. a REST API<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. With a REST API, users interact in two ways: passing fields on an endpoint, and reading fields off a response. Meanwhile, with a <em>library</em> API, they can inherit from classes, they can catch exceptions, they can import symbols, they can detach methods from their prototypes, they can use reflection, they can take the types you define and pass them to type-level functions, and so on.</li>
+</ul>
+<p>I’m on constant guard against my changes being breaking in some subtle, unintended way. I look for ways to avoid a change being breaking. When I do discover I need to make a breaking change (subtle or not), I work hard to try and land the breaking change in the least disruptive way possible. This takes effort.</p>
+<h3 id="user-personas">User personas</h3>
+<p>There’s a practice “user personas” I’ve picked up from working with product and design people. The idea is to have a specific type of user in mind when you are designing software. Perhaps I want to think about (images generated by Midjourney).</p>
+<figure>
+<img src="../images/taylor.jpg" class="persona" alt="Taylor, a startup founder that has no time to sweat the technical details and just wants to get things working so they can move on to the next iteration in the urgent quest for product-market fit" />
+<figcaption aria-hidden="true">Taylor, a startup founder that has no time to sweat the technical details and just wants to get things working so they can move on to the next iteration in the urgent quest for product-market fit</figcaption>
+</figure>
+<p>Or maybe</p>
+<figure>
+<img src="../images/harley.jpg" class="persona" alt="Harley, an opinionated staff engineer at an established software company whose entire job description is to sweat technical details" />
+<figcaption aria-hidden="true">Harley, an opinionated staff engineer at an established software company whose entire job description is to sweat technical details</figcaption>
+</figure>
+<p>I would love to spend my time building for Taylor and Harley. But too often the user that I find myself thinking about is neither of those two noble souls, but foul</p>
+<figure>
+<img src="../images/mayhemus.jpg" class="persona" alt="Mayhemus McWreckington, the user bent on using the library in the squirrelliest possible way, the user who reaches in to all my library internals that aren’t properly marked as private, who extends all my classes that really ought to be marked as final, who keys off the presence of that null value where I want to begin putting something meaningful, who uses a dependency injection framework that uses reflection to figure out what parameters to use to construct instances of my classes, who calls all Python methods positionally, who initializes all Go structs positionally, who takes all the type symbols provided by my library and uses them as the input into bizarre, type-level programs." />
+<figcaption aria-hidden="true">Mayhemus McWreckington, the user bent on using the library in the squirrelliest possible way, the user who reaches in to all my library internals that aren’t properly marked as private, who extends all my classes that really ought to be marked as final, who keys off the presence of that null value where I want to begin putting something meaningful, who uses a dependency injection framework that uses reflection to figure out what parameters to use to construct instances of my classes, who calls all Python methods positionally, who initializes all Go structs positionally, who takes all the type symbols provided by my library and uses them as the input into bizarre, type-level programs.</figcaption>
+</figure>
+<p>Every maintainer faces this dilemma: abandon your discipline around breaking changes, or let your ability to improve things for actual users be constrained by hypothetical edge cases.</p>
+<p>We all lose here. Every improvement a maintainer chooses not to ship because it breaks imaginary users means a worse library for the rest of us. Every moment a maintainer spends on workarounds to avoid breaking changes, or on managing the breaking changes they do ship – e.g. delaying them so many breaking changes can be bundled, managing deprecation, writing migration instructions – is a moment they don’t spend on improving other, more tangible aspects of the library.</p>
+<p><img src="../images/breaking_changes_meme.png" style="width:80%" /></p>
+<h2 id="tips-for-library-maintainers">Tips for library maintainers</h2>
+<p>There are things you can and should do as a library maintainer to reduce the toll of breaking changes on your own library:</p>
+<ul>
+<li>Run a tool in CI<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> that detects breaking changes. Less burden on you to catch things.</li>
+<li>Be very conservative with your public interface. Default to making everything private or else final and readonly and whatever other limiting modifiers you can think of.</li>
+<li>Explicitly disallow “weird” usage patterns inside your documentation. The <a href="https://semver.org/">semver spec</a> says that your public interface is what you declare it to be, and you are allowed to say “the shape of the library under reflection is not considered part of the public interface” if you want to, or “only classes that are explicitly documented as such are allowed to be subclassed”.</li>
+</ul>
+<p>Doing this consistently makes a difference but can’t eliminate the burden completely. And these lessons aren’t immediately apparent; many libraries rise to popularity before the maintainers have learned them, and applying them retroactively is a tough nut to crack. My take is that this really is an industry-wide tooling problem. It needn’t just be on maintainers to know and be responsible for all this – our tools and programming languages should enable and encourage the right practices from the get-go.</p>
+<h2 id="it-doesnt-have-to-be-this-way">It doesn’t have to be this way</h2>
+<p>What could change in our programming languages and tools to reduce the cost of breaking changes? I have a list. These are the things I would be thinking about if I were contributing to a programming language or its tools and trying to build the most library-friendly programming language in the world.</p>
+<h3 id="codemod-powered-upgrades">Codemod-powered upgrades</h3>
+<p>I’d like to see better, standard tooling around codemods. If robust codemods were easy enough to write, maintainers could begin including codemod definitions with new versions of their library, capable of automatically modifying a user’s code to be compatible with otherwise breaking changes. If this were standard practice, the package manager could run codemods automatically as a user upgrades from an old version, and maintainers could then begin to treat as non-breaking any change whose migration could be automated. While writing this post I listened to an <a href="https://changelog.com/podcast/597">episode of the “Changelog” Podcast</a> where <a href="https://predr.ag/">Predrag Gruevski</a>, maintainer of the <a href="https://github.com/obi1kenobi/cargo-semver-checks">“cargo-semver-checks” tool</a> for Rust, <a href="https://changelog.com/podcast/597#transcript-54">calls for much the same thing.</a></p>
+<p>Only some types of breaking change can be smoothed over via codemod. For example, let’s take two breaking changes that have happened in the popular ExpressJS library. In ExpressJS v5, the <code>.del</code> method is removed in favor of <code>.delete</code>, certainly a migration that could be completely automated via codemod. On the other hand in ExpressJS v4, the <code>.routes</code> method is removed without replacemen; if you need to list all the routes mounted in your Express app, you need to start keeping track of that yourself as you mount them. This change can’t realistically be tackled with a codemod.</p>
+<p>Codemods might only be able to smooth over simple types of breaking change – renames, changing defaults, splitting method calls, etc. – but while simple, these types of change are still valuable. Library code, like all code, evolves. Names that used to make sense become confusing. Defaults that used to be helpful turn out to clash with new use cases. Think of how often you do renaming and refactoring of internal code: our libraries suffer because of how burdensome making small changes like this to a library is for both maintainers and users.</p>
+<p>Codemods for library upgrades isn’t commonplace in the status quo, but it exists. There’s <a href="https://github.com/reactjs/react-codemod">react codemod</a> that uses <a href="https://github.com/facebook/jscodeshift">a library <code>jscodeshift</code></a> and provides some commands to help with specific steps of certain React migrations. There’s <a href="https://docs.openrewrite.org/">openrewrite</a> for Java, and tools written on top of it such as <a href="https://github.com/spring-projects-experimental/spring-boot-migrator?tab=readme-ov-file">Spring boot migrator</a>. In PHP land there’s a <a href="https://laravelshift.com/">paid service</a> that helps people automate their Laravel version upgrades.</p>
+<p>Something I think needs to change is that <em>type-directed</em> codemods need to become the standard. The story for codemods almost everywhere (the exception being <a href="https://docs.openrewrite.org/concepts-explanations/lossless-semantic-trees">openrewrite</a> ) is that you define it entirely in terms of ASTs. This is how <a href="https://github.com/facebook/jscodeshift"><code>jscodeshift</code></a> works, at least, and if you wanted to do codemods in Python or Go the Internet seems to think the way you would do it is to use the <code>ast</code> package that they provide in their respective standard libraries.</p>
+<p>The problem with ASTs though, is that an AST is just a <em>syntactical</em> structure. It doesn’t really reflect anything about how the <em>semantics</em> of the programming language <em>works</em>. Manipulating ASTs is only one level more structured than manipulating text with regexes. A critical example: an AST doesn’t give you any help if you want to <em>find references</em>. Suppose you’re in Typescript and trying to write a codemod to do that ExpressJS <code>.del</code> -&gt; <code>.delete</code> migration on instances of <code>express.App</code>. You have to
+1. Find something that looks like it’s an an import of <code>express</code>.
+2. Find something that looks like it’s a function call to the result of the <code>express</code> import (to instantiate an express app).
+3. Find something that looks like it’s a call on <code>.del</code> to the result of that function call to the result of the <code>express</code> import.
+4. Pray that there are no re-assignments or function boundaries in between these events, because if there are, your codemod isn’t realistically going to be able to track them and will drop the ball, you’ll have to be satisfied with a codemod that only actually triggers in say, 90% of the scenarios in which it might need to. A 90% success rate is useful, but won’t cut it if the goal is reliable touch-free automation of library upgrades.</p>
+<p>Meanwhile, my LSP has “find all references” built-in and a “rename” feature that does exactly this, no guesswork involved (yes, <code>any</code> can interfere, but users understand that allowing <code>any</code> into your Typescript codebase amounts to voluntarily opting out of having nice things, unlike the everyday sorts of things that tend to break AST-only code triangulation: doing an assignment, breaking out a function, etc.)</p>
+<p>If codemod-powered library upgrades are to arise, they will need to be type-aware. Purely syntactic codemods are simply too hard to write and too unreliable. Most dynamically-typed languages now have robust gradual type systems available now, so I’m an optimist.</p>
+<h3 id="more-granular-breakingness">More granular breakingness</h3>
+<p>Maintainers should be able to be more specific than labeling every release simply “breaking” or “non-breaking”. What, precisely, broke?</p>
+<p>With today’s technology, if I make a breaking change to a small part of my library – say, a parameter that only 1% of users use – there is no way for my release to be treated as major just for those users. I have to release a major version for everybody, which means 99% of users unnecessarily pay a <em>cost of vetting</em>. “Cost of vetting” is worth deconstructing. There’s a continuum of vetting practices, between two extremes:</p>
+<ul>
+<li><strong>Heavy vetters</strong> – these (rare) users conscientiously read the release notes to verify they aren’t implicated before they bump a major version. Heavy vetters, because they are so careful, pay a cost for every major version, whether they actually suffer breakage or not.</li>
+<li><strong>Light vetters</strong> – these users essentially treat major versions no differently than minor versions, and pull major versions wholesale from all their dependencies at once, and only investigate what breaks in CI.</li>
+</ul>
+<p>Because of heavy vetting, a library maintainer might choose to avoid certain breaking changes, whose benefit to users or to the ease of library maintenance doesn’t exceed the cost to heavy vetters, or delay the breaking changes to bundle them together in a single major version.</p>
+<p>The cost of light vetting is more subtle. Light vetting, in a sense, defeats the purpose of semantic versioning altogether. If I can’t trust that users will pay attention to the changes in a major unless it breaks their CI, then if I have a change that I actually need users to pay attention to, then bumping the major version is not enough to signal this – I have to make sure my change breaks their CI.</p>
+<p>This often comes up when you’re considering changing defaults. For example, suppose my library makes network requests, and for years I have hardcoded into the library a decision to always use IPv4 unless IPv6 is explicitly enabled. Perhaps this made sense and led to less user trouble ten years ago, when IPv6 support was less universal, but these days IPv6 is much more mature and cloud vendors even offer IPv6-only environments, and having IPv6 something for which you have to explicitly enable support is almost certainly no longer the thing that leads to the lowest friction for a new user on average. But if I change the default, and users pull the update, it is very possible that a user with certain network settings or very locked-down firewall rules would break. And this, unfortunately, is exactly the sort of thing that would fail in a production environment but succeed in CI and testing environments.</p>
+<p>If you could actually rely upon users to read and obey the release notes, there would be no risk. At it is, you can make this change in a major, let users break, and take solace in the fact that in a legalistic sense you are not in the wrong. According to semver you are allowed to make breaking changes in majors and it is the user’s “fault” for not reading the release notes if they break. But if what you care about is preventing your users from having bad experiences – not just avoiding being at fault for them – it just isn’t realistic to expect that users will read the release notes. The modern software application uses too many libraries, and the signal-to-noise of major releases is too low.</p>
+<p>A way for tools to address this problem would be a finer-grained concept of “breaking change”. Maintainers should be able to specify which <em>parts</em> of a library are subject to breakage, and users (with the help of their tools) should specify which <em>parts</em> of the library are used by their project, and this information should be used to determine which releases to automatically pull, not the coarse “breaking/non-breaking” distinction. Pull this off and breaking changes become less disruptive for those they do not affect, and the signal-to-noise ratio of reading the release notes that are flagged for you is much more favorable.</p>
+<p>As with codemods, types may be a big part of the story here. The type system has a pretty definitive answer to “do I use subject-to-breaking-change part X part of library Y” – this is just checking if “find all references” returns an empty result or not. In theory, you can also get (even more granular) usage information with run-time mechanisms, if you have sufficient test coverage.</p>
+<h3 id="library-level-access-control">Library-Level Access Control</h3>
+<p>A feature that few programming languages provide is library-level access control. Many programming languages have no access control to speak of, and many of those that have access control do not provide it at the <strong>library</strong> level.</p>
+<ul>
+<li>Java, for instance, provides access control only at the <em>package</em> and <em>class</em> levels. This would be fine, except most Java libraries are not just a single package: they are several packages, because the package is Java’s primary namespacing mechanism. You therefore have a dilemma, if you make a method <code>public</code> then the world can use it. If you make a method <code>package protected</code> then its inaccessible to other packages in the library. There is no way to make a method accessible to other packages in your library, but not the world.</li>
+<li>C# does better here. It has an “internal” access control keyword which makes its target inaccessible to the outside world but public to everybody inside your “assembly”. Usually a C# library is a single assembly. An assembly can contain several namespaces.</li>
+<li>Rust also does better. There is a <a href="https://doc.rust-lang.org/reference/visibility-and-privacy.html">module hierarchy</a>, so things can be public within your hierarchy but hidden at the root. Libraries have a single root module.</li>
+<li>Go, like Java, only gives you access control at the package level, and libraries often contain multiple packages because the package is Go’s only namespacing construct.</li>
+<li>PHP only gives you access control at the class level.</li>
+<li>Ruby and Python provide no access control to speak of, although in Python <a href="https://microsoft.github.io/pyright/#/typed-libraries?id=library-interface">typecheckers may respect</a> the convention that names beginning with an underscore are library-private.</li>
+<li>In Typescript you can accomplish the effect of internal-only types by exporting different types to your users than what you use internally. I know of but have not used <a href="https://api-extractor.com/pages/tsdoc/doc_comment_syntax/">API Extractor</a> which provides <code>@public</code>, <code>@private</code> annotations.</li>
+</ul>
+<p>This is mostly just an inconvenience. You can always use docstrings to mark something as internal. But in my opinion, every programming language serious about libraries should enforce access controls, or at a bare minimum, ratify a standard. Tools to detect breaking changes (and enforce semver?) can’t work unless there’s an agreed way for library maintainers to declare what’s actually in the public interface.</p>
+<h3 id="unison">Unison</h3>
+<p>I don’t think a post on library upgrade experience would be complete if I didn’t mention the programming language <a href="https://www.unison-lang.org">Unison</a>. In Unison, <a href="https://www.unison-lang.org/docs/the-big-idea/">things are referenced</a> by <em>a hash of their syntax tree</em> instead of by <em>name</em>. This has several implications, but among other things it makes for an interesting library upgrade story. Several different versions of a single library can coexist peacefully in the same Unison project, so if you need something from the newest version of a library <a href="https://www.unison-lang.org/docs/the-big-idea/">you don’t necessarily need to</a> stop the world, upgrade all your existing usage of the library to be compatible with the latest version first, before bumping a single, project-wide version. You can very naturally just grab the latest version of the library and start using it <em>in addition</em> to the older version of the library that you are already using. You can consolidate things later, if it becomes convenient or proves to be logically necessary. When you do wish to do a project-wide upgrade, the a Unison tooling <a href="https://www.unison-lang.org/docs/usage-topics/workflow-how-tos/update-code/#upgrade-workflow">partially automates</a> this with its <a href="https://www.unison-lang.org/docs/the-big-idea/#structured-refactoring">structured refactoring</a> capabilities. Also because references are by-hash and not by-name, renames are non-breaking. So in theory, breaking changes in a Unison library promise to be less disruptive to users than breaking changes to a library in a more typical programming language.</p>
+<p>I haven’t used Unison too seriously, so I can’t speak authoritatively to how things shake out in practice; but I will say if you’ve never played around with Unison, you should. It’s ambitious. I wish more developer tools aimed so high.</p>
+<h2 id="dont-just-click-away-and-forget">Don’t just click away and forget</h2>
+<p>I hope I’ve convinced you</p>
+<ul>
+<li>the library experience around breaking changes is poor and has room to improve</li>
+<li>this is costly, not just to library maintainers but to everybody</li>
+</ul>
+<p>The next time you are selecting a programming language for an important, long-term project, the next time you are advising a friend which programming language they should choose to build their career around, the next time that you are sitting down to a fancy dinner with the core team of the world’s most promising programming language, the next time you are sounding off your unsolicited programming language opinions on Hacker News – think of the library maintainers. Shake your fist at Mayhemus McWreckington. Remember that he is why we can’t have nice things, even though he probably doesn’t even really exist.</p>
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>I watched a <a href="https://www.youtube.com/watch?v=43XaZEn2aLc">“Papers We Love” talk</a>
+about a paper that tries to formalize the notion of what it means or a programming language to be “expressive”. I recommend it if you’re PL-theory-curious.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>You can get a <em>little</em> insight into how users are using your library with telemetry. But you’re never really going to be able to get answers to questions like “are any users extending this class?” with telemetry that you collect pre-emptively (unless your telemetry is terrifyingly invasive), you have to deploy a new version and you’ll only get answers for users that upgrade. Telemetry has its uses but is really quite limited.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>It might seem a little weird that, as I mentioned, the libraries I maintain are for wrapping a REST API, but then I’m contrasting how libraries are subject to more types of breaking change than REST APIs are. What gives? It turns out that (a), depending on how your REST API gets reflected into the libraries that wrap it, some changes that aren’t strictly <em>breaking</em> on a data-over-the-wire level can correspond to a breaking change to e.g. the class structure that describes it inside your SDK, and (b) REST API wrapper libraries also contain a fair amount of “infrastructure” code, that needs to evolve as new patterns appear in the API it wraps, or to adapt to more user environments.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>In .NET there is something called the <a href="https://learn.microsoft.com/en-us/dotnet/fundamentals/apicompat/package-validation/baseline-version-validator">Baseline Version Validator</a> For Java, the best tool I know of is <a href="https://github.com/lvc/japi-compliance-checker">this ancient perl script</a>. For Go, there is <a href="https://pkg.go.dev/golang.org/x/exp/cmd/gorelease">gorelease</a>. For Typescript, you should read the <a href="https://www.semver-ts.org/index.html">semver-ts spec</a>, and especially the section on <a href="https://www.semver-ts.org/appendices/b-tooling.html#detect-breaking-changes-in-types">tooling</a>. For Rust there is <a href="https://github.com/obi1kenobi/cargo-semver-checks">cargo-semver-checks</a>. For other languages, if you know of any good tools, please let me know!<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+    <hr />
+
+    <div class="callToAction">
+    <p>
+    
+      Thanks for reading!
+    
+    To read more by me, you can subscribe to the <a href="../atom.xml">Atom feed</a> or follow my <a href="https://twitter.com/twitchard">Twitter</a>.</p>
+    
+    
+    
+    <p>Check out the previous post, <a href="../posts/2023-01-18-unicycles.html">"take your pragmatism for a unicycle ride"</a>.</p>
+    
+      <blockquote>"Sometimes the tool that brings the best results isn't the tool that is "best" on the practical merits"</blockquote>
+    
+    
+    </p>
+    
+    <h4><a href="../">Home</a></h4>
+    </div>
+    </section>
+</article>
+
+        </main>
+
+        <footer>
+          <div class="leftfootleftfootleftfoot">
+            Nothing I write represents the opinion of those foolish enough to employ me.
+          </div>
+          <div class="rightfeetatthemorningfeetatnight">
+            Site shamefully generated by <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+          </div>
+        </footer>
+    </body>
+</html>

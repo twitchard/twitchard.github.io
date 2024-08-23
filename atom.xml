@@ -8,13 +8,13 @@
         <name>Richard Marmorstein</name>
         <email>nobody@example.com</email>
     </author>
-    <updated>2024-08-24T00:00:00Z</updated>
+    <updated>2024-08-23T00:00:00Z</updated>
     <entry>
     <title>Breaking changes: a tooling problem</title>
-    <link href="https://twitchard.github.io/posts/2024-08-24-breaking-changes.html" />
-    <id>https://twitchard.github.io/posts/2024-08-24-breaking-changes.html</id>
-    <published>2024-08-24T00:00:00Z</published>
-    <updated>2024-08-24T00:00:00Z</updated>
+    <link href="https://twitchard.github.io/posts/2024-08-23-breaking-changes.html" />
+    <id>https://twitchard.github.io/posts/2024-08-23-breaking-changes.html</id>
+    <published>2024-08-23T00:00:00Z</published>
+    <updated>2024-08-23T00:00:00Z</updated>
     <summary type="html"><![CDATA[How could our tools change to reduce the cost of breaking changes?]]></summary>
 </entry>
 <entry>
