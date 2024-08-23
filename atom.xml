@@ -8,8 +8,16 @@
         <name>Richard Marmorstein</name>
         <email>nobody@example.com</email>
     </author>
-    <updated>2023-01-18T00:00:00Z</updated>
+    <updated>2024-08-24T00:00:00Z</updated>
     <entry>
+    <title>Breaking changes: a tooling problem</title>
+    <link href="https://twitchard.github.io/posts/2024-08-24-breaking-changes.html" />
+    <id>https://twitchard.github.io/posts/2024-08-24-breaking-changes.html</id>
+    <published>2024-08-24T00:00:00Z</published>
+    <updated>2024-08-24T00:00:00Z</updated>
+    <summary type="html"><![CDATA[How could our tools change to reduce the cost of breaking changes?]]></summary>
+</entry>
+<entry>
     <title>Take your pragmatism for a unicycle ride</title>
     <link href="https://twitchard.github.io/posts/2023-01-18-unicycles.html" />
     <id>https://twitchard.github.io/posts/2023-01-18-unicycles.html</id>
@@ -80,14 +88,6 @@
     <published>2020-07-26T00:00:00Z</published>
     <updated>2020-07-26T00:00:00Z</updated>
     <summary type="html"><![CDATA[The Oedipus Rex of Monad Tutorials]]></summary>
-</entry>
-<entry>
-    <title>Software culture as proof strategies</title>
-    <link href="https://twitchard.github.io/posts/2020-07-03-proof-engines.html" />
-    <id>https://twitchard.github.io/posts/2020-07-03-proof-engines.html</id>
-    <published>2020-07-03T00:00:00Z</published>
-    <updated>2020-07-03T00:00:00Z</updated>
-    <summary type="html"><![CDATA["Product-driven" means backward-chaining, "Engineering-driven" means forward chaining.]]></summary>
 </entry>
 
 </feed>
