@@ -73,14 +73,11 @@
 <p>I would love to spend my time building for Taylor and Harley. But too often the user that I find myself thinking about is neither of those two noble souls, but foul “Mayhemus McWreckington, the user bent on using the library in the squirrelliest possible way, the user who reaches in to all my library internals that aren’t properly marked as private, who extends all my classes that really ought to be marked as final, who keys off the presence of that null value where I want to begin putting something meaningful, who uses a dependency injection framework that uses reflection to figure out what parameters to use to construct instances of my classes, who calls all Python methods positionally, who initializes all Go structs positionally, who takes all the type symbols provided by my library and uses them as the input into bizarre, type-level programs.” It’s a shame.</p>
 <p>Every maintainer faces this dilemma: abandon your discipline around breaking changes, or let your ability to improve things for actual users be constrained by hypothetical edge cases.</p>
 <p>We all lose here. Every improvement a maintainer chooses not to ship because it breaks imaginary users means a worse library for the rest of us. Every moment a maintainer spends on workarounds to avoid breaking changes, or on managing the breaking changes they do ship – e.g. delaying them so many breaking changes can be bundled, managing deprecation, writing migration instructions – is a moment they don’t spend on improving other, more tangible aspects of the library.</p>
-<figure>
-<img src="../breaking_changes_meme.png" alt="The world if library maintainers could spend more time improving the library and less time managing breaking changes" />
-<figcaption aria-hidden="true">The world if library maintainers could spend more time improving the library and less time managing breaking changes</figcaption>
-</figure>
+<p><img src="../images/breaking_changes_meme.png" style="width:80%" /></p>
 <h2 id="tips-for-library-maintainers">Tips for library maintainers</h2>
 <p>There are things you can and should do as a library maintainer to reduce the toll of breaking changes on your own library:</p>
 <ul>
-<li>Run a tool in CI<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>that detects breaking changes. Less burden on you to catch things.</li>
+<li>Run a tool in CI<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> that detects breaking changes. Less burden on you to catch things.</li>
 <li>Be very conservative with your public interface. Default to making everything private or else final and readonly and whatever other limiting modifiers you can think of.</li>
 <li>Explicitly disallow “weird” usage patterns inside your documentation. The <a href="https://semver.org/">semver spec</a> says that your public interface is what you declare it to be, and you are allowed to say “the shape of the library under reflection is not considered part of the public interface” if you want to, or “only classes that are explicitly documented as such are allowed to be subclassed”.</li>
 </ul>
