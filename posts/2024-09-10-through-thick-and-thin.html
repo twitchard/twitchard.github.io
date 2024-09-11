@@ -50,7 +50,7 @@
 <li>Put that logic in a new API endpoint. This gives you more control; or,</li>
 <li>Put that logic in the docs. This lets you abdicate some of the responsibility to the user.</li>
 </ul>
-<p>g “thick” SDK method gives you all the responsibility and none of the control, it is the worst of both worlds.</p>
+<p>A “thick” SDK method gives you all the responsibility and none of the control, it is the worst of both worlds.</p>
 <h2 id="example">Example</h2>
 <p>Suppose that you own <code>api.petinfluencer.io</code>, a tool where users manage their pet’s social media presence, with a public API like</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a># This endpoint information about social destinations configured via frontend UI</span>
@@ -118,7 +118,7 @@
 <li><strong>Latency</strong>: Logic that runs in the SDK has to make a round-trip per API call. Logic that runs on your server is already there, on your server.</li>
 <li><strong>Consistency</strong>: What happens if your “thick” SDK method fails halfway through? Logic on your server, in theory, can write durable records of partial progress to enable recovery. This isn’t practical for logic in the SDK.</li>
 </ul>
-<h3 id="a-case-for-thick-fetching-more-data">A case for thick: fetching more data</h3>
+<h2 id="a-case-for-thick-fetching-more-data">A case for thick: fetching more data</h2>
 <p>I said that “thick” was inappropriate 90% of the time. What’s the other 10%?</p>
 <p>One exception is helper methods for fetching more data, e.g. pagination or following references. These are <em>thick</em> in a sense, but here it’s not the case you can just move the logic to the server and things would strictly be better. Moving the logic to the server would mean returning the entire list of results in one chunk, or returning the result with all references pre-expanded, which would defeat the entire point.</p>
 <h2 id="a-case-for-thick-user-defined-logic">A case for thick: user-defined logic</h2>
