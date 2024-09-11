@@ -71,7 +71,7 @@
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">linkedin_result</span><span class="op">:</span> <span class="kw">null</span><span class="op">,</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (enabled_socials<span class="op">.</span><span class="fu">includes</span>(<span class="st">'twitter'</span>)) {</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> tweets <span class="op">=</span> <span class="fu">sliceIntoChunks</span>(<span class="dv">140</span><span class="op">,</span> post<span class="op">.</span><span class="at">text</span>)<span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> tweets <span class="op">=</span> <span class="fu">sliceIntoChunks</span>(<span class="dv">280</span><span class="op">,</span> post<span class="op">.</span><span class="at">text</span>)<span class="op">;</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    ret<span class="op">.</span><span class="at">twitter_results</span> <span class="op">=</span> []</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    ret<span class="op">.</span><span class="at">twitter_results</span><span class="op">.</span><span class="fu">push</span>(</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>      <span class="cf">await</span> lib<span class="op">.</span><span class="fu">create_tweet</span>({</span>
