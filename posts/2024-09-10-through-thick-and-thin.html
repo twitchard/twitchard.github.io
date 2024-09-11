@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@twitchard" />
+        <meta name="twitter:title" content="How thick should your SDK be?" />
+        <meta name="twitter:description" content="Usually thin is better -- but not always" />
+        <meta name="description" property="og:description" content="Usually thin is better -- but not always" />
+        <meta name="author" property="og:author" content="Richard Marmorstein" />
+        
+        <title>How thick should your SDK be? - Richard Marmorstein</title>
+        <link rel="alternate" type="application/atom+xml" href="../atom.xml">
+        <link rel="stylesheet" href="../css/default.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css?family=Finger Paint" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <!-- Used for drop cap for the first character of blog posts-->
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet"> 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DPC615L5M6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-DPC615L5M6');
+    </script>
+    </head>
+    <body>
+        <main role="main">
+            <article>
+    <section class="header">
+      <h1>How thick should your SDK be?</h1>
+      <h3>by Richard Marmorstein - September 10, 2024</h3>
+      <h4><a href="../">← Home</a></h4>
+    </section>
+    <section class="prose">
+        <p>Say you’ve got a public REST API, that you wrap with SDKs in several languages. Should the SDK be a “thin” wrapper; that is, should the methods in the SDK be 1:1 with endpoints in the underlying API? Or should it be a “thick” wrapper; that is, should the SDK contain methods that have significant logic of their own, potentially calling multiple underlying API methods?</p>
+<p>My take? Thick is typically wrong. Ninety percent of the time, If you’re tempted to add an SDK method with any “extra” logic in it, what you should <em>actually</em> do is either</p>
+<ul>
+<li>Put that logic in a new API endpoint. This gives you more control; or,</li>
+<li>Put that logic in the docs. This lets you abdicate some of the responsibility to the user.</li>
+</ul>
+<p>g “thick” SDK method gives you all the responsibility and none of the control, it is the worst of both worlds.</p>
+<h2 id="example">Example</h2>
+<p>Suppose that you own <code>api.petinfluencer.io</code>, a tool where users manage their pet’s social media presence, with a public API like</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a># This endpoint information about social destinations configured via frontend UI</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>GET /social_settings </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a># Each of these endpoints triggers a post of supplied content to a single social destination</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>POST /facebook_posts</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>POST /twitter_posts</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>POST /linkedin_posts</span></code></pre></div>
+<p>Your users are asking for an easy way to publish the same content to all configured destinations at the same time.</p>
+<p>You <em>could</em> write a “thick” SDK method that connects the existing APIs:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> sliceIntoChunks <span class="op">=</span> <span class="op">...;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">async</span> <span class="kw">function</span> <span class="fu">createAllSocialsPost</span>(post) {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> {enabled_socials} <span class="op">=</span> <span class="cf">await</span> lib<span class="op">.</span><span class="fu">getSocialSettings</span>(userId)<span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> ret <span class="op">=</span> {</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">twitter_results</span><span class="op">:</span> <span class="kw">null</span><span class="op">,</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">facebook_result</span><span class="op">:</span> <span class="kw">null</span><span class="op">,</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">linkedin_result</span><span class="op">:</span> <span class="kw">null</span><span class="op">,</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (enabled_socials<span class="op">.</span><span class="fu">includes</span>(<span class="st">'twitter'</span>)) {</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> tweets <span class="op">=</span> <span class="fu">sliceIntoChunks</span>(<span class="dv">140</span><span class="op">,</span> post<span class="op">.</span><span class="at">text</span>)<span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    ret<span class="op">.</span><span class="at">twitter_results</span> <span class="op">=</span> []</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    ret<span class="op">.</span><span class="at">twitter_results</span><span class="op">.</span><span class="fu">push</span>(</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>      <span class="cf">await</span> lib<span class="op">.</span><span class="fu">create_tweet</span>({</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="dt">text</span><span class="op">:</span> tweets[<span class="dv">0</span>]</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>      })</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;</span> tweets<span class="op">.</span><span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> last_tweet_id <span class="op">=</span> ret<span class="op">.</span><span class="at">twitter_results</span>[</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        ret<span class="op">.</span><span class="at">twitter_results</span><span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>      ]<span class="op">.</span><span class="at">id</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>      results<span class="op">.</span><span class="fu">push</span>(<span class="cf">await</span> lib<span class="op">.</span><span class="fu">create_tweet</span>({</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        userId<span class="op">,</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        <span class="dt">text</span><span class="op">:</span> tweets[i]<span class="op">,</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        <span class="dt">in_reply_to</span><span class="op">:</span> last_tweet_id</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>      }))</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (enabled_socials<span class="op">.</span><span class="fu">includes</span>(<span class="st">'linkedin'</span>)) {</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    ret<span class="op">.</span><span class="at">linkedin_result</span> <span class="op">=</span> <span class="cf">await</span> lib<span class="op">.</span><span class="fu">create_linkedin_post</span>({</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>      <span class="dt">content</span><span class="op">:</span> post<span class="op">.</span><span class="at">text</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (enabled_socials<span class="op">.</span><span class="fu">includes</span>(<span class="st">'facebook'</span>)) {</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    ret<span class="op">.</span><span class="at">facebook_result</span> <span class="op">=</span> <span class="cf">await</span> lib<span class="op">.</span><span class="fu">create_facebook_post</span>({</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>      <span class="dt">content</span><span class="op">:</span> post<span class="op">.</span><span class="at">text</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> ret</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The problem: if things need to change, there’s a library upgrade in the way.</p>
+<p>Say tomorrow your users ask for Reddit support.</p>
+<ol type="1">
+<li>You add <code>POST /reddit_posts</code>, a <code>reddit</code> field to the the response of <code>GET /social_settings</code>, and the requisite ui. You update the SDK and release a new version.</li>
+<li>The users go to the web interface and configure their Reddit settings.</li>
+<li>The users get confused, why aren’t posts going to Reddit?</li>
+<li>They look at their code, see that they are indeed calling <code>lib.createAllSocialsPost</code>… what part of “all socials” does your API not understand?</li>
+<li>They contact support and learn that, oh yes of course, they need to bump the version in the <code>package.json</code> and deploy their servers with the new version, how silly of them.</li>
+</ol>
+<p>By contrast if <code>lib.createAllSocialsPost</code> was a thin wrapper around an endpoint <code>POST /all_socials_post</code>, no action whatsoever would be required from the user after you updated that endpoint. Thin for the win.</p>
+<p>Alternatively, if <code>lib.createAllSocialsPost</code> was not included in the SDK, but its implementation was displayed in the docs for users to paste, it would be significantly easier for the user to find the place in their own codebase where they call <code>lib.createLinkedinPost</code> etc. but not <code>lib.createRedditPost</code>, and would understand that it is their responsibility to update their code if they want posts to go to Reddit.</p>
+<p>Other things to consider:</p>
+<ul>
+<li><strong>Implementation cost</strong>: Logic that lives in the SDK has to be written (and maintained) once <strong>per language you support</strong>. Logic on the server has to be written once in your backend language.</li>
+<li><strong>Latency</strong>: Logic that runs in the SDK has to make a round-trip per API call. Logic that runs on your server is already there, on your server.</li>
+<li><strong>Consistency</strong>: What happens if your “thick” SDK method fails halfway through? Logic on your server, in theory, can write durable records of partial progress to enable recovery. This isn’t practical for logic in the SDK.</li>
+</ul>
+<h3 id="a-case-for-thick-fetching-more-data">A case for thick: fetching more data</h3>
+<p>I said that “thick” was inappropriate 90% of the time. What’s the other 10%?</p>
+<p>One exception is helper methods for fetching more data, e.g. pagination or following references. These are <em>thick</em> in a sense, but here it’s not the case you can just move the logic to the server and things would strictly be better. Moving the logic to the server would mean returning the entire list of results in one chunk, or returning the result with all references pre-expanded, which would defeat the entire point.</p>
+<h2 id="a-case-for-thick-user-defined-logic">A case for thick: user-defined logic</h2>
+<p>Another case where I think there’s a case for <em>thick</em> is when the combination of API calls involves user-defined logic; in other words: when you want the user to be able to pass a callback.</p>
+<p>ln our running example, imagine that the logic to break the text of the post up into 280-character chunks for Twitter wasn’t just a hardcoded piece of logic in the SDK or API, but you wanted to let the user describe their own logic for chunking. (A bit contrived – why not just accept pre-chunked text? – but bear with me).</p>
+<p>If <code>lib.createAllSocialsPost</code> needs to take a callback function, putting the logic entirely in a <code>POST /all_socials_post</code> endpoint is no longer straightforward. How do you transmit a callback function to a REST API?</p>
+<p>You can use a webhook: require the user to host an HTTP server somewhere reachable to you with an endpoint like <code>/petinfluencer_webhooks</code>, and send to them <code>{"type": "twitter_chunk", "text": "..."}</code>. This is obviously latency-heavy and unergonomic.</p>
+<p>Another option is “hosted callbacks” – allow the user to upload code or some sort of code artifact to your servers, and then trigger the user code on your own servers (in some sort of sandboxed environment) when appropriate. Less latency this way, but still bad ergonomically.</p>
+<p>Another option is “serialized callbacks”. Here, the user would write code in some agreed-upon language and send it over the wire as a string. If the code is in a general purpose language, you need to sandbox it (in effect this is much like “hosted callbacks”, just inline). You can also use a DSL specifically intended for this use case, such as Google’s CEL. Also not great, ergonomically.</p>
+<p>None of these options are great. So the case for a “thick” SDK that accepts the user’s callback is stronger here. (The other strong contender being write it in the docs and let users copy paste.)</p>
+<h2 id="when-youd-have-to-be-thick-not-to-go-thick-plugging-in">When you’d have to be thick not to go thick: plugging in</h2>
+<p>Some SDKs go much further than <em>REST wrapper</em>. They want to involve the user’s database, frontend, or web framework. This is a <em>thick</em> SDK, by definition. Libraries like this are legitimate, if not wonderful. When I say “thick is a almost always a mistake” and “SDKs should be thin” I’m not expressing opposition to this kind of SDK – my position is more like “if you have thick abstractions in your SDK, they had better be abstracting over more than just your own API”.</p>
+<p>That said, your (thin) REST wrapper should probably exist as a separate, independent product from your (thick) web framework plugin, as you will probably want to version and release them separately.</p>
+<hr />
+<p>As my family says at the card table, “cut thin, sure to win”. Enjoy your REST!</p>
+    <hr />
+
+    <div class="callToAction">
+    <p>
+    
+      Thanks for reading!
+    
+    To read more by me, you can subscribe to the <a href="../atom.xml">Atom feed</a> or follow my <a href="https://twitter.com/twitchard">Twitter</a>.</p>
+    
+    
+    
+    <p>Check out the previous post, <a href="../posts/2024-09-10-big-datatype.html">"big datatype: why code tools like to be written with fancy types"</a>.</p>
+    
+    
+    </p>
+    
+    <h4><a href="../">Home</a></h4>
+    </div>
+    </section>
+</article>
+
+        </main>
+
+        <footer>
+          <div class="leftfootleftfootleftfoot">
+            Nothing I write represents the opinion of those foolish enough to employ me.
+          </div>
+          <div class="rightfeetatthemorningfeetatnight">
+            Site shamefully generated by <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+          </div>
+        </footer>
+    </body>
+</html>

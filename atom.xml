@@ -10,6 +10,14 @@
     </author>
     <updated>2024-09-10T00:00:00Z</updated>
     <entry>
+    <title>How thick should your SDK be?</title>
+    <link href="https://twitchard.github.io/posts/2024-09-10-through-thick-and-thin.html" />
+    <id>https://twitchard.github.io/posts/2024-09-10-through-thick-and-thin.html</id>
+    <published>2024-09-10T00:00:00Z</published>
+    <updated>2024-09-10T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Usually thin is better -- but not always]]></summary>
+</entry>
+<entry>
     <title>Big Datatype: why code tools like to be written with fancy types</title>
     <link href="https://twitchard.github.io/posts/2024-09-10-big-datatype.html" />
     <id>https://twitchard.github.io/posts/2024-09-10-big-datatype.html</id>
@@ -80,14 +88,6 @@
     <published>2021-07-26T00:00:00Z</published>
     <updated>2021-07-26T00:00:00Z</updated>
     <summary type="html"><![CDATA[Use discriminated unions and exhaustiveness checking to level up your Javascript]]></summary>
-</entry>
-<entry>
-    <title>Please, Systematically Enforce Your Constraints</title>
-    <link href="https://twitchard.github.io/posts/2021-04-24-behavior-constraining-features.html" />
-    <id>https://twitchard.github.io/posts/2021-04-24-behavior-constraining-features.html</id>
-    <published>2021-04-24T00:00:00Z</published>
-    <updated>2021-04-24T00:00:00Z</updated>
-    <summary type="html"><![CDATA[There are two types of features: behavior-adding features and behavior-constraining features.]]></summary>
 </entry>
 
 </feed>
