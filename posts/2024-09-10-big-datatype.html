@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@twitchard" />
+        <meta name="twitter:title" content="Big Datatype: why code tools like to be written with fancy types" />
+        <meta name="twitter:description" content="What explains the disproportionate popularity of typed FP for code tools and relative unpopularity for web apps?" />
+        <meta name="description" property="og:description" content="What explains the disproportionate popularity of typed FP for code tools and relative unpopularity for web apps?" />
+        <meta name="author" property="og:author" content="Richard Marmorstein" />
+        
+        <title>Big Datatype: why code tools like to be written with fancy types - Richard Marmorstein</title>
+        <link rel="alternate" type="application/atom+xml" href="../atom.xml">
+        <link rel="stylesheet" href="../css/default.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css?family=Finger Paint" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <!-- Used for drop cap for the first character of blog posts-->
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet"> 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DPC615L5M6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-DPC615L5M6');
+    </script>
+    </head>
+    <body>
+        <main role="main">
+            <article>
+    <section class="header">
+      <h1>Big Datatype: why code tools like to be written with fancy types</h1>
+      <h3>by Richard Marmorstein - September 10, 2024</h3>
+      <h4><a href="../">← Home</a></h4>
+    </section>
+    <section class="prose">
+        <p><img src="../images/dropCapL.webp" class="dropCap" alt="L" />anguages with ML-style type systems like Haskell and OCaml<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> seem to be particularly successful in the “code tools” genre of software project. This is my subjective impression, at least. Here’s a few I can think of off the top of my head:</p>
+<p>In Haskell</p>
+<ul>
+<li>Many programming languages: <a href="https://www.purescript.org/">Purescript</a>, <a href="https://github.com/elm/compiler/">Elm</a>, <a href="https://github.com/unisonweb/unison">Unison</a>, <a href="https://github.com/agda/agda">Agda</a>.</li>
+<li><a href="https://github.com/github/semantic">Semantic</a>, the library Github <a href="https://github.com/github/semantic/blob/main/docs/why-haskell.md">built</a> for enabling code navigation for repos in many programming languages.</li>
+<li><a href="https://github.com/koalaman/shellcheck">ShellCheck</a>, a linter for shell scripts</li>
+</ul>
+<p>In OCaml</p>
+<ul>
+<li><a href="https://github.com/comby-tools/comby">Comby</a>, a tool for codemods</li>
+<li><a href="https://github.com/semgrep/semgrep">Semgrep</a>, a tool for searching for code patterns</li>
+<li><a href="https://github.com/facebook/flow,">Flow</a> Meta’s type checker for Javascript</li>
+<li><a href="https://github.com/facebook/hhvm/tree/master/hphp/hack">Hack</a>, Meta’s offshoot of PHP.</li>
+</ul>
+<p>Outside code tools, these languages seem rarer. There’s a fintech company <a href="https://mercury.com/">Mercury</a> that uses Haskell on the backend; there’s a trading firm <a href="https://www.janestreet.com/">Jane Street</a> that uses OCaml ubiquitously, there are some blockchain projects, but these are outliers. For the most part, if a well-known, successful company uses OCaml or Haskell it’s for some particular, specialized use case – they’re not usually writing their entire system in it.</p>
+<p>Why? What explains the disproportionate popularity for code tools and relative unpopularity for web apps?</p>
+<p>It could be sociological: perhaps there is a certain kind of developer – say, those more on the idealistic side – who is both more likely both to find typed FP appealing, and to wind up having occasion to invent their own code tool.</p>
+<p>Or, it could be path dependence and network effects. There’s lots of blog posts about implementing programming language compilers and interpreters and such in Haskell and OCaml. There are well-regarded libraries for e.g. parsing (Parsec, Menhir), too, in these ecosystems. So, if you are writing something along the lines of a compiler yourself, it’s easier to go with the herd and use what you see others using. In the opposite direction, there are a gazillion blog posts and well-regarded libraries for doing web apps (Rails, Django, Sprint Boot) in non-FP languages, so if you’re writing a web backend it’s easier to go with the herd here too.</p>
+<p>But I don’t think happenstance is the whole story. There seems to be something inherent about typed, functional programming that is <em>particularly</em> useful for writing code tools – something that isn’t useful to the same degree in other contexts.</p>
+<h2 id="big-datatype">Big Datatype</h2>
+<p>My hypothesis is that there is a fundamental difference – I call the phenomenon <em>Big Datatype</em> – between the way you write a web app vs. the way that you write a code tool.</p>
+<p>In a <em>code tool</em>, the source code of your implementation is typically organized around a few, very important, centralized datatypes. In a compiler, you’ve got your abstract syntax tree, some intermediate representations, your output instruction set, etc., and your program is mostly a series of transforms between these Big Datatypes. The AST is a Big Datatype in many tools besides compilers too, linters and codemods and whatnot.</p>
+<p>Web applications don’t exhibit <em>Big Datatype</em> to the same degree. In a typical web backend, you have a <code>models/</code> directory with dozens or hundreds of largely independent classes, containing code that solves hundreds of loosely related but mostly independent problems.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd models/</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">avatars.rb</span>              likes.rb     saved_searches.rb</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">comments.rb</span>             products.rb  users.rb</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">email_subscriptions.rb</span>  reviews.rb   wishlists.rb</span></code></pre></div>
+<p>Some of these are more important than others, yes: most models will have some sort of reference to the User model, probably, but the user model still probably isn’t the all-encompassing, centrally important data structure in the same way as is the AST in a code tool. The code in <code>saved_searches.rb</code> will have a reference or two to the User model, maybe, but the <code>User</code> type won’t be the input and output type of any methods inside <code>saved_searches.rb</code>, probably.</p>
+<p>This is why <em>microservices</em> is at all a tenable idea for web backends. You can get away with writing your <em>likes</em> service in a completely different programming language with a different database than the rest of your application, your app could still function mostly fine if your <em>likes</em> service went down, say – because the problems your <em>likes</em> service solve are sufficiently disconnected from the problems that the rest of your web app solves. But inside a compiler it would be absurd to try to implement, e.g. inheritance in one programming language, but then iteration in another. They interact. You must consider, for example, the case of iteration over a collection of expressions that may or may not inherit from a common class. Inheritance isn’t a separate problem from iteration in a compiler in the same way that likes are separate from comments in a web app.</p>
+<h3 id="expressive-types">Expressive types</h3>
+<p>If your codebase has <em>Big Datatype</em>, I claim, there is a higher payoff you can get if you use an expressive type system. People like strong types for a lot of reasons: bug prevention, IDE tooling, but a big one is <em>compiler-directed refactoring<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></em>.</p>
+<p>The story of compiler-directed refactoring is something like this: you want to make a wide-ranging change to an existing large program. You start by changing a type or a function somewhere, and you get a type error. You resolve the type error, and it <em>cascades.</em> You get type errors in, say, three more locations. You resolve those type errors appropriately, and they <em>cascade</em> again, and you have six locations to fix, and so on, until your program compiles again. In this way, the type system <em>guides</em> you. Without types, tracking down all the various downstream places that might need to change would require tedious checking and careful thought. (A good test suite can provide similar guidance, but requires more mental discipline to maintain). The more expressive your type system, the more details about the problem you can encode into the types, and so the greater the proportion of changes you can use your type checker to partially automate.</p>
+<p>So here’s my centraI point: I conjecture that this <em>type cascade</em> offers a greater advantage in codebases under the regime of <em>Big Datatype</em>. Here’s a hand-wavey thought experiment. Imagine you have two different codebases:</p>
+<ol type="1">
+<li>A <strong>small datatype</strong> codebase, where an average change to a type cascades and creates type errors in 2 other places.</li>
+<li>A <strong>big datatype</strong> codebase, where an average change to a type cascades to 4 additional type errors.</li>
+</ol>
+<p>In (1), 66% of the changes you make are compiler-guided (1 original change, 2 cascaded changes); but in (2), 80% of changes are compiler-guided (1 original change, 4 cascaded changes).</p>
+<p>A more abstract way to put this is that an expressive type system gives you more of an ability to <em>centralize your reasoning</em> in a single place (the definition of your datatypes). This gives you much more leverage in codebases where there are a small number of central datatypes (code tools), vs. codebases when there is a sprawling number of lesser-important datatypes (web apps).</p>
+<p>Does this mean I don’t think you should use typed FP for web apps? No! You certainly can. As I’ve hinted in previous posts, my opinion is that we should actually try to write web apps <a href="2019-11-01-beware-middleware.html">more like compilers</a>, in a style that makes the <a href="http://localhost:8000/posts/2021-04-24-behavior-constraining-features.html">constraintful features</a> of web apps more explicit.</p>
+<h2 id="typescript">Typescript</h2>
+<p>Most of what I write professionally isn’t Haskell or OCaml, it’s Typescript. The “code tool” I’ve worked most on isn’t exactly a compiler: it generates SDKs from an OpenAPI definition, but it is definitely subject to <em>Big Datatype</em>.</p>
+<p>If you are deliberate about it, Typescript can also be a good language for writing code tools. You’ve got the expressive type system with sum types, parametric polymorphism, and convenient structural typing. If you’ve got a habit of avoiding gratuitous side effects and writing functions so that the input and return types tell a complete story of what is happening inside the function, then you too can experience the <em>type error cascade</em> when making project-widen design changes. Typescript doesn’t <em>force</em> a style like this, the way a language like Haskell does, so you have to work for it, but I’ve been pretty happy.</p>
+<p>So if <em>you</em> find yourself working on a code tool, it may or may not be practical to write it in OCaml or Haskell, but at the very least I think it pays to <em>teach yourself</em> an ML-inspired language on the side to practice the skill of telling stories with types. Learn to put Big Datatype at work for you.</p>
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>Rust also has an expressive (and ML-inspired) type system, and is also popular for code tools, so I suspect Rust also supports my arguments but omit discussing Rust just because I’m personally not as familiar.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>I’ve looked for a blog post that describes “compiler-directed refactoring”, but haven’t quite found one to my satisfaction. Sandy Maguire has a <a href="https://reasonablypolymorphic.com/blog/typeholes/">good post</a> where he talks about how “you don’t have to use your brain to do programming” with Haskell, but he is talking about how you can use the compiler as a code assistant <em>in the small</em>, so to speak, to write an implementation of a single tricky function. My concern is more about using the type checker as an assistant <em>in the large</em>. Edwin Brady, author of the Idris programming language, has an entire book entitled <a href="https://www.manning.com/books/type-driven-development-with-idris">“Type-driven development with Idris”</a> (strongly recommended, by the way), but “type-driven development” here refers to a technique for writing <em>whole programs</em> from scratch where you use your types as a sort of outline for your program and you progressively fill in the implementation. This is closer to what I mean, but is sort of too broad.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+    <hr />
+
+    <div class="callToAction">
+    <p>
+    
+      Thanks for reading!
+    
+    To read more by me, you can subscribe to the <a href="../atom.xml">Atom feed</a> or follow my <a href="https://twitter.com/twitchard">Twitter</a>.</p>
+    
+    
+    
+    <p>Check out the previous post, <a href="../posts/2024-08-23-breaking-changes.html">"breaking changes: a tooling problem"</a>.</p>
+    
+      <blockquote>"the library experience around breaking changes is poor and has room to improve"</blockquote>
+    
+    
+    </p>
+    
+    <h4><a href="../">Home</a></h4>
+    </div>
+    </section>
+</article>
+
+        </main>
+
+        <footer>
+          <div class="leftfootleftfootleftfoot">
+            Nothing I write represents the opinion of those foolish enough to employ me.
+          </div>
+          <div class="rightfeetatthemorningfeetatnight">
+            Site shamefully generated by <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+          </div>
+        </footer>
+    </body>
+</html>

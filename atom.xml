@@ -8,8 +8,16 @@
         <name>Richard Marmorstein</name>
         <email>nobody@example.com</email>
     </author>
-    <updated>2024-08-23T00:00:00Z</updated>
+    <updated>2024-09-10T00:00:00Z</updated>
     <entry>
+    <title>Big Datatype: why code tools like to be written with fancy types</title>
+    <link href="https://twitchard.github.io/posts/2024-09-10-big-datatype.html" />
+    <id>https://twitchard.github.io/posts/2024-09-10-big-datatype.html</id>
+    <published>2024-09-10T00:00:00Z</published>
+    <updated>2024-09-10T00:00:00Z</updated>
+    <summary type="html"><![CDATA[What explains the disproportionate popularity of typed FP for code tools and relative unpopularity for web apps?]]></summary>
+</entry>
+<entry>
     <title>Breaking changes: a tooling problem</title>
     <link href="https://twitchard.github.io/posts/2024-08-23-breaking-changes.html" />
     <id>https://twitchard.github.io/posts/2024-08-23-breaking-changes.html</id>
@@ -80,14 +88,6 @@
     <published>2021-04-24T00:00:00Z</published>
     <updated>2021-04-24T00:00:00Z</updated>
     <summary type="html"><![CDATA[There are two types of features: behavior-adding features and behavior-constraining features.]]></summary>
-</entry>
-<entry>
-    <title>Monads and Mom</title>
-    <link href="https://twitchard.github.io/posts/2020-07-26-monads.html" />
-    <id>https://twitchard.github.io/posts/2020-07-26-monads.html</id>
-    <published>2020-07-26T00:00:00Z</published>
-    <updated>2020-07-26T00:00:00Z</updated>
-    <summary type="html"><![CDATA[The Oedipus Rex of Monad Tutorials]]></summary>
 </entry>
 
 </feed>
