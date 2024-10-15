@@ -8,8 +8,16 @@
         <name>Richard Marmorstein</name>
         <email>nobody@example.com</email>
     </author>
-    <updated>2024-09-10T00:00:00Z</updated>
+    <updated>2024-10-15T00:00:00Z</updated>
     <entry>
+    <title>Left Stripe, joined an AI start-up</title>
+    <link href="https://twitchard.github.io/posts/2024-10-15-new-job.html" />
+    <id>https://twitchard.github.io/posts/2024-10-15-new-job.html</id>
+    <published>2024-10-15T00:00:00Z</published>
+    <updated>2024-10-15T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Phoebe Syndrome, reacjis, and AI playfulness]]></summary>
+</entry>
+<entry>
     <title>How thick should your SDK be?</title>
     <link href="https://twitchard.github.io/posts/2024-09-10-through-thick-and-thin.html" />
     <id>https://twitchard.github.io/posts/2024-09-10-through-thick-and-thin.html</id>
@@ -80,14 +88,6 @@
     <published>2021-11-07T00:00:00Z</published>
     <updated>2021-11-07T00:00:00Z</updated>
     <summary type="html"><![CDATA[The horrible apartments and neighbors I've had in New York.]]></summary>
-</entry>
-<entry>
-    <title>Discriminated Unions and Exhaustiveness Checking</title>
-    <link href="https://twitchard.github.io/posts/2021-07-26-discriminated-unions-with-flow.html" />
-    <id>https://twitchard.github.io/posts/2021-07-26-discriminated-unions-with-flow.html</id>
-    <published>2021-07-26T00:00:00Z</published>
-    <updated>2021-07-26T00:00:00Z</updated>
-    <summary type="html"><![CDATA[Use discriminated unions and exhaustiveness checking to level up your Javascript]]></summary>
 </entry>
 
 </feed>
