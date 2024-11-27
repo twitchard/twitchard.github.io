@@ -6,10 +6,20 @@
     <id>https://twitchard.github.io/atom.xml</id>
     <author>
         <name>Richard Marmorstein</name>
+        
         <email>nobody@example.com</email>
+        
     </author>
-    <updated>2024-10-15T00:00:00Z</updated>
+    <updated>2024-11-27T00:00:00Z</updated>
     <entry>
+    <title>Pushing the boundaries of Streamlit</title>
+    <link href="https://twitchard.github.io/posts/2024-11-27-streamlit.html" />
+    <id>https://twitchard.github.io/posts/2024-11-27-streamlit.html</id>
+    <published>2024-11-27T00:00:00Z</published>
+    <updated>2024-11-27T00:00:00Z</updated>
+    <summary type="html"><![CDATA[How I learned to stop worrying and love Streamlit's execution model]]></summary>
+</entry>
+<entry>
     <title>Left Stripe, joined an AI start-up</title>
     <link href="https://twitchard.github.io/posts/2024-10-15-new-job.html" />
     <id>https://twitchard.github.io/posts/2024-10-15-new-job.html</id>
@@ -80,14 +90,6 @@
     <published>2022-08-26T00:00:00Z</published>
     <updated>2022-08-26T00:00:00Z</updated>
     <summary type="html"><![CDATA[Software culture and the abuse of data]]></summary>
-</entry>
-<entry>
-    <title>I hate NY: a rant by Richard</title>
-    <link href="https://twitchard.github.io/posts/2021-11-07-i-hate-ny.html" />
-    <id>https://twitchard.github.io/posts/2021-11-07-i-hate-ny.html</id>
-    <published>2021-11-07T00:00:00Z</published>
-    <updated>2021-11-07T00:00:00Z</updated>
-    <summary type="html"><![CDATA[The horrible apartments and neighbors I've had in New York.]]></summary>
 </entry>
 
 </feed>

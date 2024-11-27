@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@twitchard" />
+        <meta name="twitter:title" content="Pushing the boundaries of Streamlit" />
+        <meta name="twitter:description" content="How I learned to stop worrying and love Streamlit's execution model" />
+        <meta name="description" property="og:description" content="How I learned to stop worrying and love Streamlit's execution model" />
+        <meta name="author" property="og:author" content="Richard Marmorstein" />
+        
+        <title>Pushing the boundaries of Streamlit - Richard Marmorstein</title>
+        <link rel="alternate" type="application/atom+xml" href="../atom.xml">
+        <link rel="stylesheet" href="../css/default.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css?family=Finger Paint" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <!-- Used for drop cap for the first character of blog posts-->
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet"> 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DPC615L5M6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-DPC615L5M6');
+    </script>
+    </head>
+    <body>
+        <main role="main">
+            <article>
+     <link rel="stylesheet" href="../css/pandoc-markdown-css-theme.css" />
+     <link rel="stylesheet" href="../css/pandoc-markdown-css-theme-solarized-theme.css" />
+    <section class="header">
+      <h1>Pushing the boundaries of Streamlit</h1>
+      <h3>by Richard Marmorstein - November 27, 2024</h3>
+      <h4><a href="../">← Home</a></h4>
+    </section>
+    <section class="prose">
+        <p>I recently had the pleasure of using <a href="https://streamlit.io/">Streamlit</a> for the first time. Streamlit is a Python library for making Web UIs. I really like it!</p>
+<p>I also had some challenges trying to make some inherently “event-driven” UI play nicely with Streamlit’s unique execution model.</p>
+<p>The goals of this post:</p>
+<ul>
+<li>Increase your interest in trying Streamlit if you never used it.</li>
+<li>Show you some things that might be difficult in Streamlit, so that you can steer clear of trying it in cases when it’s not the right tool.</li>
+<li>Give you some tips if you happen to find yourself trying to do the same sort of tricky things I needed to.</li>
+<li>In the course of things, I also discuss voice AI and Anthropic’s new Computer Use API.</li>
+</ul>
+<h2 id="eww-frontend-in-python">Eww… frontend in Python?</h2>
+<p>My first reaction to “Python library for frontend” was “eww, why would you ever do this, just write Javascript” but I got over this pretty quickly. Streamlit is high-level and opinionated enough so that – while the Python &lt;&gt; Javascript bridge definitely adds a little complexity – it’s not really that troublesome. If you need low-level control over the details of your app’s appearance and behavior and access to web primitives – you shouldn’t be using Streamlit. You should use Streamlit if you have some interesting code in Python, and want it to have a functional, interactive web UI that looks decent and standard, but you don’t care too much about the details.</p>
+<h2 id="streamlits-control-flow">Streamlit’s control flow</h2>
+<p>In Streamlit, defining a Web UI looks a lot like defining a script than runs from top to bottom. For example</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> streamlit <span class="im">as</span> st</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>name <span class="op">=</span> st.text_input(<span class="st">&quot;What is your name?&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>height_in_inches <span class="op">=</span> st.number_input(<span class="st">&quot;Enter your height (in inches)&quot;</span>, min_value<span class="op">=</span><span class="dv">2</span> <span class="op">*</span> <span class="dv">12</span>, step<span class="op">=</span><span class="dv">1</span>, max_value<span class="op">=</span><span class="dv">9</span><span class="op">*</span><span class="dv">12</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>is_taller_than_taylor_swift <span class="op">=</span> height_in_inches <span class="op">&gt;</span> <span class="dv">5</span> <span class="op">*</span> <span class="dv">12</span> <span class="op">+</span> <span class="dv">11</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> st.button(<span class="st">&quot;Greet me&quot;</span>):</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  st.text(<span class="ss">f&quot;Hello, </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">, you are </span><span class="sc">{</span><span class="st">'taller'</span> <span class="cf">if</span> is_taller_than_taylor_swift <span class="cf">else</span> <span class="st">'not taller'</span><span class="sc">}</span><span class="ss"> than Taylor Swift!&quot;</span>)</span></code></pre></div>
+<p>The cute/clever thing about this is that the “results” of widgets like text inputs or buttons are mapped immediately to variables. You don’t have to explicitly hook up event handlers as you would in e.g. React.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode jsx"><code class="sourceCode javascriptreact"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> [name<span class="op">,</span> setName] <span class="op">=</span> <span class="fu">useState</span>(<span class="st">&quot;&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">return </span><span class="kw">&lt;div&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;input</span> <span class="ot">value</span><span class="op">=</span><span class="va">{</span>name<span class="va">}</span> <span class="ot">onChange</span><span class="op">=</span><span class="va">{</span>(e) <span class="kw">=&gt;</span> <span class="fu">setName</span>(e<span class="op">.</span><span class="at">target</span><span class="op">.</span><span class="at">value</span>)<span class="va">}</span><span class="kw">/&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/div&gt;</span></span></code></pre></div>
+<p>How do things update? Every time something changes, the <strong>entire Streamlit script runs again from top to bottom</strong>, and the return value of a widget will be equal to the updated value.</p>
+<p>If a button is clicked it only “stays clicked” for the very next run. If you want something (like the effects of a button click) to persist past that, you have to explicitly store it in <code>session_state</code>. For the above example:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode diff"><code class="sourceCode diff"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  if st.button(&quot;Greet me&quot;):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">-   st.text(f&quot;Hello, {name}, you are {'taller' if is_taller_than_taylor_swift else 'not taller'} than Taylor Swift!&quot;)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="va">+   st.session_state.greeting = f&quot;Hello, {name}, you are {'taller' if is_taller_than_taylor_swift else 'not taller'} than Taylor Swift!&quot;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="va">+ greeting = st.session_state.get('greeting', None)</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="va">+ if greeting:</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="va">+   st.text(greeting)</span></span></code></pre></div>
+<p>this will prevent the greeting from disappearing when you change the height after having clicked the button.</p>
+<p>I like this a lot. You can very directly express the data flow of your UI. It’s not too hard to reason about control flow, at least in the happy path.</p>
+<p>If performance starts to become a problem, there are callbacks and features like <a href="https://docs.streamlit.io/develop/api-reference/execution-flow/st.fragment">“fragments”</a> that you can introduce that will complicate the execution flow a little more but let you optimize a little bit.</p>
+<p>Unfortunately, once you start to stray from the happy path, things get ugly.</p>
+<h2 id="adventures-in-computer-use">Adventures in computer use</h2>
+<p>The reason I was exploring Streamlit in the first place was that Anthropic – the AI company behind Claude – recently released a <a href="https://github.com/anthropics/anthropic-quickstarts/tree/main/computer-use-demo">demo app</a> for their <a href="https://docs.anthropic.com/en/docs/build-with-claude/computer-use">computer use API</a> that used Streamlit. My goal was to adapt their demo so that – instead of <em>typing</em> input into it, you could <em>speak</em> to <a href="https://hume.ai/">Hume</a>’s <a href="https://dev.hume.ai/docs/empathic-voice-interface-evi/overview">Empathic Voice Interface</a> in order to trigger the computer use.</p>
+<p>Adding voice to a computer-using agent is, in my biased opinion, a huge and very obvious improvement. The problem with writing a text prompt is that it requires a bunch of emotional <em>activation energy.</em> You have to do much of your thinking all up front and compose it a prompt in one go. Whereas if you just start clicking around doing the task yourself you only have to do your thinking one step at a time, and it’s a lot easier emotionally to get the momentum going.</p>
+<p>Voice — particularly interruptible, conversational voice interfaces like EVI — can remove some of the “writer’s block” awkwardness of the text interface. for some people at least, it takes less activation energy to click a button and start talking then it does to draft a prompt and click submit.</p>
+<p>Anyway, that’s the motivation. Here’s how Anthropic’s computer use demo works, before any attempts to add voice:</p>
+<ol type="1">
+<li>A Python process runs on a Linux machine, and serves a Streamlit app.</li>
+<li>The user of the demo types some instructions.</li>
+<li>Those instructions go to the Anthropic API, which returns a response and a series of “tool use instructions”, e.g. “move the mouse cursor to <coordinates>” or “enter keystrokes <text>” or “take a screenshot” or “run a shell command <bash>”.</li>
+<li>The python process (the same one that serves the streamlit app) is capable of shelling out and executing those instructions on the Linux machine it runs on. The results are collected and sent back to the Anthropic API, which iterates and responds with a message and more instructions to execute. This process (”the agentic sampling loop”) repeats until the task is done or needs more user input.</li>
+<li>Messages from the Anthropic API and descriptions of the ongoing tool use are displayed to the user by Streamlit as they happen.</li>
+</ol>
+<p>My goal seemed simple.</p>
+<ol type="1">
+<li>Accept voice input from the user.</li>
+<li>Narrate the messages coming back to the user from the Anthropic API.</li>
+<li>Ideally, take advantage of EVI’s interruptibility, so that the interaction can feel like a natural conversation and not just like using a voice command line.</li>
+</ol>
+<p>This turned out <strong>not</strong> to be easy to do with Streamlit.</p>
+<h2 id="accessing-audio-input-and-output">Accessing audio input and output</h2>
+<p>The first obstacle is: Streamlit runs in a Python process on a server somewhere. That server, in general, is <em>not</em> the user’s personal machine, and so cannot directly access the user’s microphone and speaker. Those are only available through the browser. This means that the assumptions of <a href="https://dev.hume.ai/docs/empathic-voice-interface-evi/quickstart/python#handling-audio">Hume’s guide to using EVI in Python</a> or anything you would find if you Googled “how to access the microphone in Python” are going to be broken.</p>
+<p>If you web search “Streamlit microphone” you will find some community-built components for getting audio from the user’s microphone through the browser. The problem is: none of these seem to handle <em>streaming, real-time</em> audio. The way they work is, the user hits record, they user speaks, the user hits stop record, and then all the audio is transmitted at once over to the Python side for processing. That’s not how EVI works. EVI wants a constant stream of audio chunks that are 10ms long.</p>
+<p>No fear: I quickly concluded I would need to make a <a href="https://docs.streamlit.io/develop/concepts/custom-components/create">Streamlit custom component</a> and do most of the EVI stuff completely on the browser side. The idea was, the user would talk to EVI entirely in the browser, and then when EVI needed to trigger the computer use API would just send a message back to the Python side. Easy peasy, right?</p>
+<h2 id="long-running-tasks">Long-running tasks</h2>
+<p>Things seemed to be all right for awhile. I was thinking about it a little wrong, Streamlit custom components don’t exactly “send messages” back to the Python side — this isn’t Javascript, where event emitters are a way of life. In Streamlit, you communicate with the Python side by “setting the component value”. When you set your component value, the entire Streamlit script will rerun.</p>
+<p>This seemed to make sense. I had something like</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>latest_message_from_evi <span class="op">=</span> evi_chat(hume_api_key<span class="op">=</span><span class="st">&quot;nice try&quot;</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> latest_message_from_evi[<span class="st">'type'</span>] <span class="op">==</span> <span class="st">'user_input'</span>:</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>	computer_use_instructions <span class="op">=</span> latest_message_from_evi[<span class="st">'content'</span>]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Now plug `computer_use_instructions` into the same place where the prompt</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># from the text box used to go to trigger the Anthropic computer use</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>do_computer_use_stuff(computer_use_instructions)</span></code></pre></div>
+<p>The trouble was this: what if a new message came in from <code>evi_chat</code> while <code>do_computer_use_stuff</code> was running? Then the Streamlit script would immediately terminate so it could rerun. This was a huge problem, because <code>do_computer_use_stuff</code> very strongly assumed that it would never be interrupted. The people who wrote the Anthropic computer use demo kind of cheated. They disabled the entire UI while the computer use was happening, so you couldn’t interact with anything that would trigger a rerun. This was reasonable for them: the point of their demo was “look! isn’t this cool? the computer can do things by itself”. The point of my fork of their demo, on the other hand, was “look! isn’t this even cooler if you can converse with the AI that is using the computer and like, interrupt it and stuff?” so disabling interaction while computer use was happening would have defeated the purpose.</p>
+<p>So, the way forward was for me to change <code>do_computer_use_stuff</code> so that it wouldn’t break if Streamlit had to re-run while it was in progress.</p>
+<h2 id="making-things-uninterruptable">Making things uninterruptable</h2>
+<p>What I ended up having to do was reimplement the computer use stuff so that</p>
+<ul>
+<li>It executed in a separate thread that wouldn’t be terminated when the script restarts.</li>
+<li>It could communicate the results of its progress back to the main Streamlit script (so, e.g. EVI could narrate to the user what was happening).</li>
+</ul>
+<p>I also ended up rewriting the computer use code as a state machine that advanced with discrete state transitions. I think this made the control flow easier for me to reason about but in retrospect might not have been strictly necessary.</p>
+<p>In any case, I’ll show you one way to do the “execute in a separate thread that won’t be terminated when the script restarts” bit:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is boilerplate that you write when you want a background thread</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># where you can use `asyncio` to schedule tasks on it.</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AsyncioThread(threading.Thread):</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(daemon<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.loop <span class="op">=</span> asyncio.new_event_loop()</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> run(<span class="va">self</span>):</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        asyncio.set_event_loop(<span class="va">self</span>.loop)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.loop.run_forever()</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># st.cache_resource means that calling `worker_thread` will return a singleton</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># instance of a thread that is *global* across all users and sessions.</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="at">@st.cache_resource</span>()</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> worker_thread():</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    thread <span class="op">=</span> AsyncioThread()</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    thread.start()</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> thread</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co"># However, each *session* has its own Queue where tasks that it schedules</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co"># will write their results. This is *session-scoped*, so not global.</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">'worker_queue'</span> <span class="kw">not</span> <span class="kw">in</span> st.session_state:</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    st.session_state.worker_queue <span class="op">=</span> Queue()</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Here's an example task that takes some time to finish executing</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="cf">async</span> <span class="kw">def</span> long_running_task(begin_time, queue):</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    begin_task <span class="op">=</span> time.time() <span class="op">-</span> begin_time</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">await</span> asyncio.sleep(<span class="dv">5</span>)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    end_task <span class="op">=</span> time.time() <span class="op">-</span> begin_time</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Put the result into the queue</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    queue.put((begin_task, end_task))</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co"># This reads results from the queue and adds them into `session_state`.</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_finished_tasks():</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="kw">not</span> st.session_state.task_results_queue.empty():</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> st.session_state.task_results_queue.get()</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>        st.session_state.finished.append(result)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>		st.button(<span class="st">&quot;Click this button to trigger a rerun&quot;</span>)</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> st.button(<span class="st">&quot;Start Long-Running Task&quot;</span>):</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>        asyncio.run_coroutine_threadsafe(</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>            long_running_task(st.session_state.begin, st.session_state.task_results_queue),</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>            st.session_state.asyncio_thread.loop</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>        st.write(<span class="st">&quot;Task started...&quot;</span>)</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Update finished tasks from the queue</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    update_finished_tasks()</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>	 </span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>	  <span class="co"># Display completed tasks</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> idx, (begin_task, end_task) <span class="kw">in</span> <span class="bu">enumerate</span>(st.session_state.finished, <span class="dv">1</span>):</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>        st.markdown(<span class="ss">f&quot;**Task </span><span class="sc">{</span>idx<span class="sc">}</span><span class="ss">** - Begun at: </span><span class="sc">{</span>begin_task<span class="sc">:.2f}</span><span class="ss">s, Ended at: </span><span class="sc">{</span>end_task<span class="sc">:.2f}</span><span class="ss">s&quot;</span>)</span></code></pre></div>
+<p>Really, I think the code snippet mostly speaks for itself. “Here’s how you make a thread that doesn’t die, and here’s how you schedule tasks on it and get those results”.</p>
+<p>What I don’t show is — what happens if, when one of those tasks finishes, you need to display its result right away, rather than waiting for an interaction to happen before it gets reflected in the ui? What you can do in that case is just block in a <code>while True</code> at the end of <code>main</code>, poll for a message to get added to the queue, and <code>st.rerun()</code> if something else in the Streamlit UI will want to reflect the result of the new message.</p>
+<p>And that’s it basically! It’s doesn’t look too bad in the context of this very simplified code example. The challenge for me was figuring out how to take this stream of events I was receiving from my voice chat component, plus the stream of events that I was now getting from the computer use loop, and producing an appropriate action in every case. But that is just the fundamental challenge of asynchronous programming, there’s nothing unique to Streamlit about that.</p>
+<h2 id="hindsight">Hindsight</h2>
+<p>There’s a <a href="https://github.com/whitphx/streamlit-webrtc">community component</a> that <a href="https://towardsdatascience.com/developing-web-based-real-time-video-audio-processing-apps-quickly-with-streamlit-7c7bcd0bc5a8">appears to be</a> a Streamlit custom component that accepts callbacks to give a more natural interface for working with realtime video/audio. Callbacks are not officially supported by the Streamlit custom component API, so I assume that this component is reaching into some sort of internals behind the scenes to make that happen.</p>
+<p>This being my first time using Streamlit, I shied away from reaching into internals and tried to stick to the blessed path. In retrospect, though, it might have been easier to try and figure this out.</p>
+<h2 id="aside-recovering-type-safety">Aside: recovering type-safety</h2>
+<p>I really like types. Types help me clarify my thinking, and they also help me put safeguards in place to prevent me from making stupid mistakes like typos.</p>
+<p>Unfortunately, Streamlit’s <code>st.session_state</code> doesn’t have a very useful type (it’s basically <code>MutableMapping[str | int, Any]</code>). With this type, you can put anything in and get anything out. If you’re making a highly stateful Streamlit app with concurrency, this can get you into trouble.</p>
+<p>What I ended up doing was setting a rule for myself: <em>never</em> access <code>st.session_state</code> directly and always go through a wrapper class <code>class State</code> with a more specific type. It looked basically like</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> State:</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    _session_state: SessionStateProxy</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, session_state: SessionStateProxy):</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._session_state <span class="op">=</span> session_state</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        State.setup_state(session_state)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">@staticmethod</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> setup_state(session_state: SessionStateProxy):</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>				...</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>				<span class="cf">if</span> <span class="st">'worker_running'</span> <span class="kw">not</span> <span class="kw">in</span> session_state:</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>            session_state.worker_running <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">'debug'</span> <span class="kw">not</span> <span class="kw">in</span> session_state:</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>            session_state.debug <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>		...</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> worker_running(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>._session_state.worker_running</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">@worker_running.setter</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> worker_running(<span class="va">self</span>, value: <span class="bu">bool</span>):</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._session_state.worker_running <span class="op">=</span> value</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> debug(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>._session_state.debug</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">@debug.setter</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> debug(<span class="va">self</span>, value: <span class="bu">bool</span>):</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._session_state.debug <span class="op">=</span> value</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Many more properties</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    ...</span></code></pre></div>
+<p>And then in my main function, I did</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>state <span class="op">=</span> State(st.session_state)</span></code></pre></div>
+<p>On a similar note, Python’s <code>Queue</code> class isn’t very typesafe either. (It would be nice if it took a generic parameter.) But you can wrap <code>Queue</code> in a similar way.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> WorkerEventSuccess(TypedDict):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>	<span class="bu">type</span>: Literal[<span class="st">&quot;success&quot;</span>]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>	result: <span class="bu">str</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>	</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> WorkerEventFailure(TypedDict):</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="bu">type</span>: Literal[<span class="st">&quot;failure&quot;</span>]</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  error: <span class="bu">str</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>WorkerEvent <span class="op">=</span> WorkerEventSuccess <span class="op">|</span> WorkerEventFailure</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> WorkerQueue():</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    _queue: Queue</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, queue):</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._queue <span class="op">=</span> queue</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> put(<span class="va">self</span>, event: WorkerEvent):</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._queue.put(event)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> empty(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>._queue.empty()</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get(<span class="va">self</span>) <span class="op">-&gt;</span> WorkerEvent:</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>._queue.get()</span></code></pre></div>
+<h2 id="last-words">Last Words</h2>
+<p>Overall, I had a blast getting to know Streamlit. I think the “let’s try and make (re-)rendering a UI like (re-)running a Jupyter notebook” is just a really compelling idea. So, if you’ve been writing any Python, you should give Streamlit a try!</p>
+    <hr />
+
+    <div class="callToAction">
+    <p>
+    
+      Thanks for reading! Consider <a href>retweeting</a> the post.
+    
+    To read more by me, you can subscribe to the <a href="../atom.xml">Atom feed</a> or follow my <a href="https://twitter.com/twitchard">Twitter</a>.</p>
+    
+    
+    
+    <p>Check out the previous post, <a href="../posts/2024-10-15-new-job.html">"left stripe, joined an ai start-up"</a>.</p>
+    
+      <blockquote>"A month ago, I left my job of 5 years at Stripe to join an AI start-up."</blockquote>
+    
+    
+    </p>
+    
+    <h4><a href="../">Home</a></h4>
+    </div>
+    </section>
+</article>
+
+        </main>
+
+        <footer>
+          <div class="leftfootleftfootleftfoot">
+            Nothing I write represents the opinion of those foolish enough to employ me.
+          </div>
+          <div class="rightfeetatthemorningfeetatnight">
+            Site shamefully generated by <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+          </div>
+        </footer>
+    </body>
+</html>
