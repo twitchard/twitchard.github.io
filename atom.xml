@@ -10,8 +10,16 @@
         <email>nobody@example.com</email>
         
     </author>
-    <updated>2024-11-27T00:00:00Z</updated>
+    <updated>2025-02-11T00:00:00Z</updated>
     <entry>
+    <title>P(user-hostile trash heap)</title>
+    <link href="https://twitchard.github.io/posts/2025-02-11-p-user-hostile-trash-heap.html" />
+    <id>https://twitchard.github.io/posts/2025-02-11-p-user-hostile-trash-heap.html</id>
+    <published>2025-02-11T00:00:00Z</published>
+    <updated>2025-02-11T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Will generative AI will magically make the software industry start doing right by users?]]></summary>
+</entry>
+<entry>
     <title>Pushing the boundaries of Streamlit</title>
     <link href="https://twitchard.github.io/posts/2024-11-27-streamlit.html" />
     <id>https://twitchard.github.io/posts/2024-11-27-streamlit.html</id>
@@ -82,14 +90,6 @@
     <published>2022-08-30T00:00:00Z</published>
     <updated>2022-08-30T00:00:00Z</updated>
     <summary type="html"><![CDATA[Speedy, hands-off, opinionated, reliable, timely]]></summary>
-</entry>
-<entry>
-    <title>Be good-argument-driven, not data-driven</title>
-    <link href="https://twitchard.github.io/posts/2022-08-26-metrics-schmetrics.html" />
-    <id>https://twitchard.github.io/posts/2022-08-26-metrics-schmetrics.html</id>
-    <published>2022-08-26T00:00:00Z</published>
-    <updated>2022-08-26T00:00:00Z</updated>
-    <summary type="html"><![CDATA[Software culture and the abuse of data]]></summary>
 </entry>
 
 </feed>

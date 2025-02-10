@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@twitchard" />
+        <meta name="twitter:title" content="P(user-hostile trash heap)" />
+        <meta name="twitter:description" content="Stop assuming AI will magically make the software industry treat users well" />
+        <meta name="description" property="og:description" content="Stop assuming AI will magically make the software industry treat users well" />
+        <meta name="author" property="og:author" content="Richard Marmorstein" />
+        
+        <title>P(user-hostile trash heap) - Richard Marmorstein</title>
+        <link rel="alternate" type="application/atom+xml" href="../atom.xml">
+        <link rel="stylesheet" href="../css/default.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css?family=Finger Paint" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <!-- Used for drop cap for the first character of blog posts-->
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet"> 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DPC615L5M6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-DPC615L5M6');
+    </script>
+    </head>
+    <body>
+        <main role="main">
+            <article>
+     <link rel="stylesheet" href="../css/pandoc-markdown-css-theme.css" />
+     <link rel="stylesheet" href="../css/pandoc-markdown-css-theme-solarized-theme.css" />
+    <section class="header">
+      <h1>P(user-hostile trash heap)</h1>
+      <h3>by Richard Marmorstein - February  9, 2025</h3>
+      <h4><a href="../">← Home</a></h4>
+    </section>
+    <section class="prose">
+        <h2 id="in-the-future-ai-will-____">In the future AI will ____</h2>
+<p>There’s a genre of AI influencer social media post — I call them “in-the-futures”. You’ll see people make posts like</p>
+<ul>
+<li>“in the future all the kids will have personalized AI tutors that match their pace and learning style and teach them what they need to know while keeping curiosity alive”, or</li>
+<li>“in the future doctors’ offices will all have AI assistants to help you interpret your medical results and evaluate potential medical procedures with easy reference to accessible summaries of medical research”,</li>
+<li>“in the future, we’ll all have personal AI shopping concierges that know our tastes and budget and find us the best products for our needs.”</li>
+</ul>
+<p>People post these because they are excited about all the new things that are technically possible with generative AI: there are ideas that, three years ago, were so infeasible they would have gotten you laughed out of the startup accelerator — today they are not only technically possible but perhaps even trivial (“just a gpt wrapper, not a real business, no moat”).</p>
+<p>Quality of this genre of post varies a lot. Some of them are low-effort “I played around for 15 minutes with ChatGPT and now I’m playing”but with AI” madlibs; some posts are genuinely thoughtful insights into non-obvious new possibilities. But even these <strong>are not actually very good predictions of the future</strong>. They fall into a trap of mistaking <em>technical possibility</em> for <em>inevitability.</em> In reality, just because something amazing is <em>now possible to build</em> does not mean that something amazing <em>will win</em>.</p>
+<h2 id="trash-wins">Trash wins</h2>
+<p>Just look around. Most of the software that wins is many times worse for users than the best version of the software it would be technically possible to build. To be blunt, the software that wins tends to be user-hostile trash.</p>
+<p>The website <a href="http://how-i-experience-web-today.com/">How I Experience Web Today</a> makes the point pretty succinctly. You can read <a href="https://www.wired.com/story/tiktok-platforms-cory-doctorow/">Cory Doctorow on “en$#!^ification”</a>, who might be a bit sensationalist but makes criticisms of large tech platforms that I find resonant, as a user.</p>
+<p>Examples of “user-hostile trash” that come to top of my mind:</p>
+<h3 id="mobile-game-adpocalypse"><strong>Mobile Game Adpocalypse</strong></h3>
+<p>I play Words with Friends. What I really want is a Scrabble clone that runs on my phone, gives me reminders when it’s my move, and lets me devastate my Mom by spelling “IBEXES” in a well-multiplied position. Instead, network effects oblige me to use a Scrabble clone that regales me with notifications for “daily word play” and other engagement-bait. After every move I am presented with an ad for “Royal Match” that mutes my background Spotify so it can play its obnoxious noises, and it strategically hides the “X” button at exactly the right moment to make me click the ad and go to the app store against my will.</p>
+<p>Don’t get me wrong, I love the app despite all this and have many fond memories around it, it’s just the sad and simple truth that pestering your users with ads and in-app purchase bait is often a winning strategy in the world of mobile games. This has become so normal that people don’t really even think to complain.</p>
+<h3 id="word-processing-c-ad-tastrophe"><strong>Word Processing C-ad-tastrophe</strong></h3>
+<p>I recently learned that Microsoft <a href="https://learn.microsoft.com/en-us/windows/whats-new/deprecated-features">stopped shipping/maintaining Wordpad</a> on recent versions of Windows. If you won’t pay for Word, they want you to use an ad-supported, free version of Word. That is, you have to watch <strong>video ads</strong> before you can do your word processing. No skin off my teeth — I do my writing in Vim or Google Docs — but I felt ashamed on behalf the industry discovering this and explaining it to my wife’s grandmother, who, before her latest computer upgrade, had been using Wordpad to write her annual “Letter to Myself” (basically a technical retrospective on the family Christmas party she hosts every year).</p>
+<p>Sadly, this is common practice just about everywhere: cripple the product so we can coerce users to paying us money or extract more from them via ads or data collection.</p>
+<h3 id="gen-1-voice-assistants"><strong>Gen 1 Voice Assistants</strong></h3>
+<p>A vivid memory for me is watching <a href="https://youtu.be/zmhcPKKt7gw?feature=shared">the announcement of the Echo</a> by Amazon in 2014. I ordered it immediately. It completely captured my imagination — I was sure this was the beginning of a new era, the rise of a completely new, more natural way to interact with the world of computing. In the announcement video, a whole family gathers around the Echo in awe at the useful things it can do. The Echo is cast as a beloved household robot – a digital member of the family.
+Fast forward to today, the novelty of Alexa, Siri, etc. has all worn off. This generation of voice assistants is a disappointment. They are appliances, not computers. Kitchen reminders are useful, yes, but has Alexa successfully taken the role of beloved household robot? Alas, she has made one too many aggressive attempts to sign me up for a free trial of Amazon Music or upsell me to this or that in the course of interacting with her for me to see her as a member of the family<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Amazon’s product strategy for “Alexa Skills”, oddly, seems to have been to build a platform that helps teenage hobbyists write as many Harry Potter personality quizzes as possible, rather than building the sort of platform that would allow serious software professionals to build interesting new experiences with the voice modality.</p>
+<p>Alexa is a great product in many ways (I own like 8 echos), despite her not living up to my inflated dreams. This example should be a reminder that tech companies don’t always solve for constraints like “how can we build the voice assistant that outsells the others by offering a superior user experience”, but more like “how can we build the voice assistant that helps us earn the most additional revenue from our existing vast retail empire?”</p>
+<h2 id="ai-trash-will-also-win">AI Trash Will Also Win</h2>
+<p>From the thought leaders in my social media bubble, you’d get the idea that there are basically only two outcomes when it comes to the future of AI: AI doom or AI paradise. AI could just destroy civilization, yes — but if it doesn’t, then we’re in a golden age where the best versions of all the coolest generative AI stuff we can imagine will inevitably enter common use.</p>
+<p>In reality, AI software of the future will be subject to all the same cultural and industrial pressures that ordinary software is today. There’s no <em>a priori</em> reason to expect that it won’t just wind up being like a lot of ordinary software is today: user-hostile trash. People don’t like to write about this. It’s more fun to think about the extremes. But you have to take it seriously.</p>
+<p>So here’s a more cynical “in-the-future”: in the future, we will carry around tremendously intelligent AI in our pockets that can write better than Shakespeare, draw better than Picasso, theorize better than Einstein, etc. and it will direct these talents mainly for the purpose of creating addictive content to keep us clicking as we view ads for GLP-1s, boutique underwear subscriptions, and, most especially, the mobile game “Royal Match”</p>
+<p>If somebody does build magnificent AI tutors that helps kids follow the threads of their curiosity, learn at their own pace, with individualized methods that work best for them, these AI tutors won’t win; they won’t be what actually ends up in the typical classroom. Any AI tutors that win will be those that helps teachers and school administrators most effectively do things the way that they do now: “teach to the test” and encourage kids to solve problems in the precise ways dictated by the over-prescriptive state curricula.</p>
+<p>If somebody does build a magnificent AI shopping concierge that helps you conversationally find the best product for your constraints at the right price, this too will not win. It will be deployed nowhere. All the online shopping destinations, if they build AI shopping experiences, will mostly resemble the “search” experience they offer today — that is, they will push you as hard as they can towards results that somebody has bid to give priority (even when there’s only a small chance that this is what you are looking for). Results that actually match your need or compare well according to objective criteria will come second, if at all.</p>
+<h2 id="minimizing-puser-hostile-trash2">Minimizing P(user-hostile trash)<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></h2>
+<p>So, what’s my call to action. How do we fight the trash heap?</p>
+<p>I’m just a random software engineer who enjoys writing on the Internet, not any kind of expert authority, so take my scattered thoughts with a grain of salt, but here they are:</p>
+<h3 id="the-time-is-now."><strong>The time is now.</strong></h3>
+<p>Generative AI is a paradigm shift, and it’s early days. Right now, there’s a lot of enthusiasm within the software culture for trying new things, the industry is willing to tolerate a lot of experimentation. This is temporary. Sooner than you think, people will get used to generative AI, the taste for novelty will fade, and whatever products are successful at that point will set the tone for decades.</p>
+<p>Imagine if, back in the 90s, instead of figuring out how to track ad impressions on the web, somebody really nailed how to do micropayments on the web really well. The world of consumer software would look completely different today.</p>
+<h3 id="dont-be-the-problem"><strong>Don’t be the problem</strong></h3>
+<p>If you’re in a position to be picky about your work, exercise the privilege. Try to work on a product that uses AI to make the lives of users better, not to manipulate the user to serve some other business goal. I’m fortunate to work for a company that has explicitly adopted <a href="https://thehumeinitiative.org/about">something like this</a> as an official ethical principle.</p>
+<p>There’s a lot of money to be made out there from treating users as a means to an end. This always will be unless we do something drastic like dismantle capitalism (and would that really be the lesser evil?) But you don’t need to be involved.</p>
+<h3 id="learn-to-win."><strong>Learn to win.</strong></h3>
+<p>To fight the trash heap, you have to build software that (a) does right by users and (b) wins. The trash heap rises when people pursue winning by any means: b without a, but if you’re the sort of person who cares deeply about doing right by users, the more dangerous failure mode for you is (a) without (b) — building software that’s fabulous for users but doesn’t really have a prayer of seeing any type of serious adoption. Building great software that can’t win is a waste of your time. You’d do more good joining a successful but unprincipled organization and doing your best to nudge them in a good direction, or finding some morally neutral B2B SaaS to write.</p>
+<h3 id="reject-inevitabilism"><strong>Reject inevitabilism</strong></h3>
+<p>I’ll say it again: <em>technically possibility</em> doesn’t entail <em>inevitability</em>. Excise inevitabilism from your language. Instead of “in the future, we’ll all have &lt;amazing thing now possible with AI&gt;” — prefer “somebody should build &lt;amazing thing now possible with AI&gt;”.</p>
+<p>Excise it from your worldview too. Never decide against building something just because you assume somebody else inevitably will. Never find an amazing community or organization with a great vision and decide against getting involved just because you assume they’ll succeed anyway. Things don’t happen because they are inevitable, they happen because somebody makes them happen.</p>
+<h3 id="supplant-trash-reset-norms"><strong>Supplant trash, reset norms</strong></h3>
+<p>Sadly, people have grown to tolerate being mistreated by the software they use. The software industry has grown bones around extractive business models that treat users as a means to an end.</p>
+<p>Generative AI can change things and reset norms, especially where it <em>completely supplants existing ways of working with software.</em></p>
+<p>Things like <a href="https://blog.replit.com/introducing-replit-agent">Replit Agent</a> or <a href="https://blog.val.town/blog/townie/">val.towns “Townie”</a> are good examples. The idea is: instead of using software that somebody else has designed for you, regular folks should be able to just design their own software by describing it to the AI. Technically viable? Maybe, maybe not. But if this sort of thing makes it big, it will certainly reset norms and put the user at the center of the universe.</p>
+<p>Things like Anthropic’s <a href="https://www.anthropic.com/news/3-5-models-and-computer-use">computer use</a> or OpenAI’s <a href="https://openai.com/index/introducing-operator/">operator</a> are also supplantive. They let you take advantage of existing software systems, but free you from the need to actually interact with them. So say, if some website decides it wants to make me you <a href="https://arstechnica.com/tech-policy/2023/06/ftc-sues-amazon-over-4-page-6-click-15-option-prime-cancellation-process/">navigate a labyrinth</a> in order to unsubscribe, this sucks if you have to navigate the labyrinth yourself, but this is mostly moot if you’re in the habit of having an AI agent do this sort of thing.</p>
+<p>I work in <a href="https://www.hume.ai/products">conversational voice</a> AI. Voice AI isn’t quite supplantive — I believe you could (and should!!) add a voice interface on alongside basically any piece of existing software. But I do suspect Voice AI will have a tendency to reset norms. People have developed very low standards for traditional web software and mobile apps. They also presently have low standards for voice, because they’re used to “voice command lines” like Alexa/Siri/Google Assistant. I suspect, though, that once the latest generation of voice models (like EVI, that can respond to tone of voice, be interrupted, and express emotively) makes it into consumer software, talking to an AI will feel much more like talking to a human, and so people will naturally begin to expect the same standard of treatment when talking to an AI via voice that they do when talking to a human via voice. That is, I think that there are users who would take it in stride when a web interface puts them through an obnoxious 12-step process to unsubscribe, and assume this is just the way technology is — that would become very angry if a person (or a voice AI) tried to put them through those same steps. Voice AI has the potential to reset norms, too.</p>
+<h2 id="last-remarks">Last remarks</h2>
+<p>I’ve complained about a lot of software in this post, “trash heap” etc. But It’s only a trash heap compared <em>what it could and should be.</em> Trash heap or not, at the end of the day, software has added a vast amount of wealth and convenience to the world and is unquestionably a net force for good. Similarly, I fully expect consumer AI to add tremendous wealth and convenience to the world. P(user-hostile trash heap) isn’t a doom scenario, it’s just a scenario where the technology fails to live up to the incredible potential that everybody (well, all the technologists in my little social media tech bubble) senses it to have.</p>
+<p>P(user-hostile trash heap) is not as important as P(doom). High-stakes AI problems, e.g. alignment, the threat of deepfakes eroding our ability to distinguish fact and fiction, the risk of giving bad actors access to tools of mass destruction, automation-driven unemployment, copyright questions — all these deserve to be taken seriously. But what can you do about it? Maybe something if you’re a big shot at a major AI lab, or an AI safety researcher, or some kind of regulator. But if you’re a rank-and-file person who works in software — well, you can vote with your dollars, perhaps — favor whatever AI lab seems to have the best story around AI safety, and try and persuade others to do the same, but this isn’t really much of a lever to pull. I fear that if the only kind of “AI ethics” people talk about is high-stakes AI ethics and P(doom) this threatens to alienate people. It turns AI ethics into a thought experiment and political posturing, instead of what it should be: a practical tool that you can use in order to align your actions with your values.</p>
+<p>So I hope that the industry can start talking more about small-stakes AI ethics. What does it mean to build AI software that does right by users? How does the industry need to change so that building this type of software has a strong path to success? What developing areas of technology are most promising in terms of enabling better industry incentives and more ethical business models? Even if you vehemently disagree with absolutely everything I’ve posted in my little screed here, I hope that you will take to social media and roast me, because at least that will mean that more people in the AI social media tech bubble are talking about these things, and from my perspective, that can really only be good.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>The touchscreen Alexas also make it way too easy for my toddler to order $50 worth of sugar-free strawberry syrup, probably the most useless liquid known to man.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>In case you’re not familiar, <a href="https://en.wikipedia.org/wiki/P(doom)">“P(doom)”</a> is AI jargon for the probability that AI will destroy civilization. If failing to adequately house train my Yorkie mix has taught me anything, it’s that you need not limit your imagination when it comes to considering things that <code>P()</code> might surround. Hence, <code>P(user-hostile trash heap)</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+    <hr />
+
+    <div class="callToAction">
+    <p>
+    
+      Thanks for reading!
+    
+    To read more by me, you can subscribe to the <a href="../atom.xml">Atom feed</a> or follow my <a href="https://twitter.com/twitchard">Twitter</a>.</p>
+    
+    
+    <h4><a href="../">Home</a></h4>
+    </div>
+    </section>
+</article>
+
+        </main>
+
+        <footer>
+          <div class="leftfootleftfootleftfoot">
+            Nothing I write represents the opinion of those foolish enough to employ me.
+          </div>
+          <div class="rightfeetatthemorningfeetatnight">
+            Site shamefully generated by <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+          </div>
+        </footer>
+    </body>
+</html>
