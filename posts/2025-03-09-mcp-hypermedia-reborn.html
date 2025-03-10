@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@twitchard" />
+        <meta name="twitter:title" content="MCP: REST reborn?" />
+        <meta name="twitter:description" content="How the web departed from its original vision, and how MCP might bring it back" />
+        <meta name="description" property="og:description" content="How the web departed from its original vision, and how MCP might bring it back" />
+        <meta name="author" property="og:author" content="Richard Marmorstein" />
+        
+        <title>MCP: REST reborn? - Richard Marmorstein</title>
+        <link rel="alternate" type="application/atom+xml" href="../atom.xml">
+        <link rel="stylesheet" href="../css/default.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css?family=Finger Paint" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <!-- Used for drop cap for the first character of blog posts-->
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet"> 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DPC615L5M6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-DPC615L5M6');
+    </script>
+    </head>
+    <body>
+        <main role="main">
+            <article>
+     <link rel="stylesheet" href="../css/pandoc-markdown-css-theme.css" />
+     <link rel="stylesheet" href="../css/pandoc-markdown-css-theme-solarized-theme.css" />
+    <section class="header">
+      <h1>MCP: REST reborn?</h1>
+      <h3>by Richard Marmorstein - March  9, 2025</h3>
+      <h4><a href="../">← Home</a></h4>
+    </section>
+    <section class="prose">
+        <p>MCP is trending in my social media feeds. One popular take is “what’s the big deal? Isn’t MCP just APIs?”</p>
+<p>Jacob Colling, author of AI tool Caret (<a href="https://x.com/JacobColling/status/1898543068317679677">check it out</a>!) put <a href="https://x.com/JacobColling/status/1898543068317679677">the refutation to this</a> quite succinctly</p>
+<blockquote>
+<p>MCP enables self discovery of tools and auto updated call structures Thats something you can’t do with a REST api client</p>
+</blockquote>
+<h2 id="a-tale-of-two-rests">A Tale of Two RESTs</h2>
+<p>There’s irony here. “REST” actually has two meanings. 99.9% of the time, when practitioners say “REST” they are referring to <em>industry REST</em> – which is basically RPC over HTTP with JSON organized around “resources”: it is absolutely true that the APIs of this tradition do not support any kind of self-discovery. On the other hand, there’s <em>hypermedia nerd REST</em>. This is REST as Roy Fielding (who coined the term “REST” in his 2000 dissertation) described it. Self-discovery is not only supported by OG REST, it is the <em>foundational idea</em> of OG REST. My favorite place to read about this is from <a href="https://x.com/htmx_org">Carson Gross</a> on htmx.org. You can read <a href="https://htmx.org/essays/how-did-rest-come-to-mean-the-opposite-of-rest/">“How Did REST Come To Mean The Opposite of REST?”</a>. “HATEOAS” is also useful jargon to search for, if you’re interested in learning more about the tradition of self-describing REST.</p>
+<p>You should take the time to understand this history. It’s not just about REST. Few know this, but <em>the entire web</em> is a battleground between these two competing visions: Hypermedia vs RPC; browser-as-universal-client vs. browser-as-bespoke-application-delivery-platform, user agent vs ui toolkit. Not just the web: all of software is a clash between two fundamentally different philosophies: one empowers the user, one empowers the developer. My favorite discussion of this is <a href="https://thestrangeloop.com/2021/authorship-environments-in-search-of-the-personal-in-personal-computing.html">Eric Gade’s talk “In search of the Personal in Personal Computing</a> (which I was lucky enough to attend in person!) The thrust is, “personal” computing has gotten a whole lot less personal over the years. “View Source” on the web used to be a useful thing to do – you could remix things you saw and liked. Going back further, “Hypercard”, a precursor to the Web, was a visual environment for authoring applications that came with every Mac. It had a very accessible, natural-language-like programming language “Hypertalk” that made it easy for the end user to inspect, modify, and redistribute. Even further back, Smalltalk “for children of all ages” didn’t really distinguish between “programmers” and “users” at all. There was just computing, and participating in it.</p>
+<p>It’s not exactly good vs. evil. Obviously, I romanticize the “lost vision” of the early web, and the idea of “empowering users” seems very noble on the face of it, but the fact of the matter is that most users don’t actually want to be empowered. They want software that works and that they don’t have to think about, and the natural way to achieve this is to cede all the power to the developers. There are good reasons why software is the way it is today.</p>
+<h2 id="mcp-the-battle-continues">MCP: The battle continues</h2>
+<p>Generative AI is a paradigm shift. Modern LLMs stand to democratize computing. You can now use ordinary language to accomplish sophisticated computing tasks that, just a few years ago, were only within the capabilities of the “scribal class” (to use Gade’s analogy) of software professionals. So it may be time to revisit old battles: like self-discovery, for instance.</p>
+<p>To be honest, I never thought self-describing APIs (HATEOAS, to use the jargon) actually made that much sense. It’s a cool idea, but it puts so much burden on <em>the user</em>. <em>The user</em> has to be the one that does the discovering. You can’t really consume the self-description of an API programatically, at least, not in anything but a very generic way, which means you can’t automate anything for the user – which really limits how useful a self-describing application can be.</p>
+<p>But now, everything’s changed. LLMs <em>can</em> usefully consume the self-description of an API and provide automation for the user on top of the basic operations exposed by the API. And, like Jake Colling noted so incisively, self-discovery is the distinguishing feature of MCP. Compare MCP to <a href="https://platform.openai.com/docs/actions/getting-started/sending-files#step-1-write-and-test-open-api-schema-using-actions-gpt">GPT actions</a> for instance. With GPT actions, you upload an OpenAPI spec that defines the actions the API supports ahead of time, i.e. there is “out of band” communication re: the specific protocol how the client (ChatGPT) will talk to the server (the API). OpenAPI is very much a technology after the tradition of RPC APIs. The client and server must agree on what the protocol is before any communication takes place. There is strict versioning. Whereas, with MCP, the client connects to the server, and <em>only then</em> discovers what actions it can take. And this may change during the course of the session.</p>
+<p>At the end of the day, both technologies allow for much the same thing – developers write tools, and put them in the hands of users chatting with an LLM. What matters more than the specific technologies used is the struggle of ideologies. Is the user being empowered? Or is the developer being empowered? Right now, the state of affairs in Generative AI chat applications reminds me very much of the early web. Users are very much empowered. There are lots of options to choose from, when it comes to LLM assistants – much like there were many different browsers in the early days of the web, and users have a lot of power and responsibility over the experience they have when they use an application like Claude Desktop or ChatGPT. You can set your own prompt, for example, which gets applied regardless of which tools you are using – much like in early versions of Internet Explorer, you could set your own CSS stylesheet that would be applied across every website you visited.</p>
+<p>But I think, over time, something to watch for is control being ceded back from the users to the developers. One scenario – if you’re the developer of an MCP Server, or GPT action – you might have users complain that your tool isn’t working the way it’s supposed to work, and the reason might turn out that they’re using Gemini as their model, when you did all your testing with OpenAPI and Claude. Or the reason might be, they had a really weird custom prompt that they set in their assistant that ended up interfering with tool calls. This is analogous to how, back in the 2000s, as a web developer you’d get a bug report from users, and it would turn out they were using some version of Internet Explorer that you didn’t test on, or maybe they were using Opera – and all the different web browsers implemented web technologies differently. As web developers moved away from building basic websites with forms, and moved towards “Web 2.0” and building highly specific, interactive experiences, heavily dependent on the granular details of how the predominant browsers operated – this created pressures that ultimately destroyed the variety of browsers that users had to choose from, and what killed the personalizability of the web. This same dynamic could happen to AI chatbots, too. Developers trying to build highly specific experiences for users could push the industry towards a few winners, away from variety and customizability, and towards one-size-fits-all conformity. I don’t think this is inevitable, by any means – maybe it’s not even likely: generative AI and the web are two very different technologies – but it’s something to think about.</p>
+<h2 id="obligatory-calls-to-action">Obligatory calls to action</h2>
+<p>If you are building in the AI space, my plea to you is simply – take advantage of the amazing ability of generative AI to adapt to your users preferred way of doing things. Lean into personalization and customizability. In traditional, pre-generative-AI software, in order to build an amazing experience you often had to curate the heck out of it. You had to build one, clear, obvious, extremely opinionated way of doing things in order to write good software. That is still true to some degree for software, even in the generative AI age. But it’s no longer the only option. So, get with the times. The age of “personal” in computing is due to return. Embrace it!</p>
+<p>My other call to action: if you haven’t, take some time and make sure you understand the history here, and the distinction between the RPC and Hypermedia approaches to web technology. Read the Hypermedia propaganda on <a href="https://htmx.org">htmx.org</a>; better yet: go through the exercise of implementing a toy project in HTMX (actually implement it, don’t just vibe code it). Even if you don’t drink the Hypermedia kool-aid, understanding this aspect of the web platform will actually help you write RPC-style web APIs better, and save you from a lot of foolishness. Namely, a lot of parts of the web platform, are intended for a Hypermedia context, and offer basically no value if you’re writing RPC-style APIs. For example, POST, PUT, PATCH – before I was enlightened, there were hours of my life I wasted worrying about verb distinctions <em>in private APIs</em>. It’s the law of the hammer – the HTTP spec provides these things, there <strong>must</strong> be some benefit to distinguishing them, right? Well, the benefit is so that a <em>generic Hypermedia client</em> with no specific knowledge about your API can display different UI for a partial update vs. a full update vs. original creation. If your API client has out-of-band, specific knowledge about your API, there’s really no non-documentary benefit to drawing a distinction (well, PUT is technically idempotent, so I guess there are cache implementations). In general, a lot of the reason why the HTTP spec is so specific about a lot of things is for the benefit of <em>generic</em> clients, reasons that are completely inapplicable to 90% of “REST” APIs that exist. Learning about Hypermedia will help you understand the “why” of so many parts of the web better.</p>
+<p>Peace!</p>
+    <hr />
+
+    <div class="callToAction">
+    <p>
+    
+      Thanks for reading!
+    
+    To read more by me, you can subscribe to the <a href="../atom.xml">Atom feed</a> or follow my <a href="https://twitter.com/twitchard">Twitter</a>.</p>
+    
+    
+    
+    <p>Check out the previous post, <a href="../posts/2025-02-11-p-user-hostile-trash-heap.html">"p(user-hostile trash heap)"</a>.</p>
+    
+      <blockquote>"just because something amazing is *now possible to build* does not mean that something amazing *will win*"</blockquote>
+    
+    
+    </p>
+    
+    <h4><a href="../">Home</a></h4>
+    </div>
+    </section>
+</article>
+
+        </main>
+
+        <footer>
+          <div class="leftfootleftfootleftfoot">
+            Nothing I write represents the opinion of those foolish enough to employ me.
+          </div>
+          <div class="rightfeetatthemorningfeetatnight">
+            Site shamefully generated by <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+          </div>
+        </footer>
+    </body>
+</html>
