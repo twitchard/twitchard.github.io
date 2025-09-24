@@ -10,10 +10,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Comic+Neue&family=EB+Garamond:wght@800&family=Lato&display=swap');
 /* Whole document */
 body {
-    font-family: 'Lato';
+    /* font-family: 'Lato'; */
     width: 8in;
     margin: auto;
     background: #FFFFFF;
+    
+}
+strong {
+    color: #000;
 }
 
 /*
@@ -74,7 +78,7 @@ dt {
     float: left;
     clear: left;
     width: 17%;
-    font-weight: bold;
+    font-weight: normal;
 }
 dd {
     margin-left: 17%;
