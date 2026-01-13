@@ -40,13 +40,12 @@
     <center> <h1>Great move! You have loaded Richard Marmorstein's Web Page</h1>
         <img src="images/dad-a-base.jpg" width="200px" style="border: 2px black solid;" />
     </center>
-    <h2>Inane Ramblings</h2>
-    <ul>
-      <li>Video: <a href="https://www.youtube.com/watch?v=mgRreyw-Nlg">Artisanal, Machine-Generated API Libraries</a>, Strange Loop 2021</li>
-    </ul>
-    <h2>Profane Writings</h2>
-    <ul>
-    
+    <p id="about-link"><a href="about.html">About</a></p>
+    <p id="lucky-link"><a href="#" id="feeling-lucky">I'm feeling lucky</a></p>
+    <div id="profane-section">
+        <h2>Profane Writings</h2>
+        <ul id="post-list">
+        
     <li>
         <a href="./posts/2025-06-28-the-catholic-church-vs-the-turing-test.html">The Catholic Church vs. the Turing Test</a> - June 28, 2025
     
@@ -215,18 +214,29 @@
 
 <!-- <li><a href="/archive.html">(More)</a> -->
 
-    </ul>
-    <h2>Portals into Madness</h2>
-    <ul>
-        <li><a href="https://www.goodreads.com/twitchard">Goodreads</a></li>
-        <li><a href="https://github.com/twitchard">Github</a></li>
-        <li><a href="https://twitter.com/twitchard">Twitter</a></li>
-        <li><a href="https://www.instagram.com/mozzarella_and_gouda/">My dogs' Instagram</a></li>
-    </ul>
-    <madness>
+        </ul>
+    </div>
+    <div id="inane-section">
+        <h2>Inane Ramblings</h2>
+        <ul>
+          <li>Video: <a href="https://www.youtube.com/watch?v=mgRreyw-Nlg">Artisanal, Machine-Generated API Libraries</a>, Strange Loop 2021</li>
+        </ul>
+    </div>
+    <div id="portals-section">
+        <h2>Portals into Madness</h2>
+        <ul>
+            <li><a href="https://www.goodreads.com/twitchard">Goodreads</a></li>
+            <li><a href="https://github.com/twitchard">Github</a></li>
+            <li><a href="https://twitter.com/twitchard">Twitter</a></li>
+            <li><a href="https://www.chess.com/member/richardmarmorstein">Chess.com</a></li>
+        </ul>
+    </div>
+    <div id="madness-section">
+        <madness>
     <marquee>Surrender to madness (:</marquee>
 </madness>
 
+    </div>
     <script>
         const start = Date.now()
         const end = Date.now() + 1000 * 60 * 10
@@ -264,7 +274,117 @@
           };
         };
         applyWobble();
-        setInterval(applyWobble, 2000)
+        const wobbleInterval = setInterval(applyWobble, 2000)
+
+        // I'm feeling lucky
+        document.getElementById('feeling-lucky').addEventListener('click', function(e) {
+            e.preventDefault();
+            const postList = document.getElementById('post-list');
+            const posts = Array.from(postList.querySelectorAll('li'));
+            if (posts.length === 0) return;
+
+            const luckyIndex = Math.floor(Math.random() * posts.length);
+            const luckyPost = posts[luckyIndex];
+
+            // Stop wobble
+            clearInterval(wobbleInterval);
+
+            // Everything happens together over 2 seconds
+            const duration = 2;
+
+            // Spin the image
+            const img = document.querySelector('home img');
+            img.style.transition = `transform ${duration}s ease-out`;
+            img.style.transform = 'rotate(1080deg)';
+
+            // Scatter the unchosen posts
+            posts.forEach((post, i) => {
+                if (i !== luckyIndex) {
+                    const rect = post.getBoundingClientRect();
+                    post.style.position = 'fixed';
+                    post.style.left = rect.left + 'px';
+                    post.style.top = rect.top + 'px';
+                    post.style.width = rect.width + 'px';
+                    post.style.margin = '0';
+
+                    const direction = Math.random() * 360;
+                    const distance = 2000 + Math.random() * 1000;
+                    const dx = Math.cos(direction) * distance;
+                    const dy = Math.sin(direction) * distance;
+                    const spin = (Math.random() - 0.5) * 2000;
+
+                    requestAnimationFrame(() => {
+                        post.style.transition = `all ${duration}s cubic-bezier(.2,.8,.3,1)`;
+                        post.style.transform = `translate(${dx}px, ${dy}px) rotate(${spin}deg) scale(0.5)`;
+                        post.style.opacity = '0';
+                    });
+                    setTimeout(() => post.remove(), duration * 1000);
+                }
+            });
+
+            // Exalt the chosen one (starts immediately, in parallel)
+            exaltTheChosenOne(luckyPost, duration);
+        });
+
+        // ============================================================
+        // EXALTATION ZONE - The chosen link ascends to glory
+        // ============================================================
+        function exaltTheChosenOne(chosenPost, duration) {
+            // Fade out other sections (take out of flow immediately)
+            ['about-link', 'lucky-link', 'inane-section', 'portals-section', 'madness-section'].forEach((id) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    const rect = el.getBoundingClientRect();
+                    el.style.position = 'fixed';
+                    el.style.left = rect.left + 'px';
+                    el.style.top = rect.top + 'px';
+                    el.style.transition = `opacity ${duration}s ease-out`;
+                    el.style.opacity = '0';
+                    setTimeout(() => el.remove(), duration * 1000);
+                }
+            });
+
+            // Remove the header
+            const profaneSection = document.getElementById('profane-section');
+            const h2 = profaneSection.querySelector('h2');
+            if (h2) {
+                const rect = h2.getBoundingClientRect();
+                h2.style.position = 'fixed';
+                h2.style.left = rect.left + 'px';
+                h2.style.top = rect.top + 'px';
+                h2.style.transition = `opacity ${duration}s ease-out`;
+                h2.style.opacity = '0';
+                setTimeout(() => h2.remove(), duration * 1000);
+            }
+
+            // Center and glorify - all in one smooth motion
+            profaneSection.style.transition = `all ${duration}s ease-out`;
+            profaneSection.style.textAlign = 'center';
+            profaneSection.style.marginTop = '50px';
+
+            chosenPost.style.transition = `all ${duration}s ease-out`;
+            chosenPost.style.display = 'inline-block';
+            chosenPost.style.padding = '30px 50px';
+            chosenPost.style.fontSize = '1.4em';
+            chosenPost.style.background = 'linear-gradient(135deg, #fff9e6 0%, #fff3cc 50%, #ffe680 100%)';
+            chosenPost.style.borderRadius = '15px';
+            chosenPost.style.boxShadow = '0 0 40px rgba(255, 215, 0, 0.6), 0 0 80px rgba(255, 215, 0, 0.3)';
+            chosenPost.style.border = '3px solid gold';
+            chosenPost.style.listStyle = 'none';
+
+            // Add the proclamation (hidden, then fade in)
+            const proclamation = document.createElement('div');
+            proclamation.innerHTML = '🍀 Destiny has spoken 🍀';
+            proclamation.style.fontFamily = '"Finger Paint", cursive';
+            proclamation.style.fontSize = '2.5em';
+            proclamation.style.marginBottom = '30px';
+            proclamation.style.color = '#2a5a2a';
+            proclamation.style.opacity = '0';
+            proclamation.style.transition = `opacity ${duration}s ease-out`;
+            profaneSection.insertBefore(proclamation, profaneSection.firstChild);
+            requestAnimationFrame(() => proclamation.style.opacity = '1');
+        }
+        // ============================================================
     </script>
 </home>
 
