@@ -6,14 +6,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:site" content="@twitchard" />
-        <meta name="twitter:title" content="The secret to mastering coding agents? Pair programming." />
+        <meta name="twitter:title" content="Want to get better at code agents? Try pairing with a human." />
         <meta name="twitter:description" content="Lessons from a decade of pair programming that transfer surprisingly well to working with coding agents" />
         <meta name="description" property="og:description" content="Lessons from a decade of pair programming that transfer surprisingly well to working with coding agents" />
         <meta name="author" property="og:author" content="Richard Marmorstein" />
         
           <meta name="image" property="og:image" content="https://twitchard.github.io/images/pair-programming-ai.png" />
         
-        <title>The secret to mastering coding agents? Pair programming. - Richard Marmorstein</title>
+        <title>Want to get better at code agents? Try pairing with a human. - Richard Marmorstein</title>
         <link rel="alternate" type="application/atom+xml" href="../atom.xml">
         <link rel="stylesheet" href="../css/default.css" />
 
@@ -41,7 +41,7 @@
      <link rel="stylesheet" href="../css/pandoc-markdown-css-theme.css" />
      <link rel="stylesheet" href="../css/pandoc-markdown-css-theme-solarized-theme.css" />
     <section class="header">
-      <h1>The secret to mastering coding agents? Pair programming.</h1>
+      <h1>Want to get better at code agents? Try pairing with a human.</h1>
       <h3>by Richard Marmorstein - January 15, 2026</h3>
       <h4><a href="../">← Home</a></h4>
     </section>
@@ -52,37 +52,33 @@ Iron is sharpened by iron, one person sharpens another.
 </p>
 <p><cite>— Proverbs 27:17</cite></p>
 </div>
-<h2 id="skill-issues">Skill issues</h2>
-<p>Some developers are better at using coding agents. I was confused – and a little frustrated – the first time I saw somebody struggle with getting an agent to help them. “Just talk to it like you would onboard another developer to your problem, come on!” I thought.</p>
-<p>But on reflection I’ve realized this isn’t something you can “just” do. It’s a set of skills that take practice. I just happened to have had this practice already.</p>
-<p>I took pretty naturally to coding agents, and I credit one simple thing for this: over the past ten years I have probably averaged something like three hours a week pair programming with colleagues. Pair programming, it turns out, is the perfect way to practice the same skills that make you good at coding agents. I believe it’s even better practice for coding agents than using coding agents themselves.</p>
-<p>In this post, I’ll write a little bit about some specific skills I have gained from pair programming and describe how they transfer to coding agents. These skills are:</p>
+<p>There’s skill to using coding agents effectively. As a trivial example, you will achieve greater success sooner with prompts like</p>
+<blockquote>
+<p>I ran <code>command</code> and got <code>output</code>, might be a parse error is getting swallowed in the controller? Improve the error experience here and then fix the immediate problem.</p>
+</blockquote>
+<p>than with</p>
+<blockquote>
+<p>fix this error <code>[paste]</code></p>
+</blockquote>
+<p>Being skilled at using LLMs to code involves, among others, the following skills:</p>
 <ol type="1">
 <li>Articulating problems</li>
 <li>Presenting context</li>
 <li>Creative dialogue</li>
 <li>Frontloading the tricky stuff</li>
 </ol>
-<p>A quick aside: some people just hate pairing and will always hate pairing. Completely valid – you can stop reading. If you enjoy it or are neutral, read on – let me convince you to do it more!</p>
+<p>As it happens, these are all skills you use and develop when pair programming. For the past ten years I’ve spent something like three hours a week pair programming with colleagues (usually virtually over Zoom or <a href="https://tuple.app">Tuple</a>). In this post I’ll describe lessons and skills I gained from this practice, and then explain how they have made me a more effective user of coding agents, like Claude Code, Cursor, and Codex.</p>
 <h3 id="articulating-problems">Articulating problems</h3>
-<p>When you solo program, you translate thought directly into code. Pair programming forces you to put your thoughts into words, which is an important skill for using agents. When the right word for an idea rolls off the tongue this can turn minutes of demonstrating by example into seconds of typing the right sentence.</p>
-<p>This skill has a high ceiling. I was not good at it ten years ago. I would often have ideas or code changes that I understood in my head, but struggled to explain them clearly to another person in any other way than just writing out the code myself. I have improved at this, and I am still improving. (Sometimes when I’m “navigating” I still basically try to boss my pair around like they are Vim, not great).</p>
+<p>When you solo program, you can translate thought directly into code. Pair programming, especially when you are “navigating” and your pair is “driving”, involves the additional step of putting your thoughts into words. This skill has a high ceiling. I can much better express specific ways I want code to change than I could ten years ago.</p>
 <p>Some of this is vocabulary. There are lots of code actions you can refer to more effectively if you (and your pair) have the right words: “DRY this up”, “inline that function”, “parameterize that expression over X”, “that error is getting swallowed”, “can we reify the Y behavior”, “defunctionalize the continuation here, please”. (Someday I plan to publish a glossary with my favorite software-related vocabulary).</p>
-<p>Programming solo, with or without an agent, won’t really improve your articulative abilities. Reading helps some. But by far the best way I have found to improve my code vocabulary and recall has been to pair program with bright colleagues.</p>
+<p>Articulating ideas about code is tremendously useful for AI-assisted coding, too. Knowing and summoning the right word for an idea can turn minutes of demonstrating by example into seconds of typing the right sentence.</p>
+<p>Programming solo, with or without an agent, won’t really improve your articulative abilities. Reading helps some. But the best way<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> to improve your code vocabulary and your ability to apply it is to pair program with bright colleagues.</p>
 <h3 id="presenting-context">Presenting context</h3>
-<p>Here is an example of a type of prompt I call a “grunt”:</p>
-<blockquote>
-<p>the sync script is broken</p>
-</blockquote>
-<p>Contrast this to a different prompt that provides a lot more direction:</p>
-<blockquote>
-<p>I ran <code>[command]</code> and got <code>[output]</code>, might be a parse error is getting swallowed in the controller? Improve the error experience here and then fix the immediate problem.</p>
-</blockquote>
-<p>Part of using coding agents well is being able to judge when it’s OK to grunt, and you will get results faster by providing more direction. I think of this as having a good “theory of mind” for the coding agent. What have you already told it? What files has it already read and understood? Does it understand your broader goal here, or only the immediate task? What exactly was in the CLAUDE.md? Should you summarize the way things work, or should you just point it at a couple of files that will give it the gist?</p>
-<p>When you pair program, you have to keep track of another mind. What does your pair already know about the problem? What information are they missing? Have they misunderstood something? What is the most time-efficient way to catch them up?</p>
-<p>It is much better to practice this skill with a human than an AI assistant. If you have provided context poorly, your human pair will tell you – if not directly in words, then in pattern of speech and tone of voice – whereas an AI will happily plug along making guesses about your meaning, reading files willy-nilly from the codebase in the hopes that something there will provide the missing insight and allow it to suss out your intent. Sometimes it will actually halfway succeed, and then unless you’re paying close attention to the trace, you will never become alerted to the fact that you could improve. Even if the agent fails and does the wrong thing, you might chalk it up to a shortcoming in the AI and not your own failure. Thus, using AI won’t always give you the feedback you need to improve at using AI.</p>
+<p>When you pair program, especially if you’re leading, you have to keep track of another mind. What does your pair already know about the problem? What information are they missing? What is the most time-efficient way to catch them up?</p>
+<p>This has a lot in common with keeping track of a coding agent’s context. What have you already told it? What files has it already read and understood? Does it understand your broader goal here, or only the immediate task?</p>
+<p>It is much better to practice this skill with a human than an AI assistant. If you have provided context poorly, your human pair will tell you – if not directly in words, then in pattern of speech and tone of voice – whereas an AI will happily plug along making guesses about your meaning, reading files willy-nilly from the codebase in the hopes that something there will provide the missing insight and allow it to suss out your intent. Lots of the time, it will actually succeed, too, or halfway succeed, and then unless you’re paying close attention to the trace, you will never become alerted to the fact that you could improve. Even if the agent fails and does the wrong thing, you might chalk it up to a shortcoming in the AI and not your own failure. Thus, pairing with a human can be better practice for using AI than using AI is.</p>
 <h3 id="creative-dialogue">Creative Dialogue</h3>
-<p>Every once in a while you encounter a problem that requires unusual creativity or particularly careful judgement. If I hit a problem like this while pair programming, we will begin to ask questions starting with “why is…” or “why don’t we…” or “what if…” We have to take a step back and actually think creatively.</p>
+<p>Solving most code problems is usually a straightforward application of experience and elbow grease, but every once in a while you encounter a problem that requires unusual creativity or particularly careful judgement. If I hit a problem like this while pair programming, we will begin to ask questions starting with “why is…” or “why don’t we…” or “what if…” We have to take a step back and actually think creatively.</p>
 <p>Being creative with a partner is a <em>different skill</em> than being creative solo. If I want to be creative solo, I <a href="https://medium.com/engineering-livestream/on-showers-golang-and-creativity-2230b0b97d78">take a shower</a>, relax, and let my mind explore various trains of thought. Being creative with a partner is more like attaching my mind like a caboose to my partner’s selected train of thought, and alternating and letting them do the same. It’s the skill of dialogue.</p>
 <p>You can have creative dialogue with an AI assistant, too, but you have to explicitly set it up. Coding agents have a strong tendency to just go off to try and work in complete iterations. Even in “plan mode” they go try and do all the thinking and maybe give you a little questionnaire after the fact so you feel included.</p>
 <p>In any case, creative dialogue is a skill, or perhaps two skills: the ability to put aside your preconceptions so you can really listen to what your partner is saying, and on the other hand the ability to listen openly but critically to what your partner is saying.</p>
@@ -94,7 +90,14 @@ Iron is sharpened by iron, one person sharpens another.
 <h2 id="substitutes-and-complements">Substitutes and Complements</h2>
 <p>The first time I screenshared and shared my editor with advanced voice mode on ChatGPT desktop, my instinctual reaction, conditioned by all the rhetoric about AI replacing humans, was “guess I should start pair programming with the AI more and stop pairing with humans as much”, but on reflection I do not think this correct at all. To use the economics jargon, AI pairing is a <em>complement</em> to human pairing, not a <em>substitute</em>. In the generative AI age, you should pair program with AI more <strong>and</strong> with humans more. What you should do less of is solo programming. (And of course, nothing prevents you from getting on a Zoom with a colleague and prompting the AI together. This is a great way to spread AI tools knowhow.)</p>
 <h2 id="caveat">Caveat</h2>
-<p>This is all based on personal experience and observation, not experiment. I believe that these skills make a difference in how effectively you can use agents for the time being, but it could be that agents eventually improve in such a way that really the most time-efficient way to prompt them will always be merely to grunt vaguely in the direction of something that needs improvement. But we’re not there yet! For now, keep yourself sharp. Go ask your teammate to pair.</p>
+<p>My thesis – that agents work better with input derived from human-grade articulation, contextualization, dialogue, and frontloading strategy – is based on anecdote and observation, not experiment. I believe they make a difference for the time being, but it could be that agents eventually improve in such a way that really the most time-efficient way to prompt them will be merely to grunt vaguely in the direction of something that needs improvement.</p>
+<p>But we’re not there yet! For now, keep yourself sharp. Go ask your teammate to pair.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>This is true for me and probably a majority of my teammates over the years. Not all developers enjoy or thrive pairing, and that’s ok!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
     <hr />
 
     <div class="callToAction">

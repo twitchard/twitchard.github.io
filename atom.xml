@@ -10,8 +10,16 @@
         <email>nobody@example.com</email>
         
     </author>
-    <updated>2025-06-28T00:00:00Z</updated>
+    <updated>2026-02-26T00:00:00Z</updated>
     <entry>
+    <title>Want to get better at coding agents? Try pairing with a human.</title>
+    <link href="https://twitchard.github.io/posts/2026-02-26-pairing-with-humans-for-coding-agents.html" />
+    <id>https://twitchard.github.io/posts/2026-02-26-pairing-with-humans-for-coding-agents.html</id>
+    <published>2026-02-26T00:00:00Z</published>
+    <updated>2026-02-26T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Lessons from a decade of pair programming that transfer surprisingly well to working with coding agents]]></summary>
+</entry>
+<entry>
     <title>The Catholic Church vs. the Turing Test</title>
     <link href="https://twitchard.github.io/posts/2025-06-28-the-catholic-church-vs-the-turing-test.html" />
     <id>https://twitchard.github.io/posts/2025-06-28-the-catholic-church-vs-the-turing-test.html</id>
@@ -82,14 +90,6 @@
     <published>2024-08-23T00:00:00Z</published>
     <updated>2024-08-23T00:00:00Z</updated>
     <summary type="html"><![CDATA[How could our tools change to reduce the cost of breaking changes?]]></summary>
-</entry>
-<entry>
-    <title>Take your pragmatism for a unicycle ride</title>
-    <link href="https://twitchard.github.io/posts/2023-01-18-unicycles.html" />
-    <id>https://twitchard.github.io/posts/2023-01-18-unicycles.html</id>
-    <published>2023-01-18T00:00:00Z</published>
-    <updated>2023-01-18T00:00:00Z</updated>
-    <summary type="html"><![CDATA[The critical resource is not *developer time*, it's *developer energy*]]></summary>
 </entry>
 
 </feed>

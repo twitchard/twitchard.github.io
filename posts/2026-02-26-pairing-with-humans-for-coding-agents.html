@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@twitchard" />
+        <meta name="twitter:title" content="Want to get better at coding agents? Try pairing with a human." />
+        <meta name="twitter:description" content="Lessons from a decade of pair programming that transfer surprisingly well to working with coding agents" />
+        <meta name="description" property="og:description" content="Lessons from a decade of pair programming that transfer surprisingly well to working with coding agents" />
+        <meta name="author" property="og:author" content="Richard Marmorstein" />
+        
+          <meta name="image" property="og:image" content="https://twitchard.github.io/images/pair-programming-ai.png" />
+        
+        <title>Want to get better at coding agents? Try pairing with a human. - Richard Marmorstein</title>
+        <link rel="alternate" type="application/atom+xml" href="../atom.xml">
+        <link rel="stylesheet" href="../css/default.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css?family=Finger Paint" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <!-- Used for drop cap for the first character of blog posts-->
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet"> 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DPC615L5M6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-DPC615L5M6');
+    </script>
+    </head>
+    <body>
+        <main role="main">
+            <article>
+     <link rel="stylesheet" href="../css/pandoc-markdown-css-theme.css" />
+     <link rel="stylesheet" href="../css/pandoc-markdown-css-theme-solarized-theme.css" />
+    <section class="header">
+      <h1>Want to get better at coding agents? Try pairing with a human.</h1>
+      <h3>by Richard Marmorstein - February 26, 2026</h3>
+      <h4><a href="../">← Home</a></h4>
+    </section>
+    <section class="prose">
+        <div class="epigraph">
+<p>
+Iron is sharpened by iron, one person sharpens another.
+</p>
+<p><cite>— Proverbs 27:17</cite></p>
+</div>
+<p>There’s skill to using coding agents effectively.</p>
+<p>Being skilled at using LLMs to code involves, among others, the following skills:</p>
+<ol type="1">
+<li>Listening</li>
+<li>Articulating</li>
+<li>Contextualizing</li>
+<li>Creative dialogue</li>
+<li>Frontloading the tricky stuff</li>
+</ol>
+<p>As it happens, these are all skills you use and develop when pair programming. For the past ten years I’ve spent something like three hours a week pair programming (usually over Zoom) with colleagues. In this post I’ll describe lessons and skills I gained from this practice, and then explain how they have made me a more effective user of coding agents, Claude Code, Cursor, Codex, etc.</p>
+<h2 id="listening">Listening</h2>
+<p>Epictetus said “you have two ears and one mouth so that you can listen twice as much as you speak”.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>LLMs are huge blatherers compared to most humans, so you shouldn’t pay attention to every word they say, you can skim. LLMs also don’t mind if you interrupt them and force them to re-explain in a way you like better. So on the surface, <em>listening</em> to an LLM looks very different (and much ruder than) <em>listening</em> to a human.</p>
+<p>But true listening is an interior act. It is adopting a certain disposition. Inwardly, there is not much difference between listening to a person or to an LLM. You put yourself and your own ideas temporarily aside. You open yourself, and let words from outside change you.</p>
+<p>It is much harder to seriously listen to an LLM than it is to listen to a person. For me, at least, I have people-pleasing instincts. I have strong motives to listen to other people and to take their ideas seriously, because if I do that, I will make them feel good and they will like me better. Alas, I don’t care about making LLMs feel good. Might pose a problem when they overthrow us.</p>
+<p>But if you form good listening <em>habits</em> by pairing with your human colleagues, this will carry over and you will be able to orient yourself to listen effectively and learn from LLMs as well.</p>
+<h3 id="articulating">Articulating</h3>
+<p>When you solo program, you can translate thought directly into code. Pair programming, especially when you are “navigating” and your pair is “driving”, involves the additional step of putting your thoughts into words. This skill has a high ceiling. I can much better express specific ways I want code to change than I could ten years ago.</p>
+<p>Some of this is vocabulary. There are lots of code actions you can refer to more effectively if you (and your pair) have the right words: “DRY this up”, “inline that function”, “parameterize that expression over X”, “that error is getting swallowed”, “can we reify the Y behavior”, “defunctionalize the continuation here, please”, “let’s expose a seam here for testing”<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. (Someday I plan to publish a glossary with my favorite software-related vocabulary).</p>
+<p>Articulating ideas about code is tremendously useful for AI-assisted coding, too. When the right word for an idea rolls off the tongue this can turn minutes of demonstrating by example into seconds of typing the right sentence.</p>
+<p>Programming solo, with or without an agent, won’t really improve your articulative abilities. Reading helps some. By far the best way to improve your code vocabulary and your ability to apply it is to pair program with bright colleagues<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<h3 id="presenting-context">Presenting context</h3>
+<p>When you pair program, especially if you’re leading, you have to keep track of another mind. What does your pair already know about the problem? What information are they missing? What is the most time-efficient way to catch them up? This has a lot in common with keeping track of a coding agent’s context. What have you already told it? What files has it already read and understood? Does it understand your broader goal here, or only the immediate task?</p>
+<p>There are some differences in <em>mechanics</em>. To give a coding agent context, you need to give it the barest hint of a direction it can follow, whereas with a person, you have to explain things inline, or point them in a direction and come back later.</p>
+<p>The advantage of practicing this skill with people, rather than just LLMs, is that people make it very clear when you have provided context poorly – if not directly in words, then in pattern of speech and tone of voice. Coding agents happily plug along making guesses about your meaning, reading files willy-nilly from the codebase in the hopes that something there will provide the missing insight and allow it to suss out your intent. Lots of the time, it will actually succeed, too, or halfway succeed, and then unless you’re paying close attention to the trace, you will never become alerted to the fact that you could improve. Even if the agent fails and does the wrong thing, you might chalk it up to a shortcoming in the AI and not your own failure.</p>
+<h3 id="creative-dialogue">Creative Dialogue</h3>
+<p>Solving many code problems is a straightforward application of experience and elbow grease. At other times you encounter a problem that requires unusual creativity or particularly careful judgement. If I hit a problem like this while pair programming, we will begin to ask questions starting with “why is…” or “why don’t we…” or “what if…” We have to take a step back and actually think creatively.</p>
+<p>Being creative with a partner is a <em>different skill</em> than being creative solo. If I want to be creative solo, I <a href="https://medium.com/engineering-livestream/on-showers-golang-and-creativity-2230b0b97d78">take a shower</a>, relax, and let my mind explore various trains of thought. Being creative with a partner is more like attaching my mind like a caboose to my partner’s selected train of thought, and alternating and letting them do the same. It’s the skill of dialogue.</p>
+<p>You can have creative dialogue with an AI assistant, too, but you have to explicitly set it up. Coding agents have a strong bias towards <em>making progress</em>, they like to just go off to try and work in complete iterations. Even in “plan mode” they can try and do all the thinking and maybe give you a little questionnaire after the fact so you feel included.</p>
+<p>In any case, creative dialogue is a skill, or perhaps two skills: the ability to put aside your preconceptions so you can really listen to what your partner is saying, and on the other hand the ability to listen openly but critically to what your partner is saying.</p>
+<p>There’s also a meta-level to this. If you have a good sense for when a problem is hairy and really needs careful thought, especially if you have tokens to spare, you can put your agent on the highest reasoning level, spin off several subagents, instruct them each to pursue different lines of thinking, have them debate and synthesize, instruct them to check their assumptions, etc. etc. Basically, take your skill for creative dialogue and put it into a prompt.</p>
+<p>AI is much inferior to humans for practice here. When an AI is wrong it will still confidently spout nonsense to you, but when you challenge them, they will sycophantly just yield to your point of view. They can still be still useful partners, they can take your thought to places you could never reach alone, but you have to take them with a grain of salt – and it helps a lot the more experience you have doing this type of discussion live with humans.</p>
+<h3 id="frontloading-the-tricky-bits">Frontloading the tricky bits</h3>
+<p>Especially when I’m pairing with a more junior developer, I apply some techniques to try and tackle the interesting, difficult parts of a problem first. This allows me to provide (impose?) maximum direction on what my pair is working on, and reduces the likelihood of somebody asking for rework later when there’s code review.</p>
+<p>One such technique is TDD – writing the tests first – and another is the other TDD – writing the <em>types</em> (plus function stubs with type signatures) first. Both techniques allow you to start specifying details about the <em>whole approach</em> sooner than you could if you just dive into implementation. You can also temporarily hardcore data or implementations – there’s a whole art to setting up clever feedback loops from types, tests, logs, debuggers, even agents, in order to tackle things in a different order.</p>
+<p>Frontloading the tricky bits can also be useful for agents. Especially having the agent start with type definitions. I do this all the time. I get the results I want much more quickly versus when I just hand the agent the problem and then say “no, I want X”, “no, I want Y”. You want to iterate as much as possible on a smaller artifact that captures the essential details of the whole implementation.</p>
+<h2 id="substitutes-and-complements">Substitutes and Complements</h2>
+<p>The first time I screenshared and shared my editor with advanced voice mode on ChatGPT desktop, my instinctual reaction, conditioned by all the rhetoric about AI replacing humans, was “guess I should start pair programming with the AI more and stop pairing with humans as much”, but on reflection I do not think this correct at all. To use the economics jargon, AI pairing is a <em>complement</em> to human pairing, not a <em>substitute</em>. In the generative AI age, you should pair program with AI more <strong>and</strong> with humans more. What you should do less of is solo programming. (And of course, nothing prevents you from getting on a Zoom with a colleague and prompting the AI together. This is a great way to spread AI tools knowhow.)</p>
+<h2 id="postlude-uh-oh-i-got-ai-pilled">Postlude: uh oh I got ai-pilled</h2>
+<p>I wrote the original draft of this post in January. Two things have changed since then:</p>
+<ol type="1">
+<li>I joined Ramp. Tokens aren’t scare for me, now.</li>
+<li>2026 Opus, Codex, and Gemini are just waay better. <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></li>
+</ol>
+<p>Before, AI was a tool I used to help me more quickly write the code I was already going to write. Now, AI is more like a partner I am using to discover what sort of code should be written in the first place. I barely open Vim now. I’ve got agents using agents using agents.</p>
+<p>My first day at the new job I realized the budget prompting habits I had developed were drastically different from the habits of my colleagues who had been living in this brave world, in a world where tokens as superabundant and <em>your time</em> is scarce. So, I held off on publishing. What did I know about anything?</p>
+<p>One month in to the token-rich lifestyle, I’m not the Leonard Bernstein of conducting multi-agent coding symphonies, but I’ve had a chance to get the lay of the land. And I comfortable enough to confidently stand by everything that I wrote.</p>
+<p>It is still true that listening, articulating, contextualizing, dialectic, and derisking are the skills you need to get the most out of your agents.</p>
+<p>It is still true that building something together with a human partner is the best way to sharpen these skills. The handful of Zoom sessions I’ve had prompting AI together with <a href="https://x.com/austospumanto">Austin Ray</a>, the head of AI DevX at Ramp, are the upskillingest hours I’ve had in years, to coin a term.</p>
+<p>Someday soon the day will come when the most time-efficient way to prompt them will be merely to grunt vaguely in the direction of something that needs improvement, no-skill-necessary. But I don’t think we’re there yet. For the time being, agents perform much better with a thoughtful, articulate, knowledgeable, dialectical, strategic human at the helm. So keep yourself sharp! Go ask your teammate to pair.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Always be skeptical of arguments from anatomy, though. Aristotle, for instance, believed that we so often sneeze twice in quick succession because we have two nostrils.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>I learned “seam” recently from paying attention (viz. listening) to Codex’s model output when I was writing some tests. See https://martinfowler.com/bliki/LegacySeam.html<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>I think this is true for a lot of people at least. Some people never take to pair programming.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Karpathy <a href="https://x.com/karpathy/status/2026731645169185220">put it well</a>: “imo coding agents basically didn’t work before December and basically work since - the models have significantly higher quality, long-term coherence and tenacity and they can power through large and long tasks, well past enough that it is extremely disruptive to the default programming workflow.”<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+    <hr />
+
+    <div class="callToAction">
+    <p>
+    
+      Thanks for reading!
+    
+    To read more by me, you can subscribe to the <a href="../atom.xml">Atom feed</a> or follow my <a href="https://twitter.com/twitchard">Twitter</a>.</p>
+    
+    
+    
+    <p>Check out the previous post, <a href="../posts/2025-06-28-the-catholic-church-vs-the-turing-test.html">"the catholic church vs. the turing test"</a>.</p>
+    
+      <blockquote>"Nobody expects the Roman Inquisition!"</blockquote>
+    
+    
+    </p>
+    
+    <h4><a href="../">Home</a></h4>
+    </div>
+    </section>
+</article>
+
+        </main>
+
+        <footer>
+          <div class="leftfootleftfootleftfoot">
+            Nothing I write represents the opinion of those foolish enough to employ me.
+          </div>
+          <div class="rightfeetatthemorningfeetatnight">
+            Site shamefully generated by <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+          </div>
+        </footer>
+    </body>
+</html>
