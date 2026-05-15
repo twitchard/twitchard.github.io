@@ -10,8 +10,16 @@
         <email>nobody@example.com</email>
         
     </author>
-    <updated>2026-05-08T00:00:00Z</updated>
+    <updated>2026-05-15T00:00:00Z</updated>
     <entry>
+    <title>We're all bottlenecks now</title>
+    <link href="https://twitchard.github.io/posts/2026-05-15-were-all-bottlenecks-now.html" />
+    <id>https://twitchard.github.io/posts/2026-05-15-were-all-bottlenecks-now.html</id>
+    <published>2026-05-15T00:00:00Z</published>
+    <updated>2026-05-15T00:00:00Z</updated>
+    <summary type="html"><![CDATA[On the customization craze, and why your personal tooling deserves real care]]></summary>
+</entry>
+<entry>
     <title>Incidental UI, essential UI</title>
     <link href="https://twitchard.github.io/posts/2026-05-08-incidental-ui-essential-ui.html" />
     <id>https://twitchard.github.io/posts/2026-05-08-incidental-ui-essential-ui.html</id>
@@ -82,14 +90,6 @@
     <published>2024-09-10T00:00:00Z</published>
     <updated>2024-09-10T00:00:00Z</updated>
     <summary type="html"><![CDATA[Usually thin is better -- but not always]]></summary>
-</entry>
-<entry>
-    <title>Big Datatype: why code tools like to be written with fancy types</title>
-    <link href="https://twitchard.github.io/posts/2024-09-10-big-datatype.html" />
-    <id>https://twitchard.github.io/posts/2024-09-10-big-datatype.html</id>
-    <published>2024-09-10T00:00:00Z</published>
-    <updated>2024-09-10T00:00:00Z</updated>
-    <summary type="html"><![CDATA[What explains the disproportionate popularity of typed FP for code tools and relative unpopularity for web apps?]]></summary>
 </entry>
 
 </feed>
