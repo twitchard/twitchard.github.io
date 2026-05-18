@@ -10,8 +10,16 @@
         <email>nobody@example.com</email>
         
     </author>
-    <updated>2026-05-15T00:00:00Z</updated>
+    <updated>2026-05-18T00:00:00Z</updated>
     <entry>
+    <title>Software's Centaur Era</title>
+    <link href="https://twitchard.github.io/posts/2026-05-18-softwares-centaur-era.html" />
+    <id>https://twitchard.github.io/posts/2026-05-18-softwares-centaur-era.html</id>
+    <published>2026-05-18T00:00:00Z</published>
+    <updated>2026-05-18T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Will AI automate away all the software jobs? Not until humans have nothing left to contribute -- and that era hasn't even begun.]]></summary>
+</entry>
+<entry>
     <title>We're all bottlenecks now</title>
     <link href="https://twitchard.github.io/posts/2026-05-15-were-all-bottlenecks-now.html" />
     <id>https://twitchard.github.io/posts/2026-05-15-were-all-bottlenecks-now.html</id>
@@ -82,14 +90,6 @@
     <published>2024-10-15T00:00:00Z</published>
     <updated>2024-10-15T00:00:00Z</updated>
     <summary type="html"><![CDATA[Phoebe Syndrome, reacjis, and AI playfulness]]></summary>
-</entry>
-<entry>
-    <title>How thick should your SDK be?</title>
-    <link href="https://twitchard.github.io/posts/2024-09-10-through-thick-and-thin.html" />
-    <id>https://twitchard.github.io/posts/2024-09-10-through-thick-and-thin.html</id>
-    <published>2024-09-10T00:00:00Z</published>
-    <updated>2024-09-10T00:00:00Z</updated>
-    <summary type="html"><![CDATA[Usually thin is better -- but not always]]></summary>
 </entry>
 
 </feed>
