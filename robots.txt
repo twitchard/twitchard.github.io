@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://twitchard.github.io/sitemap.xml

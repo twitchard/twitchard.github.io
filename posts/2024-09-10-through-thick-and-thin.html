@@ -4,14 +4,47 @@
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:site" content="@twitchard" />
-        <meta name="twitter:title" content="How thick should your SDK be?" />
-        <meta name="twitter:description" content="Usually thin is better -- but not always" />
-        <meta name="description" property="og:description" content="Usually thin is better -- but not always" />
-        <meta name="author" property="og:author" content="Richard Marmorstein" />
-        
+
         <title>How thick should your SDK be? - Richard Marmorstein</title>
+        
+        <meta name="description" content="Should an SDK wrap your API one-to-one, or carry logic of its own? Usually thin wins, but here is when a thick SDK earns its keep." />
+        
+        <meta name="author" content="Richard Marmorstein" />
+        
+        <meta name="robots" content="index, follow" />
+        
+        <link rel="canonical" href="https://twitchard.github.io/posts/2024-09-10-through-thick-and-thin.html" />
+
+        <!-- Open Graph -->
+        <meta property="og:title" content="How thick should your SDK be?" />
+        
+        <meta property="og:description" content="Should an SDK wrap your API one-to-one, or carry logic of its own? Usually thin wins, but here is when a thick SDK earns its keep." />
+        
+        <meta property="og:url" content="https://twitchard.github.io/posts/2024-09-10-through-thick-and-thin.html" />
+        <meta property="og:site_name" content="Richard's Software Blog" />
+        <meta property="og:locale" content="en_US" />
+        
+        <meta property="og:type" content="article" />
+        
+        
+        
+        <meta property="article:published_time" content="2024-09-10" />
+        <meta property="article:author" content="Richard Marmorstein" />
+        <meta property="article:section" content="Software" />
+        
+
+        <!-- Twitter Card -->
+        
+        <meta name="twitter:card" content="summary" />
+        
+        <meta name="twitter:site" content="@twitchard" />
+        <meta name="twitter:creator" content="@twitchard" />
+        <meta name="twitter:title" content="How thick should your SDK be?" />
+        
+        <meta name="twitter:description" content="Should an SDK wrap your API one-to-one, or carry logic of its own? Usually thin wins, but here is when a thick SDK earns its keep." />
+        
+        
+
         <link rel="alternate" type="application/atom+xml" href="../atom.xml">
         <link rel="stylesheet" href="../css/default.css" />
 
@@ -21,15 +54,15 @@
         <link href="https://fonts.googleapis.com/css?family=Finger Paint" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
         <!-- Used for drop cap for the first character of blog posts-->
-        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
-        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DPC615L5M6"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-    
+
       gtag('config', 'G-DPC615L5M6');
     </script>
     </head>
@@ -38,13 +71,35 @@
             <article>
      <link rel="stylesheet" href="../css/pandoc-markdown-css-theme.css" />
      <link rel="stylesheet" href="../css/pandoc-markdown-css-theme-solarized-theme.css" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "How thick should your SDK be?",
+      "description": "Should an SDK wrap your API one-to-one, or carry logic of its own? Usually thin wins, but here is when a thick SDK earns its keep.",
+      "datePublished": "2024-09-10",
+      "dateModified": "2024-09-10",
+      "url": "https://twitchard.github.io/posts/2024-09-10-through-thick-and-thin.html",
+      "mainEntityOfPage": "https://twitchard.github.io/posts/2024-09-10-through-thick-and-thin.html",
+      
+      "author": {
+        "@type": "Person",
+        "name": "Richard Marmorstein",
+        "url": "https://twitchard.github.io/about.html"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Richard Marmorstein"
+      }
+    }
+    </script>
     <section class="header">
       <h1>How thick should your SDK be?</h1>
       <h3>by Richard Marmorstein - September 10, 2024</h3>
       <h4><a href="../">← Home</a></h4>
     </section>
     <section class="prose">
-        <p>Say you’ve got a public REST API, that you wrap with SDKs in several languages. Should the SDK be a “thin” wrapper; that is, should the methods in the SDK be 1:1 with endpoints in the underlying API? Or should it be a “thick” wrapper; that is, should the SDK contain methods that have significant logic of their own, potentially calling multiple underlying API methods?</p>
+        <p><img src="../images/dropCapS.png" class="dropCap" alt="S" />ay you’ve got a public REST API, that you wrap with SDKs in several languages. Should the SDK be a “thin” wrapper; that is, should the methods in the SDK be 1:1 with endpoints in the underlying API? Or should it be a “thick” wrapper; that is, should the SDK contain methods that have significant logic of their own, potentially calling multiple underlying API methods?</p>
 <p>My take? Thick is typically wrong. Ninety percent of the time, If you’re tempted to add an SDK method with any “extra” logic in it, what you should <em>actually</em> do is either</p>
 <ul>
 <li>Put that logic in a new API endpoint. This gives you more control; or,</li>
