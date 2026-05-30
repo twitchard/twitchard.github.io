@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>Richard's Software Blog</title>
+    <subtitle><![CDATA[Richard's Software Blog]]></subtitle>
     <link href="https://twitchard.github.io/atom.xml" rel="self" />
     <link href="https://twitchard.github.io" />
     <id>https://twitchard.github.io/atom.xml</id>
@@ -10,8 +11,16 @@
         <email>nobody@example.com</email>
         
     </author>
-    <updated>2026-05-18T00:00:00Z</updated>
+    <updated>2026-05-30T00:00:00Z</updated>
     <entry>
+    <title>The Pope vs. Market Ideology</title>
+    <link href="https://twitchard.github.io/posts/2026-05-30-the-pope-vs-market-ideology.html" />
+    <id>https://twitchard.github.io/posts/2026-05-30-the-pope-vs-market-ideology.html</id>
+    <published>2026-05-30T00:00:00Z</published>
+    <updated>2026-05-30T00:00:00Z</updated>
+    <summary type="html"><![CDATA[What Magnifica Humanitas has to say about property rights and economics 101.]]></summary>
+</entry>
+<entry>
     <title>Software's Centaur Era</title>
     <link href="https://twitchard.github.io/posts/2026-05-18-softwares-centaur-era.html" />
     <id>https://twitchard.github.io/posts/2026-05-18-softwares-centaur-era.html</id>
@@ -82,14 +91,6 @@
     <published>2024-11-27T00:00:00Z</published>
     <updated>2024-11-27T00:00:00Z</updated>
     <summary type="html"><![CDATA[How I learned to stop worrying and love Streamlit's execution model]]></summary>
-</entry>
-<entry>
-    <title>Left Stripe, joined an AI start-up</title>
-    <link href="https://twitchard.github.io/posts/2024-10-15-new-job.html" />
-    <id>https://twitchard.github.io/posts/2024-10-15-new-job.html</id>
-    <published>2024-10-15T00:00:00Z</published>
-    <updated>2024-10-15T00:00:00Z</updated>
-    <summary type="html"><![CDATA[Scattered reflections one month after leaving Stripe for an AI start-up: Phoebe Syndrome, reacjis, and AI playfulness.]]></summary>
 </entry>
 
 </feed>
