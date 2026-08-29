@@ -11,8 +11,16 @@
         <email>nobody@example.com</email>
         
     </author>
-    <updated>2026-05-30T00:00:00Z</updated>
+    <updated>2026-08-29T00:00:00Z</updated>
     <entry>
+    <title>Why I'm not a Terminal Guy Anymore</title>
+    <link href="https://twitchard.github.io/posts/2026-08-29-why-im-not-a-terminal-guy-anymore.html" />
+    <id>https://twitchard.github.io/posts/2026-08-29-why-im-not-a-terminal-guy-anymore.html</id>
+    <published>2026-08-29T00:00:00Z</published>
+    <updated>2026-08-29T00:00:00Z</updated>
+    <summary type="html"><![CDATA[A jaded software engineer has never forgiven GUIs for what they did to him as a child. But in the age of coding agents, has he learned to hold his nose?]]></summary>
+</entry>
+<entry>
     <title>The Pope vs. Market Ideology</title>
     <link href="https://twitchard.github.io/posts/2026-05-30-the-pope-vs-market-ideology.html" />
     <id>https://twitchard.github.io/posts/2026-05-30-the-pope-vs-market-ideology.html</id>
@@ -83,14 +91,6 @@
     <published>2025-02-11T00:00:00Z</published>
     <updated>2025-02-11T00:00:00Z</updated>
     <summary type="html"><![CDATA[Will generative AI will magically make the software industry start doing right by users?]]></summary>
-</entry>
-<entry>
-    <title>Pushing the boundaries of Streamlit</title>
-    <link href="https://twitchard.github.io/posts/2024-11-27-streamlit.html" />
-    <id>https://twitchard.github.io/posts/2024-11-27-streamlit.html</id>
-    <published>2024-11-27T00:00:00Z</published>
-    <updated>2024-11-27T00:00:00Z</updated>
-    <summary type="html"><![CDATA[How I learned to stop worrying and love Streamlit's execution model]]></summary>
 </entry>
 
 </feed>
