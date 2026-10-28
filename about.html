@@ -76,9 +76,9 @@ I'm more proud than I should be that <a href="https://twitchard.github.io/posts/
 
 <p>(If you insist on a more boring timeline, here's my <a href="resume.pdf">résumé</a>.)</p>
 
-<!--
-<p>As of 2026 I'm at <strong>Ramp</strong>, where I work on AI-powered (internal) Developer Experience. My aim is to become a world-class expert on how coding agents and other AI tools can be a productivity multiplier for teams, as well as individually becoming one of the world's most expert users of coding agents.</p>
+<p>As of 2026 I'm at <strong>Ramp</strong>, where I work on AI-powered (internal) Developer Experience. The aim is coding agents: a productivity multiplier for teams, and — if I ever get there — for me personally. I wrote about <a href="https://builders.ramp.com/post/how-we-built-oca-our-ai-on-call-assistant">OCA, Ramp's AI on-call assistant</a>. Lately I'm embedded with the FDE team, working on Ramp's internal software factory.</p>
 
+<!--
 <p>My theory of productivity is that <b>how our tools make us feel</b> is more important than people realize. This is summed up in my <a href="https://twitchard.github.io/posts/2023-01-18-unicycles.html">"Take your pragmatism for a unicycle ride" post</a>.</p>
 
 Probably because of my (unsuccessful) stint in economics grad school, I have strong opinions about the epistemology of software practices. I think that the industry is full of bad arguments about developer productivity, dressed up as "science" or "data-drivenness". I sum these up in <a href="https://twitchard.github.io/posts/2019-10-13-software-development-and-the-false-promise-of-science.html">Software development and the false promise of science</a>) and <a href="https://twitchard.github.io/posts/2022-08-26-metrics-schmetrics.html">Be good-argument-driven, not data-driven</a>.
@@ -101,33 +101,59 @@ Probably because of my (unsuccessful) stint in economics grad school, I have str
 
 <p>I presently live near Chicago, IL (in the northwest suburbs, anyway). I'm originally from the great state of South Dakota. The place I've lived the longest as an adult was New York City, though, where I spent 7 years. East coast best coast!</p>
 
-<p>We have two small dogs ages <span id="dog1-age"></span> and <span id="dog2-age"></span>, and two kids ages <span id="kid1-age"></span> and <span id="kid2-age"></span>.</p>
+<p>We have two small dogs ages <span id="dog1-age"></span> and <span id="dog2-age"></span>, and three kids ages <span id="kid1-age"></span>, <span id="kid2-age"></span>, and <span id="kid3-age"></span>.</p>
 
 <script>
 (function() {
+    // Calendar-day difference. Years are whole years; under a year, months.
+    // A future date is reported as negative months ("-2 months") until that
+    // day, then the usual "0 months" / "1 month" / years.
     function getAge(birthDate) {
-        const today = new Date();
-        const birth = new Date(birthDate);
-        let years = today.getFullYear() - birth.getFullYear();
-        let months = today.getMonth() - birth.getMonth();
+        const now = new Date();
+        const parts = birthDate.split('-').map(Number);
+        const birth = new Date(parts[0], parts[1] - 1, parts[2]);
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-        if (months < 0 || (months === 0 && today.getDate() < birth.getDate())) {
-            years--;
-            months += 12;
-        }
-        if (today.getDate() < birth.getDate()) {
-            months--;
+        function elapsed(from, to) {
+            let years = to.getFullYear() - from.getFullYear();
+            let months = to.getMonth() - from.getMonth();
+            if (months < 0 || (months === 0 && to.getDate() < from.getDate())) {
+                years--;
+                months += 12;
+            }
+            if (to.getDate() < from.getDate()) {
+                months--;
+            }
+            return { years: years, months: months };
         }
 
-        if (years === 0) {
-            return months + " month" + (months !== 1 ? "s" : "");
-        } else {
-            return years
+        function monthLabel(n) {
+            return n + " month" + (Math.abs(n) !== 1 ? "s" : "");
         }
+
+        if (birth.getTime() > today.getTime()) {
+            const span = elapsed(today, birth);
+            let total = span.years * 12 + span.months;
+            const anniversary = new Date(today.getFullYear(), today.getMonth() + total, today.getDate());
+            if (anniversary.getTime() !== birth.getTime()) {
+                total += 1;
+            }
+            if (total < 1) {
+                total = 1;
+            }
+            return monthLabel(-total);
+        }
+
+        const age = elapsed(birth, today);
+        if (age.years === 0) {
+            return monthLabel(age.months);
+        }
+        return age.years;
     }
 
     document.getElementById('kid1-age').textContent = getAge('2022-04-01');
     document.getElementById('kid2-age').textContent = getAge('2024-05-01');
+    document.getElementById('kid3-age').textContent = getAge('2026-12-24');
     document.getElementById('dog1-age').textContent = getAge('2017-12-01');
     document.getElementById('dog2-age').textContent = getAge('2019-02-01');
 })();
