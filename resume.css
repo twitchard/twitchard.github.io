@@ -8,15 +8,6 @@
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Comic+Neue&family=EB+Garamond:wght@800&family=Lato&display=swap');
-header#title-block-header {
-    display: none;
-}
-
-@page {
-    size: letter;
-    margin: 0.55in 0.6in;
-}
-
 /* Whole document */
 body {
     /* font-family: 'Lato'; */
