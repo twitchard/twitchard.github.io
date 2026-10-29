@@ -18,7 +18,7 @@
 ### Software Engineer - Developer Experience <right>Stripe (July 2019 - Sep 2024)</right>
 
 - **SDKs** - Architected and shipped major improvements and features to Stripe’s server-side SDKs: type annotations, async support, instrumentation, predictable naming, testability, and more.
-- **SDK generator** - Improved and expanded Stripe's SDK generator from prototype to robust infrastructure.
+- **SDK generation** - Brought api-codegen, Stripe's project for generating SDKs, from prototype to robust infrastructure, enabling programmatic docs and major interface improvements and rapid feature development/modernization in all 7 target libraries; e.g. types and async in `stripe-python`.
 - **API Review** - Consulted on RESTful API design across the Stripe API
 
 ## Previous Experience
